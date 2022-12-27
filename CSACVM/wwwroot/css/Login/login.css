@@ -1,0 +1,26 @@
+body {
+    background: #003076;
+    background: linear-gradient(360deg, #003076, rgba(255,255,255,0.5) 93%);
+}
+
+
+#btnLogin {
+    background-color: #1e59af;
+    margin-top: 2% !important;
+    color: white;
+    border: 0 !important;
+}
+
+#btnRegister {
+    margin-top: 2% !important;
+    color: white;
+    border: 0 !important;
+}
+
+#pNombreAplicacion {
+    margin-top: 1rem;
+    font-size: 1.5rem;
+    padding-top: .5rem;
+    font-weight: bold !important;
+    color: #3770c2;
+}

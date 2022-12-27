@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace CSACVM.AccesoDatos.Repositorio.IRepositorio{
     public interface IUnitOfWork{
         IUsuarioRepositorio Usuario { get; }
+        IUsuarioCVRepositorio UsuarioCV { get; }
         IDepartamentoRepositorio Departamento { get; }
         IEntradaRepositorio Entrada { get; }
         IEntradaCVRepositorio EntradaCV { get; }

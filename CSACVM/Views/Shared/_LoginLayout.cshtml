@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - FCC Workflow</title>
+
+	<link rel="stylesheet" href="~/css/bootswatch.css" />
+	<link rel="stylesheet" href="~/css/all.min.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/Login/login.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/comunes.css" asp-append-version="true" />
+	<link rel="shortcut icon" type="image/png" href="~/FCC_Logo.ico" />
+
+</head>
+<body style="display:flex;align-items:center;justify-content:center">
+	
+	<div>
+		@RenderBody()
+	</div>
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	@await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>
+
