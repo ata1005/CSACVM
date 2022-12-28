@@ -23,6 +23,7 @@ if (!app.Environment.IsDevelopment()) {
 }
 
 app.UseHttpsRedirection();
+app.UseDefaultFiles();
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -33,6 +34,7 @@ app.UseExceptionHandlerMiddleware();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Login}/{action=Login}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+//https://localhost:7179http://localhost:5179
 
 app.Run();

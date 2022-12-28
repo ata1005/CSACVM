@@ -23,4 +23,8 @@
     <ProjectReference Include="..\CSACVM.Modelos\CSACVM.Modelos.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Perfil\" />
+  </ItemGroup>
+
 </Project>

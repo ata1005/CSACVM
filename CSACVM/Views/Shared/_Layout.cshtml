@@ -24,27 +24,78 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
                         </li>
-                        <li class="nav-item">
-                            <input />Buscar
+                        <li class="nav-item d-flex text-center align-items-baseline ms-1">
+                            <label class="form-label">Buscar </label>
+                            <input type="text" class="form-control ms-1"/>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
+    <div class="container-fluid d-flex">
+        <aside class="overflow-auto col-2 ">
+            <nav class="align-items-center">
+                <a asp-controller="Login" asp-action="Profile">
+                    @*<img src="" alt="">Nombre*@
+                    Nombre
+                </a>
+                <a asp-controller="Home" asp-action="Index">
+                    <div>
+                    </div>
+                    Editar Perfil
+                </a>
+                <hr />
+                <a asp-controller="Home" asp-action="Index">
+                    <div>
+                    </div>
+                    Contactos
+                </a>
+                <a asp-controller="Home" asp-action="Index">
+                    <div>
+                    </div>
+                    Mensajes
+                </a>
+                <a asp-controller="Home" asp-action="Index">
+                    <div>
+                    </div>
+                    Directorio
+                </a>
+                <a asp-controller="Home" asp-action="Index">
+                    <div>
+                    </div>
+                    Notificaciones
+                </a>
+                <hr />
+                <a asp-controller="Home" asp-action="Index">
+                    <div>
+                    </div>
+                    Calendario
+                </a>
+            </nav>
+        </aside>
+        <main class="col-10 ">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </main>
+
+
+
+    </div>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - CSACVM - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+    @*    <footer class="border-top footer text-muted">
+    <div class="container">
+    &copy; 2022 - CSACVM - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    </div>
+    </footer>*@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
