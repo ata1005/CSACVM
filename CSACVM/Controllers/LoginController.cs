@@ -20,8 +20,9 @@ namespace CSACVM.Controllers {
             return View();
         }
 
-        
-        public IActionResult Profile() {
+
+        public IActionResult Profile()
+        {
             return View();
         }
 

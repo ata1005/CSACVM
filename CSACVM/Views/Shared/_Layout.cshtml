@@ -16,11 +16,14 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CSACVM</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+                <div class="col-2">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CSACVM</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+               
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
@@ -29,6 +32,11 @@
                         <li class="nav-item d-flex text-center align-items-baseline ms-1">
                             <label class="form-label">Buscar </label>
                             <input type="text" class="form-control ms-1"/>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav d-flex justify-content-end flex-grow-1">
+                        <li class="nav-item align-items-end ms-2 d-flex">
+                            <a class="fa-2xl fa fa-power-off c-grey" id="btnLogout" asp-controller="Login" asp-action="Logout"></a>
                         </li>
                     </ul>
                 </div>
@@ -42,28 +50,28 @@
                     @*<img src="" alt="">Nombre*@
                     Nombre
                 </a>
-                <a asp-controller="Home" asp-action="Index">
+                <a asp-controller="Login" asp-action="Profile">
                     <div>
                     </div>
                     Editar Perfil
                 </a>
                 <hr />
-                <a asp-controller="Home" asp-action="Index">
+                <a asp-controller="Personal" asp-action="Contactos">
                     <div>
                     </div>
                     Contactos
                 </a>
-                <a asp-controller="Home" asp-action="Index">
+                <a asp-controller="Personal" asp-action="Mensajes">
                     <div>
                     </div>
                     Mensajes
                 </a>
-                <a asp-controller="Home" asp-action="Index">
+                <a asp-controller="Personal" asp-action="Directorio">
                     <div>
                     </div>
                     Directorio
                 </a>
-                <a asp-controller="Home" asp-action="Index">
+                <a asp-controller="Personal" asp-action="Notificaciones">
                     <div>
                     </div>
                     Notificaciones
@@ -76,7 +84,7 @@
                 </a>
             </nav>
         </aside>
-        <main class="col-10 ">
+        <main class="container">
             <main role="main" class="pb-3">
                 @RenderBody()
             </main>
@@ -85,11 +93,11 @@
 
 
     </div>
-    <div class="container">
+   @* <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
-    </div>
+    </div>*@
 
     @*    <footer class="border-top footer text-muted">
     <div class="container">

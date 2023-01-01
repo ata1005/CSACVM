@@ -24,7 +24,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Perfil\" />
+    <Content Update="Views\Personal\Contactos.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>
