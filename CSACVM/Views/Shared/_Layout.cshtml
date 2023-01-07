@@ -30,13 +30,12 @@
                             <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
                         </li>
                         <li class="nav-item d-flex text-center align-items-baseline ms-1">
-                            <label class="form-label">Buscar </label>
-                            <input type="text" class="form-control ms-1"/>
+                            <input type="text" placeholder="Buscar" class="form-control ms-1"/>
                         </li>
                     </ul>
                     <ul class="navbar-nav d-flex justify-content-end flex-grow-1">
                         <li class="nav-item align-items-end ms-2 d-flex">
-                            <a class="fa-2xl fa fa-power-off c-grey" id="btnLogout" asp-controller="Login" asp-action="Logout"></a>
+                            <a class="fa-2xl fa fa-power-off nav-link" id="btnLogout" asp-controller="Login" asp-action="Logout"></a>
                         </li>
                     </ul>
                 </div>
@@ -44,43 +43,37 @@
         </nav>
     </header>
     <div class="container-fluid d-flex">
-        <aside class="overflow-auto col-2 ">
-            <nav class="align-items-center">
-                <a asp-controller="Login" asp-action="Profile">
+        <aside class="nav overflow-auto col-2 ">
+            <nav class="nav-list align-items-center">
+                <a asp-controller="Login" asp-action="Profile" class="nav-link">
                     @*<img src="" alt="">Nombre*@
                     Nombre
                 </a>
-                <a asp-controller="Login" asp-action="Profile">
-                    <div>
-                    </div>
-                    Editar Perfil
+                <a asp-controller="Login" asp-action="Profile" class="nav-link">
+                    <i class="fa-solid fa-user-pen"></i>
+                    <span class="nav-item ms-2">Editar Perfil</span>
                 </a>
                 <hr />
-                <a asp-controller="Personal" asp-action="Contactos">
-                    <div>
-                    </div>
-                    Contactos
+                <a asp-controller="Personal" asp-action="Contactos" class="nav-link">
+                    <i class="fa-solid fa-user-group"></i>
+                    <span class="nav-item ms-2">Contactos</span>
                 </a>
-                <a asp-controller="Personal" asp-action="Mensajes">
-                    <div>
-                    </div>
-                    Mensajes
+                <a asp-controller="Personal" asp-action="Mensajes" class="nav-link">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span class="nav-item ms-2">Mensajes</span>
                 </a>
-                <a asp-controller="Personal" asp-action="Directorio">
-                    <div>
-                    </div>
-                    Directorio
+                <a asp-controller="Personal" asp-action="Directorio" class="nav-link">
+                    <i class="fa-solid fa-folder-closed"></i>
+                    <span class="nav-item ms-2">Directorio</span>
                 </a>
-                <a asp-controller="Personal" asp-action="Notificaciones">
-                    <div>
-                    </div>
-                    Notificaciones
+                <a asp-controller="Personal" asp-action="Notificaciones" class="nav-link">
+                    <i class="fa-solid fa-bell"></i>
+                    <span class="nav-item ms-2">Notificaciones</span>
                 </a>
                 <hr />
-                <a asp-controller="Home" asp-action="Index">
-                    <div>
-                    </div>
-                    Calendario
+                <a asp-controller="Home" asp-action="Index" class="nav-link">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <span class="nav-item ms-2">Calendario</span>
                 </a>
             </nav>
         </aside>

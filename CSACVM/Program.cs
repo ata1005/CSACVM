@@ -3,14 +3,30 @@ using CSACVM.AccesoDatos.Repositorio.IRepositorio;
 using CSACVM.AccesoDatos.Repositorio;
 using Microsoft.EntityFrameworkCore;
 using CSACVM.Exceptions;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Serilog;
+using CSACVM.AccesoDatos;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options2 => {
+        options2.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+        options2.SlidingExpiration = true;
+        options2.LoginPath = new PathString("/Login/Login"); //relative path requests will be redirected to when a user attempts to access a resource but has not been authenticated.
+        options2.LogoutPath = new PathString("/Login/Logout"); //relative path requests will be redirected to when a user attempts to access a resource but does not pass any authorization policies for that resource.
+    });
+
+builder.Host.UseSerilog((hostContext, services, configuration) => configuration.ReadFrom.Configuration(hostContext.Configuration));
+
 builder.Services.AddDbContext<CSACVMContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("CSACVMConnection")));
+   "server=(localdb)\\MSSQLLocalDB; Database=CSA_CVM;Trusted_Connection=True;MultipleActiveResultSets=True"));
+//builder.Services.AddDbContext<CSACVMContext>(options => options.UseSqlServer(
+//    builder.Configuration["ConnectionStrings:DefaultConnection"]));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IViewRenderService, ViewRenderService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

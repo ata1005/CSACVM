@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace CSACVM.Modelos.ViewModels {
     public class LoginVM {
         [Required(ErrorMessage = "El Usuario no puede estar vacío")]
-        public string Usuario { get; set; }
+        public string NombreUser { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         [Required(ErrorMessage = "La Contraseña no puede estar vacía")]

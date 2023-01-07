@@ -12,7 +12,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSACVM.AccesoDatos", "CSACV
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSACVM.Modelos", "CSACVM.Modelos\CSACVM.Modelos.csproj", "{D0004356-C723-4448-95D1-4652B8E4DC23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSACVM.Exceptions", "CSACVM.Exceptions\CSACVM.Exceptions.csproj", "{975E3FDA-193B-46C0-A1A8-2F6D4914C026}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSACVM.Exceptions", "CSACVM.Exceptions\CSACVM.Exceptions.csproj", "{975E3FDA-193B-46C0-A1A8-2F6D4914C026}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSACVM.Utilidades", "CSACVM.Utilidades\CSACVM.Utilidades.csproj", "{CC2DFE85-245D-488E-A0C6-92C42399B504}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +38,10 @@ Global
 		{975E3FDA-193B-46C0-A1A8-2F6D4914C026}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{975E3FDA-193B-46C0-A1A8-2F6D4914C026}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{975E3FDA-193B-46C0-A1A8-2F6D4914C026}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC2DFE85-245D-488E-A0C6-92C42399B504}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC2DFE85-245D-488E-A0C6-92C42399B504}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC2DFE85-245D-488E-A0C6-92C42399B504}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC2DFE85-245D-488E-A0C6-92C42399B504}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

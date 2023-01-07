@@ -14,6 +14,7 @@ namespace CSACVM.Modelos.ViewModels {
         public IEnumerable<SelectListItem> ListaDepartamentos { get; set; }
         [Required]
         public int IdDepartamento { get; set; }
+        public string Email { get; set; }
         public bool Administrador { get; set; }
         public IEnumerable<LoginVM> LoginVMs { get; set; }  
 

@@ -6,9 +6,9 @@ namespace CSACVM.AccesoDatos.Data
 {
     public class CSACVMContext : DbContext
     {
-       
-        public CSACVMContext(DbContextOptions<CSACVMContext> options) : base(options){
-           
+        public readonly IConfiguration _configuration;
+        public CSACVMContext(DbContextOptions<CSACVMContext> options, IConfiguration configuration) : base(options){
+           _configuration = configuration;
         }
         public DbSet<Departamento> Departamento { get; set; }
         public DbSet<Entrada> Entrada { get; set; }
@@ -30,7 +30,6 @@ namespace CSACVM.AccesoDatos.Data
         public DbSet<TipoNotificacion> TipoNotificacion { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<UsuarioCV> UsuarioCV { get; set; }
-
 
     }
 }

@@ -30,11 +30,11 @@ namespace CSACVM.Controllers {
         public async Task<IActionResult> Login(LoginVM model) {
 
             try {
-                //var user = unitOfWork.UserRepository.Validate(model);
-                //if (user == null) {
-                //    ModelState.AddModelError("password", "La contraseña es incorrecta o el usuario no existe");
-                //    return View(model);
-                //}
+                var user = _unitOfWork.Usuario.ValidarUsuario(model);
+                if (user == null){
+                    ModelState.AddModelError("password", "La contraseña es incorrecta o el usuario no existe");
+                    return View(model);
+                }
                 //await unitOfWork.UserManager.SignIn(this.HttpContext, user, false);
                 return LocalRedirect("~/Solicitudes/Solicitudes");
 

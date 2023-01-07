@@ -16,14 +16,10 @@ namespace CSACVM.Exceptions
             _next = next;
         }
 
-        public async Task Invoke(HttpContext context)
-        {
-            try
-            {
+        public async Task Invoke(HttpContext context){
+            try{
                 await _next.Invoke(context);
-            }
-            catch (Exception ex)
-            {
+            }catch (Exception ex) {
                 Log.Error("StackTrace: " + ex.StackTrace + " Message: " + ex.Message);
             }
         }
