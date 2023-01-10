@@ -12,8 +12,12 @@ namespace CSACVM.Modelos.ViewModels {
         [Required, Compare("Password")]
         public string ConfirmPassword { get; set; }
         public IEnumerable<SelectListItem> ListaDepartamentos { get; set; }
+        public IEnumerable<SelectListItem> ListaGrupos { get; set; }
+        public IEnumerable<SelectListItem> ListaRoles { get; set; }
         [Required]
         public int IdDepartamento { get; set; }
+        public int IdGrupo { get; set; }
+        public int IdRol { get; set; }
         public string Email { get; set; }
         public bool Administrador { get; set; }
         public IEnumerable<LoginVM> LoginVMs { get; set; }  

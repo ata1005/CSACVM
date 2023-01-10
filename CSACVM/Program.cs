@@ -4,6 +4,7 @@ using CSACVM.AccesoDatos.Repositorio;
 using Microsoft.EntityFrameworkCore;
 using CSACVM.Exceptions;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http.Features;
 using Serilog;
 using CSACVM.AccesoDatos;
 
@@ -20,7 +21,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     });
 
 builder.Host.UseSerilog((hostContext, services, configuration) => configuration.ReadFrom.Configuration(hostContext.Configuration));
-
+builder.Services.AddSession();
 builder.Services.AddDbContext<CSACVMContext>(options => options.UseSqlServer(
    "server=(localdb)\\MSSQLLocalDB; Database=CSA_CVM;Trusted_Connection=True;MultipleActiveResultSets=True"));
 //builder.Services.AddDbContext<CSACVMContext>(options => options.UseSqlServer(
@@ -46,6 +47,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseSession();
+//app.UseSessionMiddleware();
 app.UseExceptionHandlerMiddleware();
 
 app.MapControllerRoute(

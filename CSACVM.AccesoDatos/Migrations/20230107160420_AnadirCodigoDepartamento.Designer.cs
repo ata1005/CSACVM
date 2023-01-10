@@ -4,6 +4,7 @@ using CSACVM.AccesoDatos.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CSACVM.AccesoDatos.Migrations
 {
     [DbContext(typeof(CSACVMContext))]
-    partial class CSACVMContextModelSnapshot : ModelSnapshot
+    [Migration("20230107160420_AnadirCodigoDepartamento")]
+    partial class AnadirCodigoDepartamento
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,7 +42,7 @@ namespace CSACVM.AccesoDatos.Migrations
 
                     b.HasKey("IdDepartamento");
 
-                    b.ToTable("Departamento", (string)null);
+                    b.ToTable("Departamento");
                 });
 
             modelBuilder.Entity("CSACVM.Modelos.Entrada", b =>
@@ -93,7 +95,7 @@ namespace CSACVM.AccesoDatos.Migrations
 
                     b.HasIndex("IdUsuario");
 
-                    b.ToTable("Entrada", (string)null);
+                    b.ToTable("Entrada");
                 });
 
             modelBuilder.Entity("CSACVM.Modelos.EntradaCV", b =>
@@ -133,7 +135,7 @@ namespace CSACVM.AccesoDatos.Migrations
 
                     b.HasIndex("IdUsuario");
 
-                    b.ToTable("EntradaCV", (string)null);
+                    b.ToTable("EntradaCV");
                 });
 
             modelBuilder.Entity("CSACVM.Modelos.EventosUsuario", b =>
@@ -159,7 +161,7 @@ namespace CSACVM.AccesoDatos.Migrations
 
                     b.HasIndex("IdUsuario");
 
-                    b.ToTable("EventosUsuario", (string)null);
+                    b.ToTable("EventosUsuario");
                 });
 
             modelBuilder.Entity("CSACVM.Modelos.ExtraCV", b =>
@@ -182,7 +184,7 @@ namespace CSACVM.AccesoDatos.Migrations
 
                     b.HasIndex("IdUsuario");
 
-                    b.ToTable("ExtraCV", (string)null);
+                    b.ToTable("ExtraCV");
                 });
 
             modelBuilder.Entity("CSACVM.Modelos.ExtraEntradasCV", b =>
@@ -204,7 +206,7 @@ namespace CSACVM.AccesoDatos.Migrations
 
                     b.HasIndex("IdExtraCV");
 
-                    b.ToTable("ExtraEntradasCV", (string)null);
+                    b.ToTable("ExtraEntradasCV");
                 });
 
             modelBuilder.Entity("CSACVM.Modelos.FormacionCV", b =>
@@ -239,7 +241,7 @@ namespace CSACVM.AccesoDatos.Migrations
 
                     b.HasIndex("IdUsuario");
 
-                    b.ToTable("FormacionCV", (string)null);
+                    b.ToTable("FormacionCV");
                 });
 
             modelBuilder.Entity("CSACVM.Modelos.Grupo", b =>
@@ -262,7 +264,7 @@ namespace CSACVM.AccesoDatos.Migrations
 
                     b.HasIndex("DepartamentoIdDepartamento");
 
-                    b.ToTable("Grupo", (string)null);
+                    b.ToTable("Grupo");
                 });
 
             modelBuilder.Entity("CSACVM.Modelos.Idioma", b =>
@@ -285,7 +287,7 @@ namespace CSACVM.AccesoDatos.Migrations
 
                     b.HasKey("IdIdioma");
 
-                    b.ToTable("Idioma", (string)null);
+                    b.ToTable("Idioma");
                 });
 
             modelBuilder.Entity("CSACVM.Modelos.IdiomaCV", b =>
@@ -327,7 +329,7 @@ namespace CSACVM.AccesoDatos.Migrations
 
                     b.HasIndex("IdUsuario");
 
-                    b.ToTable("IdiomaCV", (string)null);
+                    b.ToTable("IdiomaCV");
                 });
 
             modelBuilder.Entity("CSACVM.Modelos.NotasUsuario", b =>
@@ -353,7 +355,7 @@ namespace CSACVM.AccesoDatos.Migrations
 
                     b.HasIndex("IdUsuario");
 
-                    b.ToTable("NotasUsuario", (string)null);
+                    b.ToTable("NotasUsuario");
                 });
 
             modelBuilder.Entity("CSACVM.Modelos.Notificacion", b =>
@@ -387,7 +389,7 @@ namespace CSACVM.AccesoDatos.Migrations
 
                     b.HasIndex("IdUsuario");
 
-                    b.ToTable("Notificacion", (string)null);
+                    b.ToTable("Notificacion");
                 });
 
             modelBuilder.Entity("CSACVM.Modelos.Proyecto", b =>
@@ -405,7 +407,7 @@ namespace CSACVM.AccesoDatos.Migrations
 
                     b.HasKey("IdProyecto");
 
-                    b.ToTable("Proyecto", (string)null);
+                    b.ToTable("Proyecto");
                 });
 
             modelBuilder.Entity("CSACVM.Modelos.Respuesta", b =>
@@ -439,7 +441,7 @@ namespace CSACVM.AccesoDatos.Migrations
 
                     b.HasIndex("IdUsuario");
 
-                    b.ToTable("Respuesta", (string)null);
+                    b.ToTable("Respuesta");
                 });
 
             modelBuilder.Entity("CSACVM.Modelos.Rol", b =>
@@ -457,7 +459,7 @@ namespace CSACVM.AccesoDatos.Migrations
 
                     b.HasKey("IdRol");
 
-                    b.ToTable("Rol", (string)null);
+                    b.ToTable("Rol");
                 });
 
             modelBuilder.Entity("CSACVM.Modelos.TipoEntrada", b =>
@@ -475,7 +477,7 @@ namespace CSACVM.AccesoDatos.Migrations
 
                     b.HasKey("IdTipoEntrada");
 
-                    b.ToTable("TipoEntrada", (string)null);
+                    b.ToTable("TipoEntrada");
                 });
 
             modelBuilder.Entity("CSACVM.Modelos.TipoExtraCV", b =>
@@ -492,7 +494,7 @@ namespace CSACVM.AccesoDatos.Migrations
 
                     b.HasKey("IdTipoExtraCV");
 
-                    b.ToTable("TipoExtraCV", (string)null);
+                    b.ToTable("TipoExtraCV");
                 });
 
             modelBuilder.Entity("CSACVM.Modelos.TipoNotificacion", b =>
@@ -510,7 +512,7 @@ namespace CSACVM.AccesoDatos.Migrations
 
                     b.HasKey("IdTipoNotificacion");
 
-                    b.ToTable("TipoNotificacion", (string)null);
+                    b.ToTable("TipoNotificacion");
                 });
 
             modelBuilder.Entity("CSACVM.Modelos.Usuario", b =>
@@ -564,7 +566,7 @@ namespace CSACVM.AccesoDatos.Migrations
 
                     b.HasIndex("IdRol");
 
-                    b.ToTable("Usuario", (string)null);
+                    b.ToTable("Usuario");
                 });
 
             modelBuilder.Entity("CSACVM.Modelos.UsuarioCV", b =>
@@ -609,7 +611,7 @@ namespace CSACVM.AccesoDatos.Migrations
 
                     b.HasIndex("IdUsuario");
 
-                    b.ToTable("UsuarioCV", (string)null);
+                    b.ToTable("UsuarioCV");
                 });
 
             modelBuilder.Entity("CSACVM.Modelos.Entrada", b =>

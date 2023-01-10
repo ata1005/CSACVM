@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CSACVM.AccesoDatos.Repositorio.IRepositorio;
 using Newtonsoft.Json;
 using CSACVM.AccesoDatos.Repositorio;
+using Microsoft.AspNetCore.Http;
 
 namespace CSACVM.Controllers {
     public class LoginController : Controller {
@@ -27,6 +28,7 @@ namespace CSACVM.Controllers {
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken()]
         public async Task<IActionResult> Login(LoginVM model) {
 
             try {
@@ -34,10 +36,15 @@ namespace CSACVM.Controllers {
                 if (user == null){
                     ModelState.AddModelError("password", "La contraseña es incorrecta o el usuario no existe");
                     return View(model);
+                } else {
+                    HttpContext.Session.SetString("NOMBRE", user.NombreUser);
+                    HttpContext.Session.SetInt32("DPTO", user.IdDepartamento);
+                    HttpContext.Session.SetInt32("ID", user.IdUsuario);
+                    HttpContext.Session.SetString("ADMIN", user.Administrador.ToString());
+                    if(user.IdGrupo != null) HttpContext.Session.SetInt32("GRUPO", Convert.ToInt32(user.IdGrupo));
+                    if(user.IdRol != null) HttpContext.Session.SetInt32("ROL", Convert.ToInt32(user.IdRol));
+                    return LocalRedirect("~/Home/Index");
                 }
-                //await unitOfWork.UserManager.SignIn(this.HttpContext, user, false);
-                return LocalRedirect("~/Solicitudes/Solicitudes");
-
             } catch (Exception) {
                 throw;
             }
@@ -45,23 +52,39 @@ namespace CSACVM.Controllers {
         }
 
         public async Task<IActionResult> LogoutAsync() {
-            //await unitOfWork.UserManager.SignOut(this.HttpContext);
-
+            HttpContext.Session.Remove("NOMBRE");
+            HttpContext.Session.Remove("DPTO");
+            HttpContext.Session.Remove("ID");
+            HttpContext.Session.Remove("GRUPO");
+            HttpContext.Session.Remove("ROL");
+            HttpContext.Session.Remove("ADMIN");
+            HttpContext.Session.Clear();
             // Si hace logout se redirige al Login para iniciar sesión con otro usuario.
             return RedirectPermanent("~/Login/Login");
         }
         public IActionResult Register() {
-            return View();
+            RegisterVM model = new() {
+                ListaDepartamentos = _unitOfWork.Departamento.ObtenerDepartamentos(),
+                ListaGrupos = _unitOfWork.Grupo.ObtenerGrupos(),
+                ListaRoles = _unitOfWork.Rol.ObtenerRoles()
+            };
+            return View(model);
         }
 
         [HttpPost]
         public async Task<IActionResult> Register(RegisterVM model) {
 
+            //using (var dbTGuardar = _unitOfWork.GetContext().Database.BeginTransaction()) {
+            //    try {
+            //        var user = _unitOfWork.Usuario.Register(model);
+            //        dbTGuardar.Commit();
+            //    } catch(Exception ex) {
+            //        dbTGuardar.Rollback();
+            //        throw;
+            //    }
 
-            //var user = unitOfWork.UserRepository.Register(model);
-
-            //await unitOfWork.UserManager.SignIn(this.HttpContext, user, false);
-
+            //}
+            var user = _unitOfWork.Usuario.Register(model);
             // Si se registra se redirige al Login para iniciar sesión.
             return LocalRedirect("~/Login/Login");
         }

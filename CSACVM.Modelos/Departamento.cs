@@ -16,5 +16,7 @@ namespace CSACVM.Modelos {
         [Required]
         [MaxLength(50)]
         public string Descripcion { get; set; }
+
+        public string? Codigo { get; set; }
     }
 }

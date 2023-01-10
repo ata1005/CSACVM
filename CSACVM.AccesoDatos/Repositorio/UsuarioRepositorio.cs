@@ -23,19 +23,33 @@ namespace CSACVM.AccesoDatos.Repositorio{
 
         public CookieUserItem ValidarUsuario(LoginVM model)
         {
-            var usuarios = _db.Usuario.Where(x => x.NombreUser == model.NombreUser);
+            Usuario usuario = _db.Usuario.Where(x => x.NombreUser == model.NombreUser).FirstOrDefault();
             if (model.Password == null) return null;
-            var results = usuarios.AsEnumerable()
-            .Where(m => m.Password == Hasher.GenerateHash(model.Password))
-            .Select(m => new CookieUserItem
-            {
-                IdUsuario = m.IdUsuario,
-                NombreUser = m.NombreUser,
-                Nombre = m.Nombre,
-                Departamento = _db.Departamento.Where(y => y.IdDepartamento == m.Departamento.IdDepartamento).Select(s => s.Descripcion).FirstOrDefault() ?? "Sin departamento"
-            });
-
-            return results.FirstOrDefault();
+            string userlogin = "";
+            string pass = "";
+            if (usuario == null) {
+                usuario = _db.Usuario.Where(x2 => x2.Email == model.NombreUser).FirstOrDefault();
+                if (usuario == null) {
+                    return null;
+                } else {
+                    userlogin = usuario.NombreUser;
+                }
+            } else {
+                userlogin = usuario.NombreUser;
+            }
+            pass = Hasher.GenerateHash(model.Password);
+            usuario = _db.Usuario.Where(x3 => x3.NombreUser == userlogin && x3.Password == pass).FirstOrDefault();
+            
+            return new CookieUserItem {
+                IdUsuario = usuario.IdUsuario,
+                NombreUser = usuario.NombreUser,
+                Nombre = usuario.Nombre,
+                Apellido = usuario.Apellido,
+                IdDepartamento = usuario.IdDepartamento,
+                //Rol = usuario.Rol.IdRol != null ? usuario.Rol.IdRol : 0,
+                //Grupo = usuario.Grupo.IdGrupo != null ? usuario.Grupo.IdGrupo : 0,
+                Administrador = usuario.EsAdmin
+            };
         }
 
         public CookieUserItem Register(RegisterVM model)
@@ -51,7 +65,8 @@ namespace CSACVM.AccesoDatos.Repositorio{
                 NombreUser = model.NombreUser,
                 Email = model.Email,
                 Password = hashedPassword,
-                Departamento = userDpto,
+                IdDepartamento = userDpto.IdDepartamento,
+                Rol = null,
                 Activo = true,
                 EsAdmin = model.Administrador
             };
@@ -64,7 +79,11 @@ namespace CSACVM.AccesoDatos.Repositorio{
                 IdUsuario = user.IdUsuario,
                 NombreUser = user.NombreUser,
                 Nombre = user.Nombre,
-                Departamento = user.Departamento.Descripcion
+                Apellido = user.Apellido,
+                IdDepartamento = user.Departamento.IdDepartamento,
+                IdRol = user.Rol.IdRol,
+                IdGrupo = user.Grupo.IdGrupo,
+                Administrador = user.EsAdmin
             };
         }
 

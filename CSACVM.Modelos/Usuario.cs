@@ -12,12 +12,15 @@ namespace CSACVM.Modelos {
         public string? Apellido { get; set;}
         [Required]
         public string Password { get; set;}
+        public int IdRol { get; set;}
         [ForeignKey("IdRol")]
-        public Rol Rol { get; set;}
+        public Rol? Rol { get; set;}
+        public int IdDepartamento { get; set; }
         [ForeignKey("IdDepartamento")]
         public Departamento Departamento { get; set;}
+        public int IdGrupo { get; set;}
         [ForeignKey("IdGrupo")]
-        public Grupo Grupo { get; set;}
+        public Grupo? Grupo { get; set;}
         public byte[]? Foto { get; set;}
         public string? Email { get; set;}
         public bool Activo { get; set; } = true;
