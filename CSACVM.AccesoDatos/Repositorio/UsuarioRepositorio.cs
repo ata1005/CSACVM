@@ -46,18 +46,18 @@ namespace CSACVM.AccesoDatos.Repositorio{
                 Nombre = usuario.Nombre,
                 Apellido = usuario.Apellido,
                 IdDepartamento = usuario.IdDepartamento,
-                //Rol = usuario.Rol.IdRol != null ? usuario.Rol.IdRol : 0,
-                //Grupo = usuario.Grupo.IdGrupo != null ? usuario.Grupo.IdGrupo : 0,
+                IdRol = usuario.IdRol,
+                IdGrupo = usuario.IdGrupo,
                 Administrador = usuario.EsAdmin
             };
         }
 
-        public CookieUserItem Register(RegisterVM model)
-        {
+        public CookieUserItem Register(RegisterVM model){
             
             var hashedPassword = Hasher.GenerateHash(model.Password);
             Departamento userDpto = _db.Departamento.Where(d => d.IdDepartamento == model.IdDepartamento).FirstOrDefault();
-
+            Rol userRol = _db.Rol.Where(d => d.IdRol == model.IdRol).FirstOrDefault();
+            Grupo userGrupo = _db.Grupo.Where(d => d.IdGrupo == model.IdGrupo).FirstOrDefault();
             var user = new Usuario
             {
                 Nombre = model.Nombre,
@@ -66,7 +66,8 @@ namespace CSACVM.AccesoDatos.Repositorio{
                 Email = model.Email,
                 Password = hashedPassword,
                 IdDepartamento = userDpto.IdDepartamento,
-                Rol = null,
+                IdRol = userRol.IdRol,
+                IdGrupo= userGrupo.IdGrupo,
                 Activo = true,
                 EsAdmin = model.Administrador
             };
@@ -80,9 +81,9 @@ namespace CSACVM.AccesoDatos.Repositorio{
                 NombreUser = user.NombreUser,
                 Nombre = user.Nombre,
                 Apellido = user.Apellido,
-                IdDepartamento = user.Departamento.IdDepartamento,
-                IdRol = user.Rol.IdRol,
-                IdGrupo = user.Grupo.IdGrupo,
+                IdDepartamento = user.IdDepartamento,
+                IdRol = user.IdRol,
+                IdGrupo = user.IdGrupo,
                 Administrador = user.EsAdmin
             };
         }

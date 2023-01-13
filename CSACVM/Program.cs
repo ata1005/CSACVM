@@ -53,7 +53,7 @@ app.UseExceptionHandlerMiddleware();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Login}/{action=Login}/{id?}");
 //https://localhost:7179http://localhost:5179
 
 app.Run();

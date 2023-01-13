@@ -30,7 +30,6 @@ namespace CSACVM.Controllers {
         [HttpPost]
         [ValidateAntiForgeryToken()]
         public async Task<IActionResult> Login(LoginVM model) {
-
             try {
                 var user = _unitOfWork.Usuario.ValidarUsuario(model);
                 if (user == null){
@@ -62,6 +61,7 @@ namespace CSACVM.Controllers {
             // Si hace logout se redirige al Login para iniciar sesión con otro usuario.
             return RedirectPermanent("~/Login/Login");
         }
+
         public IActionResult Register() {
             RegisterVM model = new() {
                 ListaDepartamentos = _unitOfWork.Departamento.ObtenerDepartamentos(),
@@ -74,17 +74,16 @@ namespace CSACVM.Controllers {
         [HttpPost]
         public async Task<IActionResult> Register(RegisterVM model) {
 
-            //using (var dbTGuardar = _unitOfWork.GetContext().Database.BeginTransaction()) {
-            //    try {
-            //        var user = _unitOfWork.Usuario.Register(model);
-            //        dbTGuardar.Commit();
-            //    } catch(Exception ex) {
-            //        dbTGuardar.Rollback();
-            //        throw;
-            //    }
-
-            //}
-            var user = _unitOfWork.Usuario.Register(model);
+            using (var dbTGuardar = _unitOfWork.GetContext().Database.BeginTransaction()) {
+                try {
+                    var user = _unitOfWork.Usuario.Register(model);
+                    dbTGuardar.Commit();
+                } catch (Exception ex) {
+                    dbTGuardar.Rollback();
+                    throw;
+                }
+            }
+            //var user = _unitOfWork.Usuario.Register(model);
             // Si se registra se redirige al Login para iniciar sesión.
             return LocalRedirect("~/Login/Login");
         }
