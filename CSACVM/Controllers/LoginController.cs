@@ -7,6 +7,7 @@ using CSACVM.AccesoDatos.Repositorio.IRepositorio;
 using Newtonsoft.Json;
 using CSACVM.AccesoDatos.Repositorio;
 using Microsoft.AspNetCore.Http;
+using static System.Net.WebRequestMethods;
 
 namespace CSACVM.Controllers {
     public class LoginController : Controller {
@@ -21,18 +22,12 @@ namespace CSACVM.Controllers {
             return View();
         }
 
-
-        public IActionResult Profile()
-        {
-            return View();
-        }
-
         [HttpPost]
         [ValidateAntiForgeryToken()]
         public async Task<IActionResult> Login(LoginVM model) {
             try {
                 var user = _unitOfWork.Usuario.ValidarUsuario(model);
-                if (user == null){
+                if (user == null) {
                     ModelState.AddModelError("password", "La contraseña es incorrecta o el usuario no existe");
                     return View(model);
                 } else {
@@ -40,17 +35,78 @@ namespace CSACVM.Controllers {
                     HttpContext.Session.SetInt32("DPTO", user.IdDepartamento);
                     HttpContext.Session.SetInt32("ID", user.IdUsuario);
                     HttpContext.Session.SetString("ADMIN", user.Administrador.ToString());
-                    if(user.IdGrupo != null) HttpContext.Session.SetInt32("GRUPO", Convert.ToInt32(user.IdGrupo));
-                    if(user.IdRol != null) HttpContext.Session.SetInt32("ROL", Convert.ToInt32(user.IdRol));
+                    if (user.Biografia != null) HttpContext.Session.SetString("BIO", user.Biografia.ToString());
+                    if (user.IdGrupo != null) HttpContext.Session.SetInt32("GRUPO", Convert.ToInt32(user.IdGrupo));
+                    if (user.IdRol != null) HttpContext.Session.SetInt32("ROL", Convert.ToInt32(user.IdRol));
                     return LocalRedirect("~/Home/Index");
                 }
             } catch (Exception) {
                 throw;
             }
-
         }
 
+
+        public IActionResult Profile() {
+            string username = HttpContext.Session.GetString("NOMBRE");
+            string dpto = _unitOfWork.Departamento.GetFirstOrDefault(d => d.IdDepartamento == HttpContext.Session.GetInt32("DPTO")).Descripcion;
+            string bio = _unitOfWork.Usuario.GetFirstOrDefault(u => u.NombreUser == username).Biografia ?? "";
+            ProfileVM model = new ProfileVM {
+                NombreUser = username,
+                Dpto = dpto,
+                Biografia = bio
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Profile(ProfileVM model) {
+
+            if (model.PassActual != null) {
+                if (model.Password != null) {
+                    if (model.ConfirmPassword != null) {
+                        if (!_unitOfWork.Usuario.ComprobarPass(model.PassActual, model.NombreUser)) {
+                            ModelState.AddModelError("passActual", "La contraseña es incorrecta para este usuario");
+                            return View(model);
+                        } else {
+                            using (var dbTGuardar = _unitOfWork.GetContext().Database.BeginTransaction()) {
+                                try {
+                                    _unitOfWork.Usuario.CambiarPass(model);
+                                    dbTGuardar.Commit();
+                                } catch (Exception ex) {
+                                    dbTGuardar.Rollback();
+                                    throw;
+                                }
+                            }    
+                        }
+                    } else {
+                        ModelState.AddModelError("confirmPassword", "Se debe confirmar la nueva contraseña");
+                        return View(model);
+                    }
+                } else {
+                    ModelState.AddModelError("password", "Se debe rellenar el campo de la contraseña nueva");
+                    ModelState.AddModelError("confirmPassword", "Se debe confirmar la nueva contraseña");
+                    return View(model);
+                }
+            }
+            if (model.ProfilePhoto != null || model.Biografia != null) {
+                using (var dbTGuardar = _unitOfWork.GetContext().Database.BeginTransaction()) {
+                    try {
+                        _unitOfWork.Usuario.GuardarCambiosPerfil(model);
+                        dbTGuardar.Commit();
+                    } catch (Exception ex) {
+                        dbTGuardar.Rollback();
+                        throw;
+                    }
+                }
+            }
+            return LocalRedirect("~/Home/Index");
+        }
+
+    
+
         public async Task<IActionResult> LogoutAsync() {
+
+            //Se limpian las variables de sesión
             HttpContext.Session.Remove("NOMBRE");
             HttpContext.Session.Remove("DPTO");
             HttpContext.Session.Remove("ID");
@@ -58,7 +114,8 @@ namespace CSACVM.Controllers {
             HttpContext.Session.Remove("ROL");
             HttpContext.Session.Remove("ADMIN");
             HttpContext.Session.Clear();
-            // Si hace logout se redirige al Login para iniciar sesión con otro usuario.
+
+            //Si hace logout se redirige al Login para iniciar sesión con otro usuario.
             return RedirectPermanent("~/Login/Login");
         }
 
@@ -83,8 +140,8 @@ namespace CSACVM.Controllers {
                     throw;
                 }
             }
-            //var user = _unitOfWork.Usuario.Register(model);
-            // Si se registra se redirige al Login para iniciar sesión.
+
+            //Si se registra se redirige al Login para iniciar sesión.
             return LocalRedirect("~/Login/Login");
         }
     }

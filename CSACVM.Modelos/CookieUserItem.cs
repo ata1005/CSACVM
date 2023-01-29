@@ -14,5 +14,6 @@ namespace CSACVM.Modelos {
         public int? IdGrupo { get; set; }
         public int? IdRol { get; set; }
         public bool Administrador { get; set; }
+        public string? Biografia { get; set; }
     }
 }

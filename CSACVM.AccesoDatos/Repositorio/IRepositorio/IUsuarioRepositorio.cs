@@ -7,5 +7,8 @@ namespace CSACVM.AccesoDatos.Repositorio.IRepositorio{
         bool EsAdmin(int idUsuario);
         public CookieUserItem ValidarUsuario(LoginVM model);
         public CookieUserItem Register(RegisterVM model);
+        public void GuardarCambiosPerfil(ProfileVM cambiosPerfil);
+        public void CambiarPass(ProfileVM cambiosPerfil);
+        public bool ComprobarPass(string PassActual, string nombre);
     }
 }

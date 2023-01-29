@@ -39,7 +39,8 @@ namespace CSACVM.AccesoDatos.Repositorio{
             }
             pass = Hasher.GenerateHash(model.Password);
             usuario = _db.Usuario.Where(x3 => x3.NombreUser == userlogin && x3.Password == pass).FirstOrDefault();
-            
+            if (usuario == null) return null;
+
             return new CookieUserItem {
                 IdUsuario = usuario.IdUsuario,
                 NombreUser = usuario.NombreUser,
@@ -48,6 +49,7 @@ namespace CSACVM.AccesoDatos.Repositorio{
                 IdDepartamento = usuario.IdDepartamento,
                 IdRol = usuario.IdRol,
                 IdGrupo = usuario.IdGrupo,
+                Biografia = "",
                 Administrador = usuario.EsAdmin
             };
         }
@@ -68,6 +70,7 @@ namespace CSACVM.AccesoDatos.Repositorio{
                 IdDepartamento = userDpto.IdDepartamento,
                 IdRol = userRol.IdRol,
                 IdGrupo= userGrupo.IdGrupo,
+                Biografia = "",
                 Activo = true,
                 EsAdmin = model.Administrador
             };
@@ -84,9 +87,32 @@ namespace CSACVM.AccesoDatos.Repositorio{
                 IdDepartamento = user.IdDepartamento,
                 IdRol = user.IdRol,
                 IdGrupo = user.IdGrupo,
+                Biografia = "",
                 Administrador = user.EsAdmin
             };
         }
 
+        public void GuardarCambiosPerfil(ProfileVM cambiosPerfil) {
+            Usuario user = _db.Usuario.Where(u => u.NombreUser == cambiosPerfil.NombreUser).FirstOrDefault();
+            if (user != null) {
+                if(cambiosPerfil.Biografia != null) user.Biografia = cambiosPerfil.Biografia;
+                _db.Usuario.Update(user);
+                _db.SaveChanges();
+            }
+        }
+        public void CambiarPass(ProfileVM cambiosPerfil) {
+            Usuario user = _db.Usuario.Where(u => u.NombreUser == cambiosPerfil.NombreUser).FirstOrDefault();
+            if (user != null) { 
+                user.Password = Hasher.GenerateHash(cambiosPerfil.Password);
+                _db.Usuario.Update(user);
+                _db.SaveChanges();
+            }
+        }
+
+        public bool ComprobarPass(string PassActual, string nombre) {
+            string hashUser = _db.Usuario.Where(u => u.NombreUser == nombre).Select(u2 => u2.Password).FirstOrDefault();
+            if (Hasher.GenerateHash(PassActual) != hashUser) return false;
+            return true;
+        }
     }
 }

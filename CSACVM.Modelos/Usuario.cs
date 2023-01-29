@@ -23,6 +23,7 @@ namespace CSACVM.Modelos {
         public Grupo? Grupo { get; set;}
         public byte[]? Foto { get; set;}
         public string? Email { get; set;}
+        public string? Biografia { get; set;}
         public bool Activo { get; set; } = true;
         public bool EsAdmin { get; set; } = false;
     }
