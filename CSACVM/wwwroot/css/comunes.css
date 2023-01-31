@@ -1,0 +1,110 @@
+﻿/* - ZONA PARA LOS ESTILOS DE LOS ID's - */
+#spanDpto {
+    width: 100%;
+    color: #3770c2;
+    font-weight: bold;
+}
+
+#nuevaModificacion {
+    background-color: #1e59af;
+    color: white;
+    width: 100%;
+    height: 2.75rem;
+    font-family: calibri;
+    font-size: 1.3rem;
+}
+
+#btnLogout {
+    text-decoration: none;
+}
+
+    #btnLogout:hover {
+        color: lightgrey;
+    }
+
+#ddlEstado {
+    width: 90%;
+    height: 60%;
+}
+
+#filtrarConsultas {
+    background-color: #1e59af;
+    color: white;
+    height: 60%;
+}
+
+#tituloHistorico {
+    font-size: 1.05rem;
+    font-weight:bold;
+   
+}
+
+#alertFechas {
+    background-color: #ff7b7b;
+}
+
+#nombreSolSpan:hover{
+    overflow:visible;
+
+}
+
+table tbody tr td.sorting_1 {
+    max-width: 3px;
+}
+
+.elipse {
+    overflow: hidden;
+    overflow-wrap:break-word;
+    text-overflow: ellipsis;
+    display: block;
+    max-width: 100%;
+}
+
+
+/* - ZONA PARA LOS ESTILOS DE LAS CLASES PERSONALIZADAS - */
+.w-40 {
+    width: 40%;
+}
+
+.w-65 {
+    width: 65%;
+}
+
+
+.w-90 {
+    width: 90%;
+}
+
+.c-grey{
+    color: grey;
+}
+
+.c-black {
+    color: black;
+}
+
+.card-login {
+    width: 750px;
+    height:375px;
+}
+
+.menu-inactivo {
+    background-color: transparent;
+    color: #1e59af;
+    font-weight: bold;
+    border: none;
+}
+
+    .menu-inactivo:hover {
+        background-color: #9ec0f1
+    }
+
+.menu-activo {
+    background-color: #1e59af;
+    color: white;
+}
+
+.modal-w {
+    width: 1100px;
+}
+

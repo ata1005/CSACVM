@@ -100,6 +100,7 @@ namespace CSACVM.AccesoDatos.Repositorio{
                 _db.SaveChanges();
             }
         }
+
         public void CambiarPass(ProfileVM cambiosPerfil) {
             Usuario user = _db.Usuario.Where(u => u.NombreUser == cambiosPerfil.NombreUser).FirstOrDefault();
             if (user != null) { 
