@@ -5,9 +5,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FCC_Workflow.Modelos;
 
 namespace CSACVM.Modelos {
-    public class Notificacion {
+    public class Notificacion : DatosAuditoria {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdNotificacion { get; set; }
 
@@ -23,7 +24,5 @@ namespace CSACVM.Modelos {
         public string Descripcion { get; set; }
 
         public Boolean Leido { get; set; } = false;
-
-        public DateTime FechaCreacion { get; set; }
     }
 }

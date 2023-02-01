@@ -15,5 +15,7 @@ namespace CSACVM.AccesoDatos.Repositorio{
         {
             _db.NotasUsuario.Update(obj);
         }
+
+        public List<NotasUsuario> ObtenerNotasUsuario(int idUsuario) => _db.NotasUsuario.Where(n => n.IdUsuario == idUsuario).ToList();
     }
 }

@@ -5,9 +5,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FCC_Workflow.Modelos;
 
 namespace CSACVM.Modelos {
-    public class Departamento {
+    public class Departamento : DatosAuditoria {
 
 
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]

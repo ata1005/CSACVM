@@ -8,26 +8,23 @@ using Newtonsoft.Json;
 using CSACVM.AccesoDatos.Repositorio;
 
 namespace CSACVM.Controllers {
-    public class PersonalController : Controller {
+    public class DirectorioController : Controller {
 
         private readonly IUnitOfWork _unitOfWork;
 
-        public PersonalController(IUnitOfWork unitOfWork) {
+        public DirectorioController(IUnitOfWork unitOfWork) {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         }
 
-        public IActionResult Contactos()
-        {
-            return View();
+        public IActionResult Directorio(){
+            int idUsuario = HttpContext.Session.GetInt32("ID").Value;
+            DirectorioVM directorio = new() {
+                ListaNotas = _unitOfWork.NotasUsuario.ObtenerNotasUsuario(idUsuario)
+               
+            };
+            return View(directorio);
         }
-        public IActionResult Mensajes()
-        {
-            return View();
-        }
-        public IActionResult Notificaciones()
-        {
-            return View();
-        }
+
 
 
     }

@@ -5,9 +5,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FCC_Workflow.Modelos;
 
 namespace CSACVM.Modelos {
-    public class IdiomaCV {
+    public class IdiomaCV : DatosAuditoria {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdIdiomaCV { get; set; }
 

@@ -12,14 +12,17 @@ namespace CSACVM.Modelos {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdNotaUsuario { get; set; }
 
+        public int IdUsuario { get; set; }
         [Required]
         [ForeignKey("IdUsuario")]
         public Usuario Usuario { get; set; }
+        
+        [MaxLength(100)]
+        public string? Descripcion { get; set; }
 
         [Required]
-        [MaxLength(50)]
-        public string Descripcion { get; set; }
+        [MaxLength(20)]
+        public string Titulo { get; set; }
 
-        public DateTime FechaCreacion { get; set; }
     }
 }

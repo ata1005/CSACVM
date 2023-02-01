@@ -5,9 +5,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FCC_Workflow.Modelos;
 
 namespace CSACVM.Modelos {
-    public class EventosUsuario {
+    public class EventosUsuario : DatosAuditoria {
 
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdEventoUsuario { get; set; }
@@ -20,7 +21,5 @@ namespace CSACVM.Modelos {
         [Required]
         [MaxLength(50)]
         public string Descripcion { get; set; }
-
-        public DateTime FechaCreacion { get; set; }
     }
 }

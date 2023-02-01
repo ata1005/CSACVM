@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FCC_Workflow.Modelos;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CSACVM.Modelos {
-    public class Usuario {
+    public class Usuario : DatosAuditoria {
 
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdUsuario { get; set; }
