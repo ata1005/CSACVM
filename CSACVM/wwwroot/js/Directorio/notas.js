@@ -1,11 +1,11 @@
-﻿function inicializarTablaNotas(notas) {
-
+﻿
+function inicializarTablaNotas(notas) {
     $("#tablaNotas").DataTable({
         data: notas,
         orderCellsTop: true,
         paging: false,
         destroy: true,
-        order: [1, "asc"],
+        order: [2, "desc"],
         scrollX: true,
         columnDefs: [
             {
@@ -17,7 +17,7 @@
             },
             {
                 targets: 1,
-                title: "Descripción nota",
+                title: "Título de la nota",
                 data: "titulo",
                 width: "50%",
                 visible: true,
@@ -45,7 +45,7 @@
                 }
             },
             {
-                targets: 3,
+                targets: 4,
                 title: "Editar",
                 visible: true,
                 orderable: false,
@@ -57,7 +57,7 @@
                 }
             },
             {
-                targets: 3,
+                targets: 5,
                 title: "Eliminar",
                 visible: true,
                 orderable: false,
@@ -65,7 +65,7 @@
                 className: 'dt-body-center text-center',
                 width: "10%",
                 render: function (data, type, row) {
-                    return '<a href="javascript:editarSolicitud(\'' + row.idSolicitud + '\');"><i class="fa-solid fa-pen fa-xl c-grey"></i></a>';
+                    return '<a href="javascript:eliminarNota(\'' + row.idNotaUsuario + '\');"><i class="fa-solid fa-trash fa-xl c-grey"></i></a>';
                 }
             },
         ],
@@ -82,4 +82,33 @@
         sDom: '<l<t>p>'
     });
 
+}
+
+function editarNota(idNotaUsuario) {
+    $.ajax({
+        type: "POST",
+        url: "/Directorio/EditarNota",
+        data: {
+            'idNota': parseInt(idNotaUsuario)
+        },
+        async: true,
+        success: function (response) {
+
+        }
+    });
+
+}
+
+function eliminarNota(idNotaUsuario) {
+    $.ajax({
+        type: "POST",
+        url: "/Directorio/EliminarNota",
+        data: {
+            'idNota': parseInt(idNotaUsuario)
+        },
+        async: true,
+        success: function (response) {
+
+        }
+    });
 }
