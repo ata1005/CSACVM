@@ -30,6 +30,7 @@ namespace CSACVM.AccesoDatos.Data
         public DbSet<TipoNotificacion> TipoNotificacion { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<UsuarioCV> UsuarioCV { get; set; }
+        public DbSet<FotoUsuarioCV> FotoUsuarioCV { get; set; }
 
     }
 }

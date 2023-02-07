@@ -38,5 +38,14 @@ namespace CSACVM.AccesoDatos.Repositorio{
             _db.NotasUsuario.Remove(nota);
             _db.SaveChanges();
         }
+        public void EditarNota(NotasVM notavm,int idUsuario) {
+            NotasUsuario nota = _db.NotasUsuario.Where(n => n.IdNotaUsuario == notavm.IdNota).FirstOrDefault();
+            nota.Titulo = notavm.Nota.Titulo;
+            nota.Descripcion = notavm.Nota.Descripcion;
+            nota.FechaActualizacion = DateTime.Now;
+            nota.ProcesoActualizacion = MethodBase.GetCurrentMethod().Name;
+            _db.NotasUsuario.Update(nota);
+            _db.SaveChanges();
+        }
     }
 }

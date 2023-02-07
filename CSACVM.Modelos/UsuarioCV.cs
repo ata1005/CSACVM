@@ -21,8 +21,11 @@ namespace CSACVM.Modelos {
         public string? Profesion { get; set; }
         public string? Nacionalidad { get; set; }
         public string? Email { get; set; }
-        public byte[]? Foto { get; set; }
+        public int IdFotoUsuarioCV { get; set; }
+        [ForeignKey("IdFotoUsuarioCV")]
+        public FotoUsuarioCV FotoUsuarioCV { get; set; }
         public int Telefono { get; set; }
         public string? EnlaceContacto { get; set; }
+        public DateTime? FechaNacimiento { get; set; }
     }
 }

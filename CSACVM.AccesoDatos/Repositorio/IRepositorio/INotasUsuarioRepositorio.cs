@@ -6,6 +6,7 @@ namespace CSACVM.AccesoDatos.Repositorio.IRepositorio{
         void Update(NotasUsuario obj);
         public List<NotasUsuario> ObtenerNotasUsuario(int idUsuario);
         public void GuardarNuevaNota(NotasVM model, int idUsuario);
+        public void EditarNota(NotasVM notavm, int idUsuario);
         public void EliminarNota(int idNota);
     }
 }

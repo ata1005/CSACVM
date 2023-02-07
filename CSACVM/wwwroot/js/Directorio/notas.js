@@ -41,7 +41,7 @@ function inicializarTablaNotas(notas) {
                 className: 'dt-body-center text-center',
                 width: "10%",
                 render: function (data, type, row) {
-                    return '<a href="javascript:verNota(\'' + row.idNotaUsuario + '\');"><i class="fa-solid fa-magnifying-glass fa-xl c-grey"></i></a>';
+                    return '<a href="javascript:verNota(\''+ row.titulo + "," + row.descripcion + '\');"><i class="fa-solid fa-magnifying-glass fa-xl c-grey"></i></a>';
                 }
             },
             {
@@ -85,18 +85,7 @@ function inicializarTablaNotas(notas) {
 }
 
 function editarNota(idNotaUsuario) {
-    $.ajax({
-        type: "POST",
-        url: "/Directorio/EditarNota",
-        data: {
-            'idNota': parseInt(idNotaUsuario)
-        },
-        async: true,
-        success: function (response) {
-
-        }
-    });
-
+    window.location.href = "/Directorio/EditarNota/?idNota=" + idNotaUsuario;
 }
 
 function eliminarNota(idNotaUsuario) {
@@ -111,4 +100,31 @@ function eliminarNota(idNotaUsuario) {
 
         }
     });
+}
+
+function verNota(strNota) {
+    debugger;
+    var strArray = strNota.split(",");
+    var divsOrden = "#divsOrden";
+    modal = $('#modalVer')[0];
+    $(modal).modal('toggle');
+    modal.style.display = "block";
+    divs = ('<div class="row-12 ms-3">');
+    divs = divs + ('<div class="row-12">');
+    divs = divs + ('<span><strong>Título:</strong></span></div>');
+    divs = divs + ('<div class="row-12 mt-2 ms-1"><span>' + strArray[0] + '</span></div>');
+    divs = divs + ('</div>');
+    divs = divs + ('<div class="row-12 ms-3">');
+    divs = divs + ('<div class="row-12 mt-3">');
+    divs = divs + ('<span><strong>Descripcion:</strong></span></div>');
+    divs = divs + ('<div class="row-12 mt-2 ms-1"><textarea class="form-control w-75" rows="3" >' + strArray[1] + '</textarea></div>');
+    divs = divs + ('</div>');
+    $("#modalBody").children(divsOrden).append(divs);
+   
+}
+
+function cerrarModal(nombreModal) {
+    modalH = $("#" + nombreModal);
+    modalH.modal('hide');
+    $("#divsOrden").children().remove();
 }
