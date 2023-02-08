@@ -13,5 +13,6 @@ namespace CSACVM.Modelos {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdTipoExtraCV { get; set; }
         public string Descripcion { get; set; }
+
     }
 }

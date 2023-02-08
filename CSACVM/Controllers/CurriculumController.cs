@@ -18,11 +18,12 @@ namespace CSACVM.Controllers {
         }
 
         public IActionResult Curriculum(){
-            
-            return View();
+            int idUsuario = HttpContext.Session.GetInt32("ID").Value;
+            CurriculumVM curriculum = new() {
+                ListaCurriculums = _unitOfWork.Curriculum.ObtenerCurriculumsUsuario(idUsuario)
+            };
+            return View(curriculum);
         }
-
-        
 
     }
 }

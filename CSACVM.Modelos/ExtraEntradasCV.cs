@@ -16,5 +16,8 @@ namespace CSACVM.Modelos {
         [ForeignKey("IdExtraCV")]
         public ExtraCV ExtraCV { get; set; }
         public string Descripcion { get; set; }
+        public int? IdCurriculum { get; set; }
+        [ForeignKey("IdCurriculum")]
+        public Curriculum? Curriculum { get; set; }
     }
 }

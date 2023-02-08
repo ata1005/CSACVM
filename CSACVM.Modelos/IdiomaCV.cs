@@ -26,6 +26,9 @@ namespace CSACVM.Modelos {
         public string Descripcion { get; set; }
         public DateTime FechaDesde { get; set; }
         public DateTime FechaHasta { get; set; }
+        public int? IdCurriculum { get; set; }
+        [ForeignKey("IdCurriculum")]
+        public Curriculum? Curriculum { get; set; }
 
     }
 }

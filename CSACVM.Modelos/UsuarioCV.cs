@@ -27,5 +27,8 @@ namespace CSACVM.Modelos {
         public int Telefono { get; set; }
         public string? EnlaceContacto { get; set; }
         public DateTime? FechaNacimiento { get; set; }
+        public int? IdCurriculum { get; set; }
+        [ForeignKey("IdCurriculum")]
+        public Curriculum? Curriculum { get; set; }
     }
 }

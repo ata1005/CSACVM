@@ -19,5 +19,8 @@ namespace CSACVM.Modelos {
         public string? Ruta { get; set; }
         [MaxLength(32)]
         public string? Guid { get; set;}
+        public int? IdCurriculum { get; set; }
+        [ForeignKey("IdCurriculum")]
+        public Curriculum? Curriculum { get; set; }
     }
 }

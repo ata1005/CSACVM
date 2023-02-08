@@ -29,7 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Curriculum\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
