@@ -49,6 +49,7 @@
 </div>
 <script type="text/javascript" src="~/js/Directorio/notas.js" asp-append-version="true"></script>
 <script type="text/javascript" src="~/js/datatables.min.js" asp-append-version="true"></script>
+<script type="text/javascript" src="~/js/moment.js" asp-append-version="true"></script>
 <script>
     var notas = @Html.Raw(Json.Serialize(Model.ListaNotas));
     inicializarTablaNotas(notas);

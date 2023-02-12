@@ -5,5 +5,6 @@ namespace CSACVM.AccesoDatos.Repositorio.IRepositorio{
     public interface ICurriculumRepositorio : IRepositorio<Curriculum> {
         void Update(Curriculum obj);
         public List<Curriculum> ObtenerCurriculumsUsuario(int idUsuario);
+        public void GuardarNuevoCurriculum(string titulo, int idUsuario);
     }
 }

@@ -9,7 +9,7 @@ namespace CSACVM.Modelos.ViewModels {
     public class CurriculumVM {
         
         public List<Curriculum>? ListaCurriculums { get; set; }
-        
+        public string? Titulo { get; set; }
     }
 }
 

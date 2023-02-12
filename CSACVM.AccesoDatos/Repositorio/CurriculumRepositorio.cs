@@ -19,6 +19,17 @@ namespace CSACVM.AccesoDatos.Repositorio{
 
         public List<Curriculum> ObtenerCurriculumsUsuario(int idUsuario) => _db.Curriculum.Where(n => n.IdUsuario == idUsuario).ToList();
 
+        public void GuardarNuevoCurriculum(string titulo, int idUsuario) {
+            Curriculum curriculum = new Curriculum() {
+                Titulo = titulo,
+                FechaCreacion = DateTime.Now,
+                IdUsuario = idUsuario,
+                ProcesoCreacion = MethodBase.GetCurrentMethod().Name,
+                FechaCurriculum = DateTime.Now
+            };
+            _db.Curriculum.Add(curriculum);
+            _db.SaveChanges();
+        }
 
     }
 }

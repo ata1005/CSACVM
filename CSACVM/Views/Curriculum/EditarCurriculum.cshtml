@@ -1,0 +1,47 @@
+﻿@using CSACVM.Modelos.ViewModels
+@model CSACVM.Modelos.ViewModels.CurriculumModelVM
+<link rel="stylesheet" type="text/css" href="~/css/datatables.min.css" />
+<form>
+    <div class="row">
+        <div class="row ">
+            <label class="form-label fw-bold">Título Currículum</label>
+            <input class="form-control w-50" type="text" asp-for="@Model.Titulo" />
+        </div>
+        <hr class="mt-3"/>
+        <div class="row">
+            <div class="accordion" id="accordionCurriculum">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="accHeaderCV">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCV"
+                                aria-expanded="true" aria-controls="collapseCV">
+                            Información del Usuario
+                        </button>
+                    </h2>
+                    <div id="collapseCV" class="accordion-collapse" aria-labelledby="accHeaderCV" data-bs-parent="#accordionCurriculum">
+                        <div class="accordion-body">
+                            <div class="row">
+                                <div class="col-md-6 col-lg-3">
+                                    <input class="form-control" asp-for="@Model.UsuarioCV.Nombre" placeholder="Nombre" aria-required="true" />
+                                </div>
+                                <div class="col-md-6 col-lg-3">
+                                    <input class="form-control" asp-for="@Model.UsuarioCV.Apellido1" placeholder="Primer Apellido" aria-required="true" />
+                                </div>
+                                <div class="col-md-6 col-lg-3">
+                                    <input class="form-control" asp-for="@Model.UsuarioCV.Apellido2" placeholder="Segundo Apellido" aria-required="true" />
+                                </div>
+                                <div class="col-md-6 col-lg-3">
+                                    <input class="form-control" asp-for="@Model.UsuarioCV.Email" placeholder="Email" aria-required="true" type="email"/>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript" src="~/js/Curriculum/curriculum.js" asp-append-version="true"></script>
+<script type="text/javascript" src="~/js/datatables.min.js" asp-append-version="true"></script>

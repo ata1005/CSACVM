@@ -27,10 +27,14 @@ function inicializarTablaNotas(notas) {
                 targets: 2,
                 title: "Fecha creación",
                 data: "fechaCreacion",
+                type: 'datetime-moment',
                 width: "20%",
                 visible: true,
                 orderable: false,
-                searchable: false
+                searchable: false,
+                render: function (data, type, row) {
+                    return moment(new Date(data).toString()).format('D/M/YYYY HH:mm');
+                }
             },
             {
                 targets: 3,

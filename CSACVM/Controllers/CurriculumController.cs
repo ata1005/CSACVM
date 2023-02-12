@@ -25,5 +25,31 @@ namespace CSACVM.Controllers {
             return View(curriculum);
         }
 
+        public async Task<IActionResult> NuevoCurriculum(string titulo) {
+            using (var dbTGuardar = _unitOfWork.GetContext().Database.BeginTransaction()) {
+                try {
+                    _unitOfWork.Curriculum.GuardarNuevoCurriculum(titulo, HttpContext.Session.GetInt32("ID").Value);
+                    dbTGuardar.Commit();
+                } catch (Exception ex) {
+                    dbTGuardar.Rollback();
+                    throw;
+                }
+            }
+            return LocalRedirect("~/Curriculum");
+        }
+
+        public RedirectToActionResult RedirectCurriculum(int? idCurriculum) {
+            return RedirectToAction("EditarCurriculum", "Curriculum", new { idCurriculum });
+        }
+        public IActionResult EditarCurriculum(int idCurriculum) {
+            Curriculum curriculum = _unitOfWork.Curriculum.GetFirstOrDefault(c => c.IdCurriculum == idCurriculum);
+            CurriculumModelVM model = new CurriculumModelVM() {
+                IdCurriculum = idCurriculum,
+                Titulo = curriculum.Titulo
+            };
+            return View("../Curriculum/EditarCurriculum", model);
+        }
+
+
     }
 }
