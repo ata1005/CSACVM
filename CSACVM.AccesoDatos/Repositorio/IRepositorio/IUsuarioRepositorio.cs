@@ -10,5 +10,6 @@ namespace CSACVM.AccesoDatos.Repositorio.IRepositorio{
         public void GuardarCambiosPerfil(ProfileVM cambiosPerfil);
         public void CambiarPass(ProfileVM cambiosPerfil);
         public bool ComprobarPass(string PassActual, string nombre);
+        public void AddPhoto(Usuario user, string fullpath);
     }
 }

@@ -6,39 +6,98 @@
         <div class="row ">
             <label class="form-label fw-bold">Título Currículum</label>
             <input class="form-control w-50" type="text" asp-for="@Model.Titulo" />
+            <input class="form-control w-50" type="text" asp-for="@Model.IdCurriculum" hidden />
         </div>
         <hr class="mt-3"/>
         <div class="row">
             <div class="accordion" id="accordionCurriculum">
                 <div class="accordion-item">
-                    <h2 class="accordion-header" id="accHeaderCV">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCV"
-                                aria-expanded="true" aria-controls="collapseCV">
+                    <h2 class="accordion-header" id="accHeaderUsuario">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUsuario"
+                                aria-expanded="true" aria-controls="collapseUsuario">
                             Información del Usuario
                         </button>
                     </h2>
-                    <div id="collapseCV" class="accordion-collapse" aria-labelledby="accHeaderCV" data-bs-parent="#accordionCurriculum">
+                    <div id="collapseUsuario" class="accordion-collapse" aria-labelledby="accHeaderUsuario" data-bs-parent="#accordionCurriculum">
                         <div class="accordion-body">
                             <div class="row">
-                                <div class="col-md-6 col-lg-3">
-                                    <input class="form-control" asp-for="@Model.UsuarioCV.Nombre" placeholder="Nombre" aria-required="true" />
+                                <div class="col-3">
+                                    Photo
                                 </div>
-                                <div class="col-md-6 col-lg-3">
-                                    <input class="form-control" asp-for="@Model.UsuarioCV.Apellido1" placeholder="Primer Apellido" aria-required="true" />
-                                </div>
-                                <div class="col-md-6 col-lg-3">
-                                    <input class="form-control" asp-for="@Model.UsuarioCV.Apellido2" placeholder="Segundo Apellido" aria-required="true" />
-                                </div>
-                                <div class="col-md-6 col-lg-3">
-                                    <input class="form-control" asp-for="@Model.UsuarioCV.Email" placeholder="Email" aria-required="true" type="email"/>
+                                <div class="col-9">
+                                    <div class="row">
+                                        <h5>- Datos Personales -</h5>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4 pe-2">
+                                            <input class="form-control" asp-for="@Model.UsuarioCV.Nombre" placeholder="Nombre" aria-required="true" />
+                                        </div>
+                                        <div class="col-4 pe-2">
+                                            <input class="form-control" asp-for="@Model.UsuarioCV.Apellido1" placeholder="Primer Apellido" aria-required="true" />
+                                        </div>
+                                        <div class="col-4 pe-2">
+                                            <input class="form-control" asp-for="@Model.UsuarioCV.Apellido2" placeholder="Segundo Apellido" aria-required="true" />
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <h5>- Contacto -</h5>
+                                    </div>
+                                     <div class="row">
+                                        <div class="col-4 pe-2">
+                                            <input class="form-control" asp-for="@Model.UsuarioCV.Telefono" placeholder="Telefono" aria-required="true" />
+                                        </div>
+                                        <div class="col-4 pe-2">
+                                            <input class="form-control" asp-for="@Model.UsuarioCV.EnlaceContacto" placeholder="Enlace Contacto" aria-required="true" />
+                                        </div>
+                                        <div class="col-4 pe-2">
+                                            <input class="form-control" asp-for="@Model.UsuarioCV.Email" placeholder="Email" aria-required="true" type="email" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            
+                            <div class="row mt-2">
+                                <h5>- Otros datos -</h5>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 pe-2">
+                                    <input class="form-control" asp-for="@Model.UsuarioCV.Nacionalidad" placeholder="Nacionalidad" aria-required="true" />
+                                </div>
+                               
+                                <div class="col-4 pe-2">
+                                    <input class="form-control" asp-for="@Model.UsuarioCV.Profesion" placeholder="Profesion" aria-required="true" />
+                                </div>
+                                <div class="col-4 pe-2">
+                                    <input class="form-control" asp-for="@Model.UsuarioCV.FechaNacimiento" placeholder="Profesion" aria-required="true" type="date"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="accHeaderFormacion">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFormacion"
+                                aria-expanded="true" aria-controls="collapseFormacion">
+                            Formación Académica
+                        </button>
+                    </h2>
+                    <div id="collapseFormacion" class="accordion-collapse" aria-labelledby="accHeaderFormacion" data-bs-parent="#accordionCurriculum">
+                        <div class="accordion-body">
+                            <div class="row">
+                               
+                            </div>
+                            <div class="row">
+                                
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         
+        </div>
+        <div class="row d-flex justify-content-end mt-4">
+            <div class="col-lg-3 col-md-3 col-sm-4 text-end">
+                <button class="btn btn-success bg-verde font-size-l btn-w-solicitud" asp-action="GuardarCurriculum"><i class="fa-solid fa-floppy-disk me-2"></i>GUARDAR CAMBIOS</button>
+            </div>
         </div>
     </div>
 </form>

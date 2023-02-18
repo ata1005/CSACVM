@@ -115,5 +115,9 @@ namespace CSACVM.AccesoDatos.Repositorio{
             if (Hasher.GenerateHash(PassActual) != hashUser) return false;
             return true;
         }
+
+        public void AddPhoto(Usuario user, string fullpath) {
+            user.Foto= fullpath;
+        }
     }
 }

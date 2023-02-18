@@ -1,0 +1,23 @@
+input[type="file"]{
+    display:none;
+}
+
+.tamImagen{
+    height: 150px;
+    width: 150px;
+}
+
+.divFoto{
+    min-height:180px;
+    min-width:180px;
+    border: 2px dashed rgba(85,139,47,0.68);
+    background: white;
+}
+    .divFoto .foto-message{
+        text-align:center;
+    }
+
+.divFotoNoBorder {
+    min-height: 150px;
+    background: white;
+}

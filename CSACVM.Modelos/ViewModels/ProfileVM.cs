@@ -16,7 +16,7 @@ namespace CSACVM.Modelos.ViewModels {
         [Required, Compare("Password")]
         public string ConfirmPassword { get; set; }
         public string? Biografia { get; set; }
-        public byte[]? ProfilePhoto { get; set; }
+        public string? ProfilePhoto { get; set; }
         public string NombreUser { get; set; }
         public string Dpto { get; set; }
     }

@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using CSACVM.AccesoDatos.Repositorio;
 using Microsoft.AspNetCore.Http;
 using static System.Net.WebRequestMethods;
+using CSACVM.Modelos;
 
 namespace CSACVM.Controllers {
     public class LoginController : Controller {
@@ -49,18 +50,52 @@ namespace CSACVM.Controllers {
         public IActionResult Profile() {
             string username = HttpContext.Session.GetString("NOMBRE");
             string dpto = _unitOfWork.Departamento.GetFirstOrDefault(d => d.IdDepartamento == HttpContext.Session.GetInt32("DPTO")).Descripcion;
-            string bio = _unitOfWork.Usuario.GetFirstOrDefault(u => u.NombreUser == username).Biografia ?? "";
+            Usuario user = _unitOfWork.Usuario.GetFirstOrDefault(u => u.NombreUser == username);
             ProfileVM model = new ProfileVM {
                 NombreUser = username,
                 Dpto = dpto,
-                Biografia = bio
+                Biografia = user.Biografia != null ? user.Biografia : "",
+                ProfilePhoto = user.Foto != null ? user.Foto : ""
             };
             return View(model);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Profile(ProfileVM model) {
+        public IFormFile ImageFile { get; set; }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> GuardarPerfil(ProfileVM model) {
+            int idUser = Convert.ToInt32(HttpContext.Session.GetInt32("ID"));
+            Usuario user = _unitOfWork.Usuario.GetFirstOrDefault(u => u.IdUsuario == idUser);
+            string folder = "wwwroot/ImagenPerfil";
+            string filename = "";
+            string ext = "";
+            string fullpath = "";
+            string pathDirectorio = "";
+            ImageFile = HttpContext.Request.Form.Files["fotoPerfil"];
+            
+            if (ImageFile != null) {
+                ext = ImageFile.FileName.Split('.')[1];
+                filename = "profilePhoto_" + idUser + "." + ext;
+                fullpath = Path.Combine(folder, filename);
+                pathDirectorio = folder + "/" + filename;
+                if (!Directory.Exists(folder)) {
+                    Directory.CreateDirectory(folder);
+                }
+
+                if (user.Foto != null) {
+                    System.IO.File.Delete(fullpath);
+                } 
+
+                using (FileStream fileStream = System.IO.File.Create(fullpath)) {
+                    await ImageFile.CopyToAsync(fileStream);
+                   
+                }
+
+                _unitOfWork.Usuario.AddPhoto(user, pathDirectorio);
+                
+            }
+         
             if (model.PassActual != null) {
                 if (model.Password != null) {
                     if (model.ConfirmPassword != null) {

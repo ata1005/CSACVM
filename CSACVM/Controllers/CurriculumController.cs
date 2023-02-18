@@ -50,6 +50,11 @@ namespace CSACVM.Controllers {
             return View("../Curriculum/EditarCurriculum", model);
         }
 
+        public IActionResult GuardarCurriculum(CurriculumModelVM model) {
+
+            return LocalRedirect("~/Curriculum");
+        }
+
 
     }
 }
