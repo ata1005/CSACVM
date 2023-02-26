@@ -3,5 +3,6 @@
 namespace CSACVM.AccesoDatos.Repositorio.IRepositorio{
     public interface IFormacionCVRepositorio : IRepositorio<FormacionCV> {
         void Update(FormacionCV obj);
+        public List<FormacionCV> ObtenerListaFormacion(int idCurriculum);
     }
 }

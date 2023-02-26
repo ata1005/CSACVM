@@ -43,14 +43,20 @@ namespace CSACVM.Controllers {
         }
         public IActionResult EditarCurriculum(int idCurriculum) {
             Curriculum curriculum = _unitOfWork.Curriculum.GetFirstOrDefault(c => c.IdCurriculum == idCurriculum);
+            FotoUsuarioCV rutaFoto = _unitOfWork.FotoUsuarioCV.GetFirstOrDefault(f => f.IdCurriculum == idCurriculum);
+
             CurriculumModelVM model = new CurriculumModelVM() {
                 IdCurriculum = idCurriculum,
-                Titulo = curriculum.Titulo
+                Titulo = curriculum.Titulo,
+                Foto = rutaFoto != null ? rutaFoto.Ruta : "",
+                ListaFormacionCV = _unitOfWork.FormacionCV.ObtenerListaFormacion(idCurriculum)
             };
             return View("../Curriculum/EditarCurriculum", model);
         }
 
-        public IActionResult GuardarCurriculum(CurriculumModelVM model) {
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> GuardarCurriculum(CurriculumModelVM model) {
 
             return LocalRedirect("~/Curriculum");
         }

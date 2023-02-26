@@ -29,6 +29,7 @@ namespace CSACVM.AccesoDatos.Repositorio
             TipoExtraCV = new TipoExtraCVRepositorio(_db);
             TipoNotificacion = new TipoNotificacionRepositorio(_db);
             Curriculum = new CurriculumRepositorio(_db);
+            FotoUsuarioCV = new FotoUsuarioCVRepositorio(_db);
         }
         public IUsuarioRepositorio Usuario { get; private set; }
         public IUsuarioCVRepositorio UsuarioCV { get; private set; }
@@ -51,6 +52,7 @@ namespace CSACVM.AccesoDatos.Repositorio
         public ITipoExtraCVRepositorio TipoExtraCV { get; private set; }
         public ITipoNotificacionRepositorio TipoNotificacion { get; private set; }
         public ICurriculumRepositorio Curriculum { get; private set; }
+        public IFotoUsuarioCVRepositorio FotoUsuarioCV { get; private set; }
         public Microsoft.EntityFrameworkCore.DbContext GetContext(){
             return this._db;
         }

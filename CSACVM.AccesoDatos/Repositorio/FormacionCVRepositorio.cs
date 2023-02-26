@@ -15,5 +15,7 @@ namespace CSACVM.AccesoDatos.Repositorio{
         {
             _db.FormacionCV.Update(obj);
         }
+
+        public List<FormacionCV> ObtenerListaFormacion(int idCurriculum) => _db.FormacionCV.Where(f => f.IdCurriculum== idCurriculum).ToList();
     }
 }
