@@ -4,6 +4,7 @@ using CSACVM.AccesoDatos.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CSACVM.AccesoDatos.Migrations
 {
     [DbContext(typeof(CSACVMContext))]
-    partial class CSACVMContextModelSnapshot : ModelSnapshot
+    [Migration("20230228171410_CambiarForeignKeyCurriculumExtraCV")]
+    partial class CambiarForeignKeyCurriculumExtraCV
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -441,20 +443,23 @@ namespace CSACVM.AccesoDatos.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdFotoUsuarioCV"), 1L, 1);
 
-                    b.Property<string>("Ext")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime?>("FechaActualizacion")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("FechaCreacion")
                         .HasColumnType("datetime2");
 
+                    b.Property<byte[]>("Foto")
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<string>("Guid")
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
 
                     b.Property<int?>("IdCurriculum")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdUsuario")
                         .HasColumnType("int");
 
                     b.Property<int>("IdUsuarioCV")
@@ -481,7 +486,7 @@ namespace CSACVM.AccesoDatos.Migrations
 
                     b.HasIndex("IdCurriculum");
 
-                    b.HasIndex("IdUsuarioCV");
+                    b.HasIndex("IdUsuario");
 
                     b.ToTable("FotoUsuarioCV");
                 });
@@ -1240,7 +1245,7 @@ namespace CSACVM.AccesoDatos.Migrations
 
                     b.HasOne("CSACVM.Modelos.UsuarioCV", "UsuarioCV")
                         .WithMany()
-                        .HasForeignKey("IdUsuarioCV")
+                        .HasForeignKey("IdUsuario")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

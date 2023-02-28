@@ -12,6 +12,7 @@ namespace CSACVM.Modelos {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdUsuarioCV { get; set; }
 
+        public int IdUsuario { get; set; }
         [ForeignKey("IdUsuario")]
         [Required]
         public Usuario Usuario { get; set; }
@@ -23,7 +24,7 @@ namespace CSACVM.Modelos {
         public string? Email { get; set; }
         public int? IdFotoUsuarioCV { get; set; }
         [ForeignKey("IdFotoUsuarioCV")]
-        public FotoUsuarioCV FotoUsuarioCV { get; set; }
+        public FotoUsuarioCV? FotoUsuarioCV { get; set; }
         public int? Telefono { get; set; }
         public string? EnlaceContacto { get; set; }
         public DateTime? FechaNacimiento { get; set; }

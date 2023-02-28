@@ -12,9 +12,11 @@ namespace CSACVM.Modelos {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdIdiomaCV { get; set; }
 
+        public int IdIdioma { get; set; }
         [ForeignKey("IdIdioma")]
         public Idioma Idioma { get; set; }
 
+        public int IdUsuario { get; set; }
         [ForeignKey("IdUsuario")]
         public Usuario Usuario { get; set; }
 

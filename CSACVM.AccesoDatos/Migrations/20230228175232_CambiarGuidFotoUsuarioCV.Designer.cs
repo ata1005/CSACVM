@@ -4,6 +4,7 @@ using CSACVM.AccesoDatos.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CSACVM.AccesoDatos.Migrations
 {
     [DbContext(typeof(CSACVMContext))]
-    partial class CSACVMContextModelSnapshot : ModelSnapshot
+    [Migration("20230228175232_CambiarGuidFotoUsuarioCV")]
+    partial class CambiarGuidFotoUsuarioCV
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -457,6 +459,9 @@ namespace CSACVM.AccesoDatos.Migrations
                     b.Property<int?>("IdCurriculum")
                         .HasColumnType("int");
 
+                    b.Property<int>("IdUsuario")
+                        .HasColumnType("int");
+
                     b.Property<int>("IdUsuarioCV")
                         .HasColumnType("int");
 
@@ -481,7 +486,7 @@ namespace CSACVM.AccesoDatos.Migrations
 
                     b.HasIndex("IdCurriculum");
 
-                    b.HasIndex("IdUsuarioCV");
+                    b.HasIndex("IdUsuario");
 
                     b.ToTable("FotoUsuarioCV");
                 });
@@ -1240,7 +1245,7 @@ namespace CSACVM.AccesoDatos.Migrations
 
                     b.HasOne("CSACVM.Modelos.UsuarioCV", "UsuarioCV")
                         .WithMany()
-                        .HasForeignKey("IdUsuarioCV")
+                        .HasForeignKey("IdUsuario")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -13,11 +13,11 @@ namespace CSACVM.Modelos {
         public int IdFotoUsuarioCV { get; set; }
         public int IdUsuarioCV { get; set; }
 
-        [ForeignKey("IdUsuario")]
-        public Usuario Usuario { get; set; }
-        public byte[]? Foto { get; set; }
+        [ForeignKey("IdUsuarioCV")]
+        public UsuarioCV UsuarioCV { get; set; }
         public string? Ruta { get; set; }
-        [MaxLength(32)]
+        public string? Ext { get; set; }
+        [MaxLength(36)]
         public string? Guid { get; set;}
         public int? IdCurriculum { get; set; }
         [ForeignKey("IdCurriculum")]
