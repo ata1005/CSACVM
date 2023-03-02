@@ -84,43 +84,65 @@ namespace CSACVM.Controllers {
                     ImageFile = HttpContext.Request.Form.Files["fotoCurriculum"];
                     FotoUsuarioCV fotoUsuarioCV = _unitOfWork.FotoUsuarioCV.GetFirstOrDefault(f => f.IdCurriculum == model.IdCurriculum);
 
-                    if (ImageFile != null) {
-                        ext = ImageFile.FileName.Split('.')[1];
-                        filename = "profilePhoto_" + idUsuario + "_" + model.IdCurriculum + "." + ext;
-                        fullpath = Path.Combine(folder, filename);
-                        pathDirectorio = folder + "/" + filename;
-                        guid = Guid.NewGuid().ToString();
-                        if (!Directory.Exists(folder)) {
-                            Directory.CreateDirectory(folder);
-                        }
+                    //if (ImageFile != null) {
+                    //    ext = ImageFile.FileName.Split('.')[1];
+                    //    filename = "profilePhoto_" + idUsuario + "_" + model.IdCurriculum + "." + ext;
+                    //    fullpath = Path.Combine(folder, filename);
+                    //    pathDirectorio = folder + "/" + filename;
+                    //    guid = Guid.NewGuid().ToString();
+                    //    if (!Directory.Exists(folder)) {
+                    //        Directory.CreateDirectory(folder);
+                    //    }
 
-                        if (fotoUsuarioCV != null) {
-                            System.IO.File.Delete(fotoUsuarioCV.Ruta);
-                        }
-                        
-                        using (FileStream fileStream = System.IO.File.Create(fullpath)) {
-                            await ImageFile.CopyToAsync(fileStream);
+                    //    if (fotoUsuarioCV != null) {
+                    //        System.IO.File.Delete(fotoUsuarioCV.Ruta);
+                    //    }
 
-                        }
-                        if (fotoUsuarioCV != null) {
-                            _unitOfWork.FotoUsuarioCV.ChangePhoto(fotoUsuarioCV, pathDirectorio, guid, ext, idUsuario);
-                        } else {
-                            _unitOfWork.FotoUsuarioCV.AddPhoto(pathDirectorio, guid, ext, idUsuario, model.IdCurriculum);
-                        }
+                    //    using (FileStream fileStream = System.IO.File.Create(fullpath)) {
+                    //        await ImageFile.CopyToAsync(fileStream);
 
-                    }
+                    //    }
+                    //    if (fotoUsuarioCV != null) {
+                    //        _unitOfWork.FotoUsuarioCV.ChangePhoto(fotoUsuarioCV, pathDirectorio, guid, ext, idUsuario);
+                    //    } else {
+                    //        _unitOfWork.FotoUsuarioCV.AddPhoto(pathDirectorio, guid, ext, idUsuario, model.IdCurriculum);
+                    //    }
 
-                    //Zona de guardado de UsuarioCV.
+                    //}
 
-                    UsuarioCV usuarioCV = _unitOfWork.UsuarioCV.GetFirstOrDefault(a => a.IdCurriculum == model.IdCurriculum);   
-                    _unitOfWork.UsuarioCV.GuardarUsuarioCV(usuarioCV,model,idUsuario,fotoUsuarioCV);
-                     
+                    ////Zona de guardado de UsuarioCV.
+
+                    //UsuarioCV usuarioCV = _unitOfWork.UsuarioCV.GetFirstOrDefault(a => a.IdCurriculum == model.IdCurriculum);   
+                    //_unitOfWork.UsuarioCV.GuardarUsuarioCV(usuarioCV,model,idUsuario,fotoUsuarioCV);
+
 
                     #endregion
 
                     #region FormacionCV.
+                    List<FormacionCV> lstFormacionCV = _unitOfWork.FormacionCV.ObtenerListaFormacion(model.IdCurriculum);
+                    List<string> lstGradoFormacion = new List<string>(); //Request.Form["gradoFormacion"].ToList();
+                    List<string> lstObservacionesFormacion = new List<string>();//Request.Form["observacionesFormacion"].ToList();                  
+                    List<string> lstUbicacionFormacion = new List<string>();//Request.Form["ubicacionFormacion"].ToList();
+                    List<string> lstDateDesdeFormacion = new List<string>(); //Request.Form["fechaDesdeFormacion"].ToList();
+                    List<string> lstDateHastaFormacion = new List<string>(); //Request.Form["fechaHastaFormacion"].ToList();
 
-
+                    foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("gradoFormacion_"))) {
+                        lstGradoFormacion.Add(Request.Form[element]);
+                    }
+                    foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("ubicacionFormacion_"))) {
+                        lstUbicacionFormacion.Add(Request.Form[element]);
+                    }
+                    foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("observacionesFormacion_"))) {
+                        lstObservacionesFormacion.Add(Request.Form[element]);
+                    }
+                    foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("fechaDesdeFormacion_"))) {
+                        lstDateDesdeFormacion.Add(Request.Form[element]);
+                    }
+                    foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("fechaHastaFormacion_"))) {
+                        lstDateHastaFormacion.Add(Request.Form[element]);
+                    }
+                 
+                    _unitOfWork.FormacionCV.GuardarFormacion(lstFormacionCV, lstGradoFormacion,lstUbicacionFormacion, lstObservacionesFormacion, lstDateDesdeFormacion, lstDateHastaFormacion, model.IdCurriculum, idUsuario);
                     #endregion
 
                     #region IdiomaCV.

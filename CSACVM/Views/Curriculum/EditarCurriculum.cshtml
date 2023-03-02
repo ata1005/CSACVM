@@ -111,31 +111,35 @@
                                         <div class="row">
                                             <div class="col-4 pe-2">
                                                 <label class="form-label fw-bold">Grado/Estudios:</label>
-                                                <input class="form-control" placeholder="Grado" aria-required="true" name="gradoFormacion_@contadorInputs"/>
+                                                <input class="form-control" placeholder="Grado" aria-required="true" name="gradoFormacion_@contadorInputs" id="gradoFormacion_@contadorInputs" />
+                                            </div>
+                                            <div class="col-4 pe-2">
+                                                <label class="form-label fw-bold">Ubicación:</label>
+                                                <input class="form-control" placeholder="Ubicación" aria-required="true" name="ubicacionFormacion_@contadorInputs" id="ubicacionFormacion_@contadorInputs" />
                                             </div>
                                             <div class="col-4 pe-2">
                                                 <label class="form-label fw-bold">Observaciones:</label>
-                                                <input class="form-control" placeholder="Observaciones" aria-required="true" name="observacionesFormacion_@contadorInputs" />
+                                                <input class="form-control" placeholder="Observaciones" aria-required="true" name="observacionesFormacion_@contadorInputs" id="observacionesFormacion_@contadorInputs" />
                                             </div>
                                         </div>
                                         <div class="row mt-3">
                                             <div class="col-4 pe-2">
                                                 <label class="form-label fw-bold">Fecha Desde:</label>
-                                                <input class="form-control" placeholder="Desde" aria-required="true" type="month" name="fechaDesdeFormacion_@contadorInputs"/>
+                                                <input class="form-control" placeholder="Desde" aria-required="true" type="month" name="fechaDesdeFormacion_@contadorInputs" id="fechaDesdeFormacion_@contadorInputs" />
                                             </div>
                                             <div class="col-4 pe-2">
                                                 <label class="form-label fw-bold">Fecha Hasta:</label>
-                                                <input class="form-control" placeholder="Hasta" aria-required="true" type="month" name="fechaHastaFormacion_@contadorInputs"/>
+                                                <input class="form-control" placeholder="Hasta" aria-required="true" type="month" name="fechaHastaFormacion_@contadorInputs" id="fechaHastaFormacion_@contadorInputs" />
                                             </div>
                                         </div>
-                                        <div class="row mt-3">
-                                            
+                                        <div class="row mt-3"> 
                                             <div class="col-4">
-                                                <button class="btn btn-primary mx-2 btnRojo" onclick="removeFormacion(@contadorInputs)" name="btnSubFormacion" id="btnSubFormacion" ><i class="fas fa-minus me-3">Quitar Formación</i></button>
+                                                <button class="btn btn-primary btnRemove" onclick="removeFormacion(@contadorInputs)" name="btnSubFormacion" id="btnSubFormacion"><i class="fas fa-minus me-3">Quitar Formación</i></button>
                                             </div>
                                         </div>
                                         
                                     </div>
+                                    <hr id="hrFormacion_@contadorInputs">
                                     contadorInputs++;
                                 }
                             } else {
@@ -143,32 +147,40 @@
                                     <div class="row">
                                         <div class="col-4 pe-2">
                                             <label class="form-label fw-bold">Grado/Estudios:</label>
-                                            <input class="form-control" placeholder="Grado" aria-required="true" />
+                                            <input class="form-control" placeholder="Grado" aria-required="true" name="gradoFormacion_1" id="gradoFormacion_1" />
+                                        </div>
+                                        <div class="col-4 pe-2">
+                                            <label class="form-label fw-bold">Ubicación:</label>
+                                            <input class="form-control" placeholder="Ubicación" aria-required="true" name="ubicacionFormacion_1" id="ubicacionFormacion_1"/>
                                         </div>
                                         <div class="col-4 pe-2">
                                             <label class="form-label fw-bold">Observaciones:</label>
-                                            <input class="form-control" placeholder="Observaciones" aria-required="true" />
+                                            <input class="form-control" placeholder="Observaciones" aria-required="true" name="observacionesFormacion_1" id="observacionesFormacion_1" />
                                         </div>
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-4 pe-2">
                                             <label class="form-label fw-bold">Fecha Desde:</label>
-                                            <input class="form-control" placeholder="Desde" aria-required="true" type="month" />
+                                            <input class="form-control" placeholder="Desde" aria-required="true" type="month" name="fechaDesdeFormacion_1" id="fechaDesdeFormacion_1" />
                                         </div>
                                         <div class="col-4 pe-2">
                                             <label class="form-label fw-bold">Fecha Hasta:</label>
-                                            <input class="form-control" placeholder="Hasta" aria-required="true" type="month" />
+                                            <input class="form-control" placeholder="Hasta" aria-required="true" type="month" name="fechaHastaFormacion_1" id="fechaHastaFormacion_1"/>
                                         </div>
                                     </div>
-                                    
-                                </div>
-                                <hr>
-                                <div class="row mt-3">
-                                    <div class="col-4">
-                                        <a class="btn btn-primary w-50" href="javascript:addFormacion();" id="btnAddFormacion"><i class="fa-solid fa-plus me-3"></i>Añadir Formación</a>
+                                    <div class="row mt-3">
+                                        <div class="col-4">
+                                            <button class="btn btn-primary btnRemove" onclick="javascript:void(0);" name="btnSubFormacion" disabled><i class="fas fa-minus me-3"></i>Quitar Formación</button>
+                                        </div>
                                     </div>
                                 </div>
+                                <hr id="hrFormacion_1">   
                             }
+                            <div class="row mt-3">
+                                <div class="col-4">
+                                    <a class="btn btn-primary w-50" href="javascript:addFormacion();" id="btnAddFormacion"><i class="fa-solid fa-plus me-3"></i>Añadir Formación</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
