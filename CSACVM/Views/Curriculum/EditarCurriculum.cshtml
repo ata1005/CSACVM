@@ -111,30 +111,30 @@
                                         <div class="row">
                                             <div class="col-4 pe-2">
                                                 <label class="form-label fw-bold">Grado/Estudios:</label>
-                                                <input class="form-control" placeholder="Grado" aria-required="true" name="gradoFormacion_@contadorInputs" id="gradoFormacion_@contadorInputs" />
+                                                <input class="form-control" placeholder="Grado" aria-required="true" name="gradoFormacion_@contadorInputs" id="gradoFormacion_@contadorInputs" value="@formacion.Grado"/>
                                             </div>
                                             <div class="col-4 pe-2">
                                                 <label class="form-label fw-bold">Ubicación:</label>
-                                                <input class="form-control" placeholder="Ubicación" aria-required="true" name="ubicacionFormacion_@contadorInputs" id="ubicacionFormacion_@contadorInputs" />
+                                                <input class="form-control" placeholder="Ubicación" aria-required="true" name="ubicacionFormacion_@contadorInputs" id="ubicacionFormacion_@contadorInputs" value="@formacion.Ubicacion"/>
                                             </div>
                                             <div class="col-4 pe-2">
                                                 <label class="form-label fw-bold">Observaciones:</label>
-                                                <input class="form-control" placeholder="Observaciones" aria-required="true" name="observacionesFormacion_@contadorInputs" id="observacionesFormacion_@contadorInputs" />
+                                                <input class="form-control" placeholder="Observaciones" aria-required="true" name="observacionesFormacion_@contadorInputs" id="observacionesFormacion_@contadorInputs" value="@formacion.Descripcion" />
                                             </div>
                                         </div>
                                         <div class="row mt-3">
                                             <div class="col-4 pe-2">
                                                 <label class="form-label fw-bold">Fecha Desde:</label>
-                                                <input class="form-control" placeholder="Desde" aria-required="true" type="month" name="fechaDesdeFormacion_@contadorInputs" id="fechaDesdeFormacion_@contadorInputs" />
+                                                <input class="form-control" placeholder="Desde" aria-required="true" type="month" name="fechaDesdeFormacion_@contadorInputs" id="fechaDesdeFormacion_@contadorInputs" asp-for="@formacion.FechaDesde"/>
                                             </div>
                                             <div class="col-4 pe-2">
                                                 <label class="form-label fw-bold">Fecha Hasta:</label>
-                                                <input class="form-control" placeholder="Hasta" aria-required="true" type="month" name="fechaHastaFormacion_@contadorInputs" id="fechaHastaFormacion_@contadorInputs" />
+                                                <input class="form-control" placeholder="Hasta" aria-required="true" type="month" name="fechaHastaFormacion_@contadorInputs" id="fechaHastaFormacion_@contadorInputs" asp-for="@formacion.FechaHasta" />
                                             </div>
                                         </div>
                                         <div class="row mt-3"> 
                                             <div class="col-4">
-                                                <button class="btn btn-primary btnRemove" onclick="removeFormacion(@contadorInputs)" name="btnSubFormacion" id="btnSubFormacion"><i class="fas fa-minus me-3">Quitar Formación</i></button>
+                                                <button class="btn btn-primary btnRemove" onclick="removeFormacion(@contadorInputs)" name="btnSubFormacion" id="btnSubFormacion"><i class="fas fa-minus me-3"></i>Quitar Formación</button>
                                             </div>
                                         </div>
                                         

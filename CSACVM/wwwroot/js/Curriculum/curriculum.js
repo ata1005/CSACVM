@@ -190,29 +190,25 @@ function CargarFotos() {
 var contadorFormacion = 1;
 var contadorMax = $(".formacionContainerClass").length;
 
-function addFormacion(contInputs = 1) {
-    var filaAux = "";
+function addFormacion() {
     var strNuevaFila = "";
     $("#btnAddFormacion").remove();
     debugger;
     contadorFormacion = document.getElementsByClassName("formacionContainerClass").length;
     contadorFormacion = $(".formacionContainerClass").length;
+    contadorMax++;
     if (contadorFormacion == 1) {
         $(".btnRemove").removeAttr("disabled");
         $(".btnRemove").attr("onclick", "javascript: removeFormacion(1);");
     }
-    contadorFormacion = contadorFormacion + 1;
-    if (contadorFormacion < contadorMax) {
-        contadorFormacion = contadorMax;
-    } else {
-        contadorMax = contadorFormacion;
-    }
+    contadorFormacion = contadorMax;
+    
     
     strNuevaFila = '<div class="container formacionContainerClass" id="formacionContainer_' + contadorFormacion +'"><div class="row">'
     strNuevaFila = strNuevaFila + '<div class="col-4 pe-2"><label class="form-label fw-bold">Grado/Estudios:</label>';
     strNuevaFila = strNuevaFila + '<input class="form-control" placeholder="Grado" aria-required="true" name="gradoFormacion_' + contadorFormacion + '" id="gradoFormacion_' + contadorFormacion + '"/></div>';
     strNuevaFila = strNuevaFila + '<div class="col-4 pe-2"><label class="form-label fw-bold">Ubicación:</label>';
-    strNuevaFila = strNuevaFila + '<input class="form-control" placeholder="Ubicación" aria-required="true" name="ubicacionFormacion_' + contadorFormacion + '" id="ubicacionFormacion_' + contadorFormacion + '" /></div></div>';
+    strNuevaFila = strNuevaFila + '<input class="form-control" placeholder="Ubicación" aria-required="true" name="ubicacionFormacion_' + contadorFormacion + '" id="ubicacionFormacion_' + contadorFormacion + '" /></div>';
     strNuevaFila = strNuevaFila + '<div class="col-4 pe-2"><label class="form-label fw-bold">Observaciones:</label>';
     strNuevaFila = strNuevaFila + '<input class="form-control" placeholder="Observaciones" aria-required="true" name="observacionesFormacion_' + contadorFormacion + '" id="observacionesFormacion_' + contadorFormacion + '" /></div></div>';
     strNuevaFila = strNuevaFila + '<div class="row mt-3"><div class="col-4 pe-2"><label class="form-label fw-bold">Fecha Desde:</label>';
@@ -236,6 +232,7 @@ function removeFormacion(contInputs) {
     var numInputs = $(".formacionContainerClass").length;
     $(idContainer).remove();
     $(hrContainer).remove();
+
     if (numInputs == 2) {
         $(".btnRemove").attr("disabled",true);
         $(".btnRemove").attr("onclick", "javascript: void(0);");

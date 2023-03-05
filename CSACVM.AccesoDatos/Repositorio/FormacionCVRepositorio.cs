@@ -58,6 +58,7 @@ namespace CSACVM.AccesoDatos.Repositorio{
                     FormacionCV formacion = new FormacionCV() {
                         IdCurriculum = idCurriculum,
                         Grado = grado,
+                        IdUsuario = idUser,
                         Descripcion = lstObservacionesFormacion[contador],
                         FechaDesde = Convert.ToDateTime(lstDateDesdeFormacion[contador]),
                         FechaHasta = Convert.ToDateTime(lstDateHastaFormacion[contador]),
