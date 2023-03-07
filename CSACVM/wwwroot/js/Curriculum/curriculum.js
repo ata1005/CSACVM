@@ -186,22 +186,24 @@ function CargarFotos() {
 
 
 
-// INPUTS FORMACION
+//Campos generales para lo inputs.
 var contadorFormacion = 1;
-var contadorMax = $(".formacionContainerClass").length;
+var contadorIdioma = 1;
+var contadorMaxFormacion = $(".formacionContainerClass").length;
+var contadorMaxIdioma = $(".idiomaContainerClass").length;
 
+//Funciones para añadir inputs de Formación, Idioma y Entrada.
 function addFormacion() {
     var strNuevaFila = "";
     $("#btnAddFormacion").remove();
-    debugger;
     contadorFormacion = document.getElementsByClassName("formacionContainerClass").length;
     contadorFormacion = $(".formacionContainerClass").length;
-    contadorMax++;
+    contadorMaxFormacion++;
     if (contadorFormacion == 1) {
-        $(".btnRemove").removeAttr("disabled");
-        $(".btnRemove").attr("onclick", "javascript: removeFormacion(1);");
+        $(".btnRemoveFormacion").removeAttr("disabled");
+        $(".btnRemoveFormacion").attr("onclick", "javascript: removeFormacion(1);");
     }
-    contadorFormacion = contadorMax;
+    contadorFormacion = contadorMaxFormacion;
     
     
     strNuevaFila = '<div class="container formacionContainerClass" id="formacionContainer_' + contadorFormacion +'"><div class="row">'
@@ -215,9 +217,8 @@ function addFormacion() {
     strNuevaFila = strNuevaFila + '<input class="form-control" placeholder="Desde" aria-required="true" type="month" name="fechaDesdeFormacion_' + contadorFormacion + '" id="fechaDesdeFormacion_' + contadorFormacion + '"/></div>';
     strNuevaFila = strNuevaFila + '<div class="col-4 pe-2"><label class="form-label fw-bold">Fecha Hasta:</label>';
     strNuevaFila = strNuevaFila + '<input class="form-control" placeholder="Hasta" aria-required="true" type="month" name="fechaHastaFormacion_' + contadorFormacion + '" id="fechaHastaFormacion_' + contadorFormacion + '"/></div></div>';
-
     strNuevaFila = strNuevaFila + '<div class="row mt-3"><div class="col-4">';
-    strNuevaFila = strNuevaFila + '<button class="btn btn-primary btnRemove" onclick="removeFormacion(' + contadorFormacion + ')">';
+    strNuevaFila = strNuevaFila + '<button class="btn btn-primary btnRemoveFormacion" onclick="removeFormacion(' + contadorFormacion + ')">';
     strNuevaFila = strNuevaFila + '<i class="fas fa-minus me-3"></i>Quitar Formación</button></div></div></div><hr id="hrFormacion_' + contadorFormacion + '">';
     strNuevaFila = strNuevaFila + '<div class="row mt-3"><div class="col-4"><a class="btn btn-primary w-50" href="javascript:addFormacion();" id="btnAddFormacion">';
     strNuevaFila = strNuevaFila + '<i class="fa-solid fa-plus me-3"></i>Añadir Formación</a></div></div>';
@@ -225,8 +226,40 @@ function addFormacion() {
     $("#bodyFormacion").append(strNuevaFila);
 }
 
+function addIdioma() {
+    var strNuevaFila = "";
+    $("#btnAddIdioma").remove();
+    contadorIdioma = document.getElementsByClassName("idiomaContainerClass").length;
+    contadorIdioma = $(".idiomaContainerClass").length;
+    contadorMaxIdioma++;
+    if (contadorIdioma == 1) {
+        $(".btnRemoveIdioma").removeAttr("disabled");
+        $(".btnRemoveIdioma").attr("onclick", "javascript: removeIdioma(1);");
+    }
+    contadorIdioma = contadorMaxIdioma;
+    strNuevaFila = '<div class="container idiomaContainerClass" id="idiomaContainer_' + contadorIdioma + '"><div class="row">'
+    strNuevaFila = strNuevaFila + '<div class="col-4 pe-2"><label class="form-label fw-bold">Descripción/Título:</label>';
+    strNuevaFila = strNuevaFila + '<input class="form-control" placeholder="Descripción" aria-required="true" name="descripcionIdioma_' + contadorIdioma + '" id="descripcionIdioma_' + contadorIdioma + '"/></div>';
+    strNuevaFila = strNuevaFila + '<div class="col-4 pe-2"><label class="form-label fw-bold">Nivel:</label>';
+    strNuevaFila = strNuevaFila + '<input class="form-control" placeholder="Nivel" aria-required="true" name="nivelIdioma_' + contadorIdioma + '" id="nivelIdioma_' + contadorIdioma + '" /></div>';
+    strNuevaFila = strNuevaFila + '<div class="col-4 pe-2"><label class="form-label fw-bold">Centro:</label>';
+    strNuevaFila = strNuevaFila + '<input class="form-control" placeholder="Centro" aria-required="true" name="centroIdioma_' + contadorIdioma + '" id="centroIdioma_' + contadorIdioma + '" /></div></div>';
+    strNuevaFila = strNuevaFila + '<div class="row mt-3"><div class="col-4 pe-2"><label class="form-label fw-bold">Fecha Desde:</label>';
+    strNuevaFila = strNuevaFila + '<input class="form-control" placeholder="Desde" aria-required="true" type="month" name="fechaDesdeIdioma_' + contadorIdioma + '" id="fechaDesdeIdioma_' + contadorIdioma + '"/></div>';
+    strNuevaFila = strNuevaFila + '<div class="col-4 pe-2"><label class="form-label fw-bold">Fecha Hasta:</label>';
+    strNuevaFila = strNuevaFila + '<input class="form-control" placeholder="Hasta" aria-required="true" type="month" name="fechaHastaidioma_' + contadorIdioma + '" id="fechaHastaIdioma_' + contadorIdioma + '"/></div></div>';
+    strNuevaFila = strNuevaFila + '<div class="row mt-3"><div class="col-4">';
+    strNuevaFila = strNuevaFila + '<button class="btn btn-primary btnRemoveIdioma" onclick="removeIdioma(' + contadorIdioma + ')">';
+    strNuevaFila = strNuevaFila + '<i class="fas fa-minus me-3"></i>Quitar Idioma</button></div></div></div><hr id="hridioma_' + contadorIdioma + '">';
+    strNuevaFila = strNuevaFila + '<div class="row mt-3"><div class="col-4"><a class="btn btn-primary w-50" href="javascript:addIdioma();" id="btnAddIdioma">';
+    strNuevaFila = strNuevaFila + '<i class="fa-solid fa-plus me-3"></i>Añadir Idioma</a></div></div>';
+
+    $("#bodyIdioma").append(strNuevaFila);
+}
+
+
+//Funciones para quitar inputs de Formación, Idioma y Entrada.
 function removeFormacion(contInputs) {
-    debugger;
     var idContainer = "#formacionContainer_" + contInputs;
     var hrContainer = "#hrFormacion_" + contInputs;
     var numInputs = $(".formacionContainerClass").length;
@@ -234,7 +267,20 @@ function removeFormacion(contInputs) {
     $(hrContainer).remove();
 
     if (numInputs == 2) {
-        $(".btnRemove").attr("disabled",true);
-        $(".btnRemove").attr("onclick", "javascript: void(0);");
+        $(".btnRemoveFormacion").attr("disabled",true);
+        $(".btnRemoveFormacion").attr("onclick", "javascript: void(0);");
+    }
+}
+
+function removeIdioma(contInputs) {
+    var idContainer = "#idiomaContainer_" + contInputs;
+    var hrContainer = "#hrIdioma_" + contInputs;
+    var numInputs = $(".idiomaContainerClass").length;
+    $(idContainer).remove();
+    $(hrContainer).remove();
+
+    if (numInputs == 2) {
+        $(".btnRemoveIdioma").attr("disabled", true);
+        $(".btnRemoveIdioma").attr("onclick", "javascript: void(0);");
     }
 }

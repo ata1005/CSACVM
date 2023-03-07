@@ -134,7 +134,7 @@
                                         </div>
                                         <div class="row mt-3"> 
                                             <div class="col-4">
-                                                <button class="btn btn-primary btnRemove" onclick="removeFormacion(@contadorInputs)" name="btnSubFormacion" id="btnSubFormacion"><i class="fas fa-minus me-3"></i>Quitar Formación</button>
+                                                <button class="btn btn-primary btnRemoveFormacion" onclick="removeFormacion(@contadorInputs)" name="btnSubFormacion" id="btnSubFormacion"><i class="fas fa-minus me-3"></i>Quitar Formación</button>
                                             </div>
                                         </div>
                                         
@@ -170,7 +170,7 @@
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-4">
-                                            <button class="btn btn-primary btnRemove" onclick="javascript:void(0);" name="btnSubFormacion" disabled><i class="fas fa-minus me-3"></i>Quitar Formación</button>
+                                            <button class="btn btn-primary btnRemoveFormacion" onclick="javascript:void(0);" name="btnSubFormacion" disabled><i class="fas fa-minus me-3"></i>Quitar Formación</button>
                                         </div>
                                     </div>
                                 </div>
@@ -184,8 +184,120 @@
                         </div>
                     </div>
                 </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="accHeaderIdioma">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseIdioma"
+                                aria-expanded="true" aria-controls="collapseIdioma">
+                            Idiomas
+                        </button>
+                    </h2>
+                    <div id="collapseIdioma" class="accordion-collapse" aria-labelledby="accHeaderIdioma" data-bs-parent="#accordionCurriculum">
+                        <div class="accordion-body" id="bodyIdioma">
+                            @if (Model.ListaIdiomaCV.Count > 0) {
+                                var contadorIdioma = 1;
+                                foreach (IdiomaCV idioma in Model.ListaIdiomaCV) {
+                                    <div class="container idiomaContainerClass" id="idiomaContainer_@contadorIdioma">
+                                        <div class="row">
+                                            <div class="col-4 pe-2">
+                                                <label class="form-label fw-bold">Descripción/Título:</label>
+                                                <input class="form-control" placeholder="Descripción" aria-required="true" name="descripcionIdioma_@contadorIdioma" id="descripcionIdioma_@contadorIdioma" value="@idioma.Descripcion" />
+                                            </div>
+                                            <div class="col-4 pe-2">
+                                                <label class="form-label fw-bold">Nivel:</label>
+                                                <input class="form-control" placeholder="Nivel" aria-required="true" name="nivelIdioma_@contadorIdioma" id="nivelIdioma_@contadorIdioma" value="@idioma.Nivel" />
+                                            </div>
+                                            <div class="col-4 pe-2">
+                                                <label class="form-label fw-bold">Centro:</label>
+                                                <input class="form-control" placeholder="Centro" aria-required="true" name="centroIdioma_@contadorIdioma" id="centroIdioma_@contadorIdioma" value="@idioma.Centro" />
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-4 pe-2">
+                                                <label class="form-label fw-bold">Fecha Desde:</label>
+                                                <input class="form-control" placeholder="Desde" aria-required="true" type="month" name="fechaDesdeIdioma_@contadorIdioma" id="fechaDesdeIdioma_@contadorIdioma" asp-for="@idioma.FechaDesde" />
+                                            </div>
+                                            <div class="col-4 pe-2">
+                                                <label class="form-label fw-bold">Fecha Hasta:</label>
+                                                <input class="form-control" placeholder="Hasta" aria-required="true" type="month" name="fechaHastaIdioma_@contadorIdioma" id="fechaHastaIdioma_@contadorIdioma" asp-for="@idioma.FechaHasta" />
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-4">
+                                                <button class="btn btn-primary btnRemoveIdioma" onclick="removeIdioma(@contadorIdioma)" name="btnSubIdioma" id="btnSubIdioma"><i class="fas fa-minus me-3"></i>Quitar Idioma</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <hr id="hrIdioma_@contadorIdioma">
+                                    contadorIdioma++;
+                                }
+                            } else {
+                                <div class="container idiomaContainerClass" id="idiomaContainer_1">
+                                    <div class="row">
+                                        <div class="col-4 pe-2">
+                                            <label class="form-label fw-bold">Descripción/Título:</label>
+                                            <input class="form-control" placeholder="Descripción" aria-required="true" name="descripcionIdioma_1" id="descripcionIdioma_1"/>
+                                        </div>
+                                        <div class="col-4 pe-2">
+                                            <label class="form-label fw-bold">Nivel:</label>
+                                            <input class="form-control" placeholder="Nivel" aria-required="true" name="nivelIdioma_1" id="nivelIdioma_1"/>
+                                        </div>
+                                        <div class="col-4 pe-2">
+                                            <label class="form-label fw-bold">Centro:</label>
+                                            <input class="form-control" placeholder="Centro" aria-required="true" name="centroIdioma_1" id="centroIdioma_"/>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-4 pe-2">
+                                            <label class="form-label fw-bold">Fecha Desde:</label>
+                                            <input class="form-control" placeholder="Desde" aria-required="true" type="month" name="fechaDesdeIdioma_1" id="fechaDesdeIdioma_1" />
+                                        </div>
+                                        <div class="col-4 pe-2">
+                                            <label class="form-label fw-bold">Fecha Hasta:</label>
+                                            <input class="form-control" placeholder="Hasta" aria-required="true" type="month" name="fechaHastaIdioma_" id="fechaHastaIdioma_1" />
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-4">
+                                            <button class="btn btn-primary btnRemoveIdioma" onclick="javascript:void(0);" name="btnSubIdioma" id="btnSubIdioma" disabled><i class="fas fa-minus me-3"></i>Quitar Idioma</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr id="hrIdioma_1">
+                            }
+                            <div class="row mt-3">
+                                <div class="col-4">
+                                    <a class="btn btn-primary w-50" href="javascript:addIdioma();" id="btnAddIdioma"><i class="fa-solid fa-plus me-3"></i>Añadir Idioma</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="accHeaderEntrada">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEntrada"
+                                aria-expanded="true" aria-controls="collapseEntrada">
+                            Experiencia Laboral
+                        </button>
+                    </h2>
+                    <div id="collapseEntrada" class="accordion-collapse" aria-labelledby="accHeaderEntrada" data-bs-parent="#accordionCurriculum">
+                        <div class="accordion-body" id="bodyEntrada">
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="accHeaderExtra">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExtra"
+                                aria-expanded="true" aria-controls="collapseExtra">
+                            Extra
+                        </button>
+                    </h2>
+                    <div id="collapseExtra" class="accordion-collapse" aria-labelledby="accHeaderExtra" data-bs-parent="#accordionCurriculum">
+                        <div class="accordion-body" id="bodyExtra">
+                        </div>
+                    </div>
+                </div>
             </div>
-        
         </div>
         <div class="row d-flex justify-content-end mt-4">
             <div class="col-lg-3 col-md-3 col-sm-4 text-end">

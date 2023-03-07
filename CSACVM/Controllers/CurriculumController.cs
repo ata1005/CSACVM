@@ -60,7 +60,8 @@ namespace CSACVM.Controllers {
                 Foto = rutaFoto != null ? rutaFoto.Ruta : "",
                 UsuarioCV = usuarioCV,
                 FormacionCV = formacionCV,
-                ListaFormacionCV = _unitOfWork.FormacionCV.ObtenerListaFormacion(idCurriculum)
+                ListaFormacionCV = _unitOfWork.FormacionCV.ObtenerListaFormacion(idCurriculum),
+                ListaIdiomaCV = _unitOfWork.IdiomaCV.ObtenerListaIdioma(idCurriculum)
             };
             return View("../Curriculum/EditarCurriculum", model);
         }
@@ -146,7 +147,30 @@ namespace CSACVM.Controllers {
                     #endregion
 
                     #region IdiomaCV.
+                    List<IdiomaCV> lstIdiomaCV = _unitOfWork.IdiomaCV.ObtenerListaIdioma(model.IdCurriculum);
+                    List<string> lstDescripcionIdioma = new List<string>(); //Request.Form["gradoFormacion"].ToList();
+                    List<string> lstNivelIdioma = new List<string>();//Request.Form["observacionesFormacion"].ToList();                  
+                    List<string> lstCentroIdioma = new List<string>();//Request.Form["ubicacionFormacion"].ToList();
+                    List<string> lstDateDesdeIdioma = new List<string>(); //Request.Form["fechaDesdeFormacion"].ToList();
+                    List<string> lstDateHastaIdioma = new List<string>(); //Request.Form["fechaHastaFormacion"].ToList();
 
+                    foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("descripcionIdioma_"))) {
+                        lstDescripcionIdioma.Add(Request.Form[element]);
+                    }
+                    foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("nivelIdioma_"))) {
+                        lstNivelIdioma.Add(Request.Form[element]);
+                    }
+                    foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("centroIdioma_"))) {
+                        lstCentroIdioma.Add(Request.Form[element]);
+                    }
+                    foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("fechaDesdeIdioma_"))) {
+                        lstDateDesdeIdioma.Add(Request.Form[element]);
+                    }
+                    foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("fechaHastaIdioma_"))) {
+                        lstDateHastaIdioma.Add(Request.Form[element]);
+                    }
+
+                    _unitOfWork.IdiomaCV.GuardarIdioma(lstIdiomaCV, lstDescripcionIdioma, lstNivelIdioma, lstCentroIdioma, lstDateDesdeIdioma, lstDateHastaIdioma, model.IdCurriculum, idUsuario);
 
                     #endregion
 
