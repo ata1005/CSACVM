@@ -48,7 +48,7 @@ namespace CSACVM.Controllers {
             FormacionCV formacionCV = _unitOfWork.FormacionCV.GetFirstOrDefault(f2 => f2.IdCurriculum == idCurriculum);
             IdiomaCV idiomaCV = _unitOfWork.IdiomaCV.GetFirstOrDefault(i => i.IdCurriculum == idCurriculum);
             EntradaCV entradaCV = _unitOfWork.EntradaCV.GetFirstOrDefault(e => e.IdCurriculum == idCurriculum);
-            ExtraCV extraCV = _unitOfWork.ExtraCV.GetFirstOrDefault(e2 => e2.IdCurriculum == idCurriculum);
+
 
             //Si los modelos son null, creamos una instancia de ese modelo con el idCurriculum.
             if (usuarioCV == null) _unitOfWork.UsuarioCV.NuevoUsuarioCV(HttpContext.Session.GetInt32("ID").Value, idCurriculum);
@@ -61,7 +61,10 @@ namespace CSACVM.Controllers {
                 UsuarioCV = usuarioCV,
                 FormacionCV = formacionCV,
                 ListaFormacionCV = _unitOfWork.FormacionCV.ObtenerListaFormacion(idCurriculum),
-                ListaIdiomaCV = _unitOfWork.IdiomaCV.ObtenerListaIdioma(idCurriculum)
+                ListaIdiomaCV = _unitOfWork.IdiomaCV.ObtenerListaIdioma(idCurriculum),
+                ListaEntradaCV = _unitOfWork.EntradaCV.ObtenerListaEntrada(idCurriculum),
+                ListaAptitudCV = _unitOfWork.AptitudCV.ObtenerListaAptitud(idCurriculum),
+                ListaLogroCV = _unitOfWork.LogroCV.ObtenerListaLogro(idCurriculum)
             };
             return View("../Curriculum/EditarCurriculum", model);
         }
@@ -175,6 +178,34 @@ namespace CSACVM.Controllers {
                     #endregion
 
                     #region EntradaCV.
+                    List<EntradaCV> lstEntradaCV = _unitOfWork.EntradaCV.ObtenerListaEntrada(model.IdCurriculum);
+                    List<string> lstPuestoTrabajo = new List<string>(); //Request.Form["gradoFormacion"].ToList();
+                    List<string> lstEmpresaAsociada = new List<string>();//Request.Form["observacionesFormacion"].ToList();                  
+                    List<string> lstUbicacionEntrada= new List<string>();//Request.Form["ubicacionFormacion"].ToList();
+                    List<string> lstObservacionesEntrada = new List<string>();
+                    List<string> lstDateDesdeEntrada = new List<string>(); //Request.Form["fechaDesdeFormacion"].ToList();
+                    List<string> lstDateHastaEntrada = new List<string>(); //Request.Form["fechaHastaFormacion"].ToList();
+
+                    foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("puestoTrabajo_"))) {
+                        lstPuestoTrabajo.Add(Request.Form[element]);
+                    }
+                    foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("empresaAsociada_"))) {
+                        lstEmpresaAsociada.Add(Request.Form[element]);
+                    }
+                    foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("ubicacionEntrada_"))) {
+                        lstUbicacionEntrada.Add(Request.Form[element]);
+                    }
+                    foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("observacionesEntrada_"))) {
+                        lstObservacionesEntrada.Add(Request.Form[element]);
+                    }
+                    foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("fechaDesdeEntrada_"))) {
+                        lstDateDesdeEntrada.Add(Request.Form[element]);
+                    }
+                    foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("fechaHastaEntrada_"))) {
+                        lstDateHastaEntrada.Add(Request.Form[element]);
+                    }
+
+                    _unitOfWork.EntradaCV.GuardarEntrada(lstEntradaCV, lstPuestoTrabajo, lstEmpresaAsociada, lstUbicacionEntrada, lstObservacionesEntrada, lstDateDesdeEntrada, lstDateHastaEntrada, model.IdCurriculum, idUsuario);
 
 
                     #endregion

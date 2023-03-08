@@ -189,8 +189,10 @@ function CargarFotos() {
 //Campos generales para lo inputs.
 var contadorFormacion = 1;
 var contadorIdioma = 1;
+var contadorEntrada = 1;
 var contadorMaxFormacion = $(".formacionContainerClass").length;
 var contadorMaxIdioma = $(".idiomaContainerClass").length;
+var contadorMaxEntrada = $(".entradaContainerClass").length;
 
 //Funciones para añadir inputs de Formación, Idioma y Entrada.
 function addFormacion() {
@@ -220,8 +222,8 @@ function addFormacion() {
     strNuevaFila = strNuevaFila + '<div class="row mt-3"><div class="col-4">';
     strNuevaFila = strNuevaFila + '<button class="btn btn-primary btnRemoveFormacion" onclick="removeFormacion(' + contadorFormacion + ')">';
     strNuevaFila = strNuevaFila + '<i class="fas fa-minus me-3"></i>Quitar Formación</button></div></div></div><hr id="hrFormacion_' + contadorFormacion + '">';
-    strNuevaFila = strNuevaFila + '<div class="row mt-3"><div class="col-4"><a class="btn btn-primary w-50" href="javascript:addFormacion();" id="btnAddFormacion">';
-    strNuevaFila = strNuevaFila + '<i class="fa-solid fa-plus me-3"></i>Añadir Formación</a></div></div>';
+    strNuevaFila = strNuevaFila + '<div class="col-4"><a class="btn btn-primary w-50" href="javascript:addFormacion();" id="btnAddFormacion">';
+    strNuevaFila = strNuevaFila + '<i class="fa-solid fa-plus me-3"></i>Añadir Formación</a></div>';
 
     $("#bodyFormacion").append(strNuevaFila);
 }
@@ -247,16 +249,48 @@ function addIdioma() {
     strNuevaFila = strNuevaFila + '<div class="row mt-3"><div class="col-4 pe-2"><label class="form-label fw-bold">Fecha Desde:</label>';
     strNuevaFila = strNuevaFila + '<input class="form-control" placeholder="Desde" aria-required="true" type="month" name="fechaDesdeIdioma_' + contadorIdioma + '" id="fechaDesdeIdioma_' + contadorIdioma + '"/></div>';
     strNuevaFila = strNuevaFila + '<div class="col-4 pe-2"><label class="form-label fw-bold">Fecha Hasta:</label>';
-    strNuevaFila = strNuevaFila + '<input class="form-control" placeholder="Hasta" aria-required="true" type="month" name="fechaHastaidioma_' + contadorIdioma + '" id="fechaHastaIdioma_' + contadorIdioma + '"/></div></div>';
+    strNuevaFila = strNuevaFila + '<input class="form-control" placeholder="Hasta" aria-required="true" type="month" name="fechaHastaIdioma_' + contadorIdioma + '" id="fechaHastaIdioma_' + contadorIdioma + '"/></div></div>';
     strNuevaFila = strNuevaFila + '<div class="row mt-3"><div class="col-4">';
     strNuevaFila = strNuevaFila + '<button class="btn btn-primary btnRemoveIdioma" onclick="removeIdioma(' + contadorIdioma + ')">';
-    strNuevaFila = strNuevaFila + '<i class="fas fa-minus me-3"></i>Quitar Idioma</button></div></div></div><hr id="hridioma_' + contadorIdioma + '">';
-    strNuevaFila = strNuevaFila + '<div class="row mt-3"><div class="col-4"><a class="btn btn-primary w-50" href="javascript:addIdioma();" id="btnAddIdioma">';
-    strNuevaFila = strNuevaFila + '<i class="fa-solid fa-plus me-3"></i>Añadir Idioma</a></div></div>';
+    strNuevaFila = strNuevaFila + '<i class="fas fa-minus me-3"></i>Quitar Idioma</button></div></div></div><hr id="hrIdioma_' + contadorIdioma + '">';
+    strNuevaFila = strNuevaFila + '<div class="col-4"><a class="btn btn-primary w-50" href="javascript:addIdioma();" id="btnAddIdioma">';
+    strNuevaFila = strNuevaFila + '<i class="fa-solid fa-plus me-3"></i>Añadir Idioma</a></div>';
 
     $("#bodyIdioma").append(strNuevaFila);
 }
 
+function addEntrada() {
+    var strNuevaFila = "";
+    $("#btnAddEntrada").remove();
+    contadorEntrada = document.getElementsByClassName("entradaContainerClass").length;
+    contadorEntrada = $(".entradaContainerClass").length;
+    contadorMaxEntrada++;
+    if (contadorEntrada == 1) {
+        $(".btnRemoveEntrada").removeAttr("disabled");
+        $(".btnRemoveEntrada").attr("onclick", "javascript: removeEntrada(1);");
+    }
+    contadorEntrada = contadorMaxEntrada;
+    strNuevaFila = '<div class="container entradaContainerClass" id="entradaContainer_' + contadorEntrada + '"><div class="row">'
+    strNuevaFila = strNuevaFila + '<div class="col-4 pe-2"><label class="form-label fw-bold">Puesto trabajo:</label>';
+    strNuevaFila = strNuevaFila + '<input class="form-control" placeholder="Puesto" aria-required="true" name="puestoTrabajo_' + contadorEntrada + '" id="puestoTrabajo_' + contadorEntrada + '"/></div>';
+    strNuevaFila = strNuevaFila + '<div class="col-4 pe-2"><label class="form-label fw-bold">Empresa Asociada:</label>';
+    strNuevaFila = strNuevaFila + '<input class="form-control" placeholder="Empresa" aria-required="true" name="empresaAsociada_' + contadorEntrada + '" id="empresaAsociada_' + contadorEntrada + '" /></div>';
+    strNuevaFila = strNuevaFila + '<div class="col-4 pe-2"><label class="form-label fw-bold">Ubicación:</label>';
+    strNuevaFila = strNuevaFila + '<input class="form-control" placeholder="Ubicación" aria-required="true" name="ubicacionEntrada_' + contadorEntrada + '" id="ubicacionEntrada_' + contadorEntrada + '" /></div></div>';
+    strNuevaFila = strNuevaFila + '<div class="row mt-3"><div class="col pe-2" ><label class="form-label fw-bold">Observaciones:</label>';
+    strNuevaFila = strNuevaFila + '<textarea class="form-control" rows="2" name="observacionesEntrada_' + contadorEntrada +'" id="observacionesEntrada_' + contadorEntrada +'"></textarea></div></div>';
+    strNuevaFila = strNuevaFila + '<div class="row mt-3"><div class="col-4 pe-2"><label class="form-label fw-bold">Fecha Desde:</label>';
+    strNuevaFila = strNuevaFila + '<input class="form-control" placeholder="Desde" aria-required="true" type="month" name="fechaDesdeEntrada_' + contadorEntrada + '" id="fechaDesdeEntrada_' + contadorEntrada + '"/></div>';
+    strNuevaFila = strNuevaFila + '<div class="col-4 pe-2"><label class="form-label fw-bold">Fecha Hasta:</label>';
+    strNuevaFila = strNuevaFila + '<input class="form-control" placeholder="Hasta" aria-required="true" type="month" name="fechaHastaEntrada_' + contadorEntrada + '" id="fechaHastaEntrada_' + contadorEntrada + '"/></div></div>';
+    strNuevaFila = strNuevaFila + '<div class="row mt-3"><div class="col-4">';
+    strNuevaFila = strNuevaFila + '<button class="btn btn-primary btnRemoveEntrada" onclick="removeEntrada(' + contadorEntrada + ')">';
+    strNuevaFila = strNuevaFila + '<i class="fas fa-minus me-3"></i>Quitar Experiencia</button></div></div></div><hr id="hrEntrada_' + contadorEntrada + '">';
+    strNuevaFila = strNuevaFila + '<div class="col-4"><a class="btn btn-primary w-50" href="javascript:addEntrada();" id="btnAddEntrada">';
+    strNuevaFila = strNuevaFila + '<i class="fa-solid fa-plus me-3"></i>Añadir Experiencia</a></div>';
+
+    $("#bodyEntrada").append(strNuevaFila);
+}
 
 //Funciones para quitar inputs de Formación, Idioma y Entrada.
 function removeFormacion(contInputs) {
@@ -282,5 +316,18 @@ function removeIdioma(contInputs) {
     if (numInputs == 2) {
         $(".btnRemoveIdioma").attr("disabled", true);
         $(".btnRemoveIdioma").attr("onclick", "javascript: void(0);");
+    }
+}
+
+function removeEntrada(contInputs) {
+    var idContainer = "#entradaContainer_" + contInputs;
+    var hrContainer = "#hrEntrada_" + contInputs;
+    var numInputs = $(".entradaContainerClass").length;
+    $(idContainer).remove();
+    $(hrContainer).remove();
+
+    if (numInputs == 2) {
+        $(".btnRemoveEntrada").attr("disabled", true);
+        $(".btnRemoveEntrada").attr("onclick", "javascript: void(0);");
     }
 }

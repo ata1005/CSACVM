@@ -14,8 +14,8 @@ namespace CSACVM.AccesoDatos.Data
         public DbSet<Entrada> Entrada { get; set; }
         public DbSet<EntradaCV> EntradaCV { get; set; }
         public DbSet<EventosUsuario> EventosUsuario { get; set; }
-        public DbSet<ExtraCV> ExtraCV { get; set; }
-        public DbSet<ExtraEntradasCV> ExtraEntradasCV { get; set; }
+        public DbSet<AptitudCV> AptitudCV { get; set; }
+        public DbSet<LogroCV> LogroCV { get; set; }
         public DbSet<FormacionCV> FormacionCV { get; set; }
         public DbSet<Grupo> Grupo { get; set; }
         public DbSet<Idioma> Idioma { get; set; }
@@ -26,7 +26,6 @@ namespace CSACVM.AccesoDatos.Data
         public DbSet<Respuesta> Respuesta { get; set; }
         public DbSet<Rol> Rol { get; set; }
         public DbSet<TipoEntrada> TipoEntrada { get; set; }
-        public DbSet<TipoExtraCV> TipoExtraCV { get; set; }
         public DbSet<TipoNotificacion> TipoNotificacion { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<UsuarioCV> UsuarioCV { get; set; }

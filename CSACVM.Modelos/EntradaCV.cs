@@ -13,18 +13,19 @@ namespace CSACVM.Modelos {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdEntradaCV { get; set; }
 
+        public int IdUsuario { get; set; }
         [ForeignKey("IdUsuario")]
         public Usuario Usuario { get; set; }
 
         [MaxLength(50)]
-        public string? NombreTitulacion { get; set; }
+        public string? PuestoTrabajo { get; set; }
 
         [MaxLength(50)]
         public string? EmpresaAsociada { get; set; }
 
         [Required]
-        [MaxLength(50)]
-        public string? Descripcion { get; set; }
+        [MaxLength(int.MaxValue)]
+        public string? Observaciones { get; set; }
 
         public string? Ubicacion { get; set; }
 

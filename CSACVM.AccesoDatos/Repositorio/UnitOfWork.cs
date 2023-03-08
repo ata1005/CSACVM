@@ -14,8 +14,8 @@ namespace CSACVM.AccesoDatos.Repositorio
             Entrada = new EntradaRepositorio(_db);
             EntradaCV = new EntradaCVRepositorio(_db);
             EventosUsuario = new EventosUsuarioRepositorio(_db);
-            ExtraCV = new ExtraCVRepositorio(_db);
-            ExtraEntradasCV = new ExtraEntradasCVRepositorio(_db);
+            AptitudCV = new AptitudCVRepositorio(_db);
+            LogroCV = new LogroCVRepositorio(_db);
             FormacionCV = new FormacionCVRepositorio(_db);
             Grupo = new GrupoRepositorio(_db);
             Idioma = new IdiomaRepositorio(_db);
@@ -26,7 +26,7 @@ namespace CSACVM.AccesoDatos.Repositorio
             Respuesta = new RespuestaRepositorio(_db);
             Rol = new RolRepositorio(_db);
             TipoEntrada = new TipoEntradaRepositorio(_db);
-            TipoExtraCV = new TipoExtraCVRepositorio(_db);
+            
             TipoNotificacion = new TipoNotificacionRepositorio(_db);
             Curriculum = new CurriculumRepositorio(_db);
             FotoUsuarioCV = new FotoUsuarioCVRepositorio(_db);
@@ -37,8 +37,8 @@ namespace CSACVM.AccesoDatos.Repositorio
         public IEntradaRepositorio Entrada { get; private set; }
         public IEntradaCVRepositorio EntradaCV { get; private set; }
         public IEventosUsuarioRepositorio EventosUsuario { get; private set; }
-        public IExtraCVRepositorio ExtraCV { get; private set; }
-        public IExtraEntradasCVRepositorio ExtraEntradasCV { get; private set; }
+        public IAptitudCVRepositorio AptitudCV { get; private set; }
+        public ILogroCVRepositorio LogroCV { get; private set; }
         public IFormacionCVRepositorio FormacionCV { get; private set; }
         public IGrupoRepositorio Grupo { get; private set; }
         public IIdiomaRepositorio Idioma { get; private set; }
@@ -49,7 +49,6 @@ namespace CSACVM.AccesoDatos.Repositorio
         public IRespuestaRepositorio Respuesta { get; private set; }
         public IRolRepositorio Rol { get; private set; }
         public ITipoEntradaRepositorio TipoEntrada { get; private set; }
-        public ITipoExtraCVRepositorio TipoExtraCV { get; private set; }
         public ITipoNotificacionRepositorio TipoNotificacion { get; private set; }
         public ICurriculumRepositorio Curriculum { get; private set; }
         public IFotoUsuarioCVRepositorio FotoUsuarioCV { get; private set; }

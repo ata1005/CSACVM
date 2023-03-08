@@ -12,8 +12,8 @@ namespace CSACVM.AccesoDatos.Repositorio.IRepositorio{
         IEntradaRepositorio Entrada { get; }
         IEntradaCVRepositorio EntradaCV { get; }
         IEventosUsuarioRepositorio EventosUsuario { get; }
-        IExtraCVRepositorio ExtraCV { get; }
-        IExtraEntradasCVRepositorio ExtraEntradasCV { get; }
+        IAptitudCVRepositorio AptitudCV { get; }
+        ILogroCVRepositorio LogroCV { get; }
         IFormacionCVRepositorio FormacionCV { get; }
         IGrupoRepositorio Grupo { get; }
         IIdiomaRepositorio Idioma { get; }
@@ -24,7 +24,6 @@ namespace CSACVM.AccesoDatos.Repositorio.IRepositorio{
         IRespuestaRepositorio Respuesta { get; }
         IRolRepositorio Rol { get; }
         ITipoEntradaRepositorio TipoEntrada { get; }
-        ITipoExtraCVRepositorio TipoExtraCV { get; }
         ITipoNotificacionRepositorio TipoNotificacion { get; }
         ICurriculumRepositorio Curriculum { get; }
         IFotoUsuarioCVRepositorio FotoUsuarioCV { get; }

@@ -244,7 +244,7 @@
                                         </div>
                                         <div class="col-4 pe-2">
                                             <label class="form-label fw-bold">Centro:</label>
-                                            <input class="form-control" placeholder="Centro" aria-required="true" name="centroIdioma_1" id="centroIdioma_"/>
+                                            <input class="form-control" placeholder="Centro" aria-required="true" name="centroIdioma_1" id="centroIdioma_1"/>
                                         </div>
                                     </div>
                                     <div class="row mt-3">
@@ -254,7 +254,7 @@
                                         </div>
                                         <div class="col-4 pe-2">
                                             <label class="form-label fw-bold">Fecha Hasta:</label>
-                                            <input class="form-control" placeholder="Hasta" aria-required="true" type="month" name="fechaHastaIdioma_" id="fechaHastaIdioma_1" />
+                                            <input class="form-control" placeholder="Hasta" aria-required="true" type="month" name="fechaHastaIdioma_1" id="fechaHastaIdioma_1" />
                                         </div>
                                     </div>
                                     <div class="row mt-3">
@@ -282,18 +282,129 @@
                     </h2>
                     <div id="collapseEntrada" class="accordion-collapse" aria-labelledby="accHeaderEntrada" data-bs-parent="#accordionCurriculum">
                         <div class="accordion-body" id="bodyEntrada">
+                            @if (Model.ListaEntradaCV.Count > 0) {
+                                var contadorEntrada = 1;
+                                foreach (EntradaCV entrada in Model.ListaEntradaCV) {
+                                    <div class="container entradaContainerClass" id="entradaContainer_@contadorEntrada">
+                                        <div class="row">
+                                            <div class="col-4 pe-2">
+                                                <label class="form-label fw-bold">Puesto trabajo:</label>
+                                                <input class="form-control" placeholder="Puesto" aria-required="true" name="puestoTrabajo_@contadorEntrada" id="puestoTrabajo_@contadorEntrada" value="@entrada.PuestoTrabajo"/>
+                                            </div>
+                                            <div class="col-4 pe-2">
+                                                <label class="form-label fw-bold">Empresa Asociada:</label>
+                                                <input class="form-control" placeholder="Empresa" aria-required="true" name="empresaAsociada_@contadorEntrada" id="empresaAsociada_@contadorEntrada" value="@entrada.EmpresaAsociada"/>
+                                            </div>
+                                            <div class="col-4 pe-2">
+                                                <label class="form-label fw-bold">Ubicación:</label>
+                                                <input class="form-control" placeholder="Ubicación" aria-required="true" name="ubicacionEntrada_@contadorEntrada" id="ubicacionEntrada_@contadorEntrada" value="@entrada.Ubicacion"/>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col pe-2">
+                                                <label class="form-label fw-bold">Observaciones:</label>
+                                                <textarea class="form-control" rows="2" name="observacionesEntrada_@contadorEntrada" id="observacionesEntrada_@contadorEntrada" asp-for="@entrada.Observaciones"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-4 pe-2">
+                                                <label class="form-label fw-bold">Fecha Desde:</label>
+                                                <input class="form-control" placeholder="Desde" aria-required="true" type="month" name="fechaDesdeEntrada_@contadorEntrada" id="fechaDesdeEntrada_@contadorEntrada" asp-for="@entrada.FechaDesde" />
+                                            </div>
+                                            <div class="col-4 pe-2">
+                                                <label class="form-label fw-bold">Fecha Hasta:</label>
+                                                <input class="form-control" placeholder="Hasta" aria-required="true" type="month" name="fechaHastaEntrada_@contadorEntrada" id="fechaHastaEntrada_@contadorEntrada" asp-for="@entrada.FechaHasta" />
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-4">
+                                                <button class="btn btn-primary btnRemoveEntrada" onclick="removeEntrada(@contadorEntrada)" name="btnSubEntrada" id="btnSubEntrada"><i class="fas fa-minus me-3"></i>Quitar Experiencia</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <hr id="hrEntrada_@contadorEntrada">
+                                    contadorEntrada++;
+                                }
+                            } else {
+                                <div class="container entradaContainerClass" id="entradaContainer_1">
+                                    <div class="row">
+                                        <div class="col-4 pe-2">
+                                            <label class="form-label fw-bold">Puesto trabajo:</label>
+                                            <input class="form-control" placeholder="Puesto" aria-required="true" name="puestoTrabajo_1" id="puestoTrabajo_1" />
+                                        </div>
+                                        <div class="col-4 pe-2">
+                                            <label class="form-label fw-bold">Empresa Asociada:</label>
+                                            <input class="form-control" placeholder="Empresa" aria-required="true" name="empresaAsociada_1" id="empresaAsociada_1" />
+                                        </div>
+                                        <div class="col-4 pe-2">
+                                            <label class="form-label fw-bold">Ubicación:</label>
+                                            <input class="form-control" placeholder="Ubicación" aria-required="true" name="ubicacionEntrada_1" id="ubicacionEntrada_1" />
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col pe-2">
+                                            <label class="form-label fw-bold">Observaciones:</label>
+                                            <textarea class="form-control" rows="2" name="observacionesEntrada_1" id="observacionesEntrada_1"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-4 pe-2">
+                                            <label class="form-label fw-bold">Fecha Desde:</label>
+                                            <input class="form-control" placeholder="Desde" aria-required="true" type="month" name="fechaDesdeEntrada_1" id="fechaDesdeEntrada_1" />
+                                        </div>
+                                        <div class="col-4 pe-2">
+                                            <label class="form-label fw-bold">Fecha Hasta:</label>
+                                            <input class="form-control" placeholder="Hasta" aria-required="true" type="month" name="fechaHastaEntrada_1" id="fechaHastaEntrada_1" />
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-4">
+                                            <button class="btn btn-primary btnRemoveEntrada" onclick="javascript:void(0);" name="btnSubEntrada" id="btnSubEntrada" disabled><i class="fas fa-minus me-3"></i>Quitar Experiencia</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr id="hrEntrada_1">
+                            }
+                            <div class="row mt-3">
+                                <div class="col-4">
+                                    <a class="btn btn-primary w-50" href="javascript:addEntrada();" id="btnAddEntrada"><i class="fa-solid fa-plus me-3"></i>Añadir Experiencia</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="accordion-item">
-                    <h2 class="accordion-header" id="accHeaderExtra">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExtra"
-                                aria-expanded="true" aria-controls="collapseExtra">
-                            Extra
+                    <h2 class="accordion-header" id="accHeaderAptitud">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAptitud"
+                                aria-expanded="true" aria-controls="collapseAptitud">
+                            Aptitudes / Habilidades
                         </button>
                     </h2>
-                    <div id="collapseExtra" class="accordion-collapse" aria-labelledby="accHeaderExtra" data-bs-parent="#accordionCurriculum">
-                        <div class="accordion-body" id="bodyExtra">
+                    <div id="collapseAptitud" class="accordion-collapse" aria-labelledby="accHeaderAptitud" data-bs-parent="#accordionCurriculum">
+                        <div class="accordion-body" id="bodyAptitud">
+                            @if (Model.ListaAptitudCV.Count > 0) {
+
+                            } else {
+                                
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="accHeaderLogro">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLogro"
+                                aria-expanded="true" aria-controls="collapseLogro">
+                            Logros
+                        </button>
+                    </h2>
+                    <div id="collapseLogro" class="accordion-collapse" aria-labelledby="accHeaderLogro" data-bs-parent="#accordionCurriculum">
+                        <div class="accordion-body" id="bodyLogro">
+                            @if(Model.ListaLogroCV.Count > 0){
+                                
+                            }else{
+
+                            }
                         </div>
                     </div>
                 </div>

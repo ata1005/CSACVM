@@ -16,9 +16,12 @@ namespace CSACVM.Modelos.ViewModels {
         public List<FormacionCV> ListaFormacionCV { get; set; }
         public List<IdiomaCV> ListaIdiomaCV { get; set; }
         public List<EntradaCV> ListaEntradaCV { get; set; }
+        public List<AptitudCV> ListaAptitudCV { get; set; }
+        public List<LogroCV> ListaLogroCV { get; set; }
         public IdiomaCV? IdiomaCV { get; set; }
         public EntradaCV? EntradaCV { get; set; }
-        public ExtraCV? ExtraCV { get; set; }
+        public AptitudCV? AptitudCV { get; set; }
+        public LogroCV? LogroCV { get; set; } 
         
     }
 }

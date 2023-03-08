@@ -8,14 +8,17 @@ using System.Threading.Tasks;
 using FCC_Workflow.Modelos;
 
 namespace CSACVM.Modelos {
-    public class ExtraEntradasCV : DatosAuditoria {
+    public class AptitudCV : DatosAuditoria {
 
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int IdExtraEntradaCV { get; set; }
+        public int IdAptitudCV { get; set; }
 
-        [ForeignKey("IdExtraCV")]
-        public ExtraCV ExtraCV { get; set; }
+        [ForeignKey("IdUsuario")]
+        public Usuario Usuario { get; set; }
         public string Descripcion { get; set; }
+        public int? IdCurriculum { get; set; }
+        [ForeignKey("IdCurriculum")]
+        public Curriculum? Curriculum { get; set; }
 
     }
 }

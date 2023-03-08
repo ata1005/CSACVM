@@ -4,6 +4,7 @@ using CSACVM.AccesoDatos.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CSACVM.AccesoDatos.Migrations
 {
     [DbContext(typeof(CSACVMContext))]
-    partial class CSACVMContextModelSnapshot : ModelSnapshot
+    [Migration("20230307173620_CambiarCamposEntradaCV")]
+    partial class CambiarCamposEntradaCV
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,53 +23,6 @@ namespace CSACVM.AccesoDatos.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("CSACVM.Modelos.AptitudCV", b =>
-                {
-                    b.Property<int>("IdAptitudCV")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdAptitudCV"), 1L, 1);
-
-                    b.Property<string>("Descripcion")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("FechaActualizacion")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("FechaCreacion")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("IdCurriculum")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdUsuario")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ProcesoActualizacion")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("ProcesoCreacion")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<int?>("UsuarioActualizacion")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UsuarioCreacion")
-                        .HasColumnType("int");
-
-                    b.HasKey("IdAptitudCV");
-
-                    b.HasIndex("IdCurriculum");
-
-                    b.HasIndex("IdUsuario");
-
-                    b.ToTable("AptitudCV");
-                });
 
             modelBuilder.Entity("CSACVM.Modelos.Curriculum", b =>
                 {
@@ -330,6 +285,96 @@ namespace CSACVM.AccesoDatos.Migrations
                     b.ToTable("EventosUsuario");
                 });
 
+            modelBuilder.Entity("CSACVM.Modelos.ExtraCV", b =>
+                {
+                    b.Property<int>("IdExtraCV")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdExtraCV"), 1L, 1);
+
+                    b.Property<DateTime?>("FechaActualizacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FechaCreacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("IdCurriculum")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdTipoExtraCV")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdUsuario")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProcesoActualizacion")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("ProcesoCreacion")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<int?>("UsuarioActualizacion")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UsuarioCreacion")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdExtraCV");
+
+                    b.HasIndex("IdCurriculum");
+
+                    b.HasIndex("IdTipoExtraCV");
+
+                    b.HasIndex("IdUsuario");
+
+                    b.ToTable("ExtraCV");
+                });
+
+            modelBuilder.Entity("CSACVM.Modelos.ExtraEntradasCV", b =>
+                {
+                    b.Property<int>("IdExtraEntradaCV")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdExtraEntradaCV"), 1L, 1);
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("FechaActualizacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FechaCreacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("IdExtraCV")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProcesoActualizacion")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("ProcesoCreacion")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<int?>("UsuarioActualizacion")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UsuarioCreacion")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdExtraEntradaCV");
+
+                    b.HasIndex("IdExtraCV");
+
+                    b.ToTable("ExtraEntradasCV");
+                });
+
             modelBuilder.Entity("CSACVM.Modelos.FormacionCV", b =>
                 {
                     b.Property<int>("IdFormacionCV")
@@ -584,48 +629,6 @@ namespace CSACVM.AccesoDatos.Migrations
                     b.HasIndex("IdUsuario");
 
                     b.ToTable("IdiomaCV");
-                });
-
-            modelBuilder.Entity("CSACVM.Modelos.LogroCV", b =>
-                {
-                    b.Property<int>("IdLogroCV")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdLogroCV"), 1L, 1);
-
-                    b.Property<string>("Descripcion")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("FechaActualizacion")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("FechaCreacion")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("IdCurriculum")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ProcesoActualizacion")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("ProcesoCreacion")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<int?>("UsuarioActualizacion")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UsuarioCreacion")
-                        .HasColumnType("int");
-
-                    b.HasKey("IdLogroCV");
-
-                    b.HasIndex("IdCurriculum");
-
-                    b.ToTable("LogroCV");
                 });
 
             modelBuilder.Entity("CSACVM.Modelos.NotasUsuario", b =>
@@ -891,6 +894,43 @@ namespace CSACVM.AccesoDatos.Migrations
                     b.ToTable("TipoEntrada");
                 });
 
+            modelBuilder.Entity("CSACVM.Modelos.TipoExtraCV", b =>
+                {
+                    b.Property<int>("IdTipoExtraCV")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdTipoExtraCV"), 1L, 1);
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("FechaActualizacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FechaCreacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ProcesoActualizacion")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("ProcesoCreacion")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<int?>("UsuarioActualizacion")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UsuarioCreacion")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdTipoExtraCV");
+
+                    b.ToTable("TipoExtraCV");
+                });
+
             modelBuilder.Entity("CSACVM.Modelos.TipoNotificacion", b =>
                 {
                     b.Property<int>("IdTipoNotificacion")
@@ -1081,23 +1121,6 @@ namespace CSACVM.AccesoDatos.Migrations
                     b.ToTable("UsuarioCV");
                 });
 
-            modelBuilder.Entity("CSACVM.Modelos.AptitudCV", b =>
-                {
-                    b.HasOne("CSACVM.Modelos.Curriculum", "Curriculum")
-                        .WithMany()
-                        .HasForeignKey("IdCurriculum");
-
-                    b.HasOne("CSACVM.Modelos.Usuario", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("IdUsuario")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Curriculum");
-
-                    b.Navigation("Usuario");
-                });
-
             modelBuilder.Entity("CSACVM.Modelos.Entrada", b =>
                 {
                     b.HasOne("CSACVM.Modelos.Proyecto", "Proyecto")
@@ -1153,6 +1176,42 @@ namespace CSACVM.AccesoDatos.Migrations
                     b.Navigation("Usuario");
                 });
 
+            modelBuilder.Entity("CSACVM.Modelos.ExtraCV", b =>
+                {
+                    b.HasOne("CSACVM.Modelos.Curriculum", "Curriculum")
+                        .WithMany()
+                        .HasForeignKey("IdCurriculum");
+
+                    b.HasOne("CSACVM.Modelos.TipoExtraCV", "TipoExtraCV")
+                        .WithMany()
+                        .HasForeignKey("IdTipoExtraCV")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CSACVM.Modelos.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("IdUsuario")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Curriculum");
+
+                    b.Navigation("TipoExtraCV");
+
+                    b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("CSACVM.Modelos.ExtraEntradasCV", b =>
+                {
+                    b.HasOne("CSACVM.Modelos.ExtraCV", "ExtraCV")
+                        .WithMany()
+                        .HasForeignKey("IdExtraCV")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ExtraCV");
+                });
+
             modelBuilder.Entity("CSACVM.Modelos.FormacionCV", b =>
                 {
                     b.HasOne("CSACVM.Modelos.Curriculum", "Curriculum")
@@ -1202,15 +1261,6 @@ namespace CSACVM.AccesoDatos.Migrations
                     b.Navigation("Curriculum");
 
                     b.Navigation("Usuario");
-                });
-
-            modelBuilder.Entity("CSACVM.Modelos.LogroCV", b =>
-                {
-                    b.HasOne("CSACVM.Modelos.Curriculum", "Curriculum")
-                        .WithMany()
-                        .HasForeignKey("IdCurriculum");
-
-                    b.Navigation("Curriculum");
                 });
 
             modelBuilder.Entity("CSACVM.Modelos.NotasUsuario", b =>
