@@ -12,9 +12,6 @@ namespace CSACVM.Modelos {
 
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdAptitudCV { get; set; }
-
-        [ForeignKey("IdUsuario")]
-        public Usuario Usuario { get; set; }
         public string Descripcion { get; set; }
         public int? IdCurriculum { get; set; }
         [ForeignKey("IdCurriculum")]

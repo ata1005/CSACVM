@@ -180,7 +180,7 @@ namespace CSACVM.Controllers {
                     #region EntradaCV.
                     List<EntradaCV> lstEntradaCV = _unitOfWork.EntradaCV.ObtenerListaEntrada(model.IdCurriculum);
                     List<string> lstPuestoTrabajo = new List<string>(); //Request.Form["gradoFormacion"].ToList();
-                    List<string> lstEmpresaAsociada = new List<string>();//Request.Form["observacionesFormacion"].ToList();                  
+                    List<string> lstEmpresaAsociada = new List<string>();//Request.Form["observacionesFormacion"].ToList();
                     List<string> lstUbicacionEntrada= new List<string>();//Request.Form["ubicacionFormacion"].ToList();
                     List<string> lstObservacionesEntrada = new List<string>();
                     List<string> lstDateDesdeEntrada = new List<string>(); //Request.Form["fechaDesdeFormacion"].ToList();
@@ -210,8 +210,19 @@ namespace CSACVM.Controllers {
 
                     #endregion
 
-                    #region ExtraCV.
-
+                    #region Extras: AptitudCV y LogroCV.
+                    List<AptitudCV> lstAptitudCV = _unitOfWork.AptitudCV.ObtenerListaAptitud(model.IdCurriculum);
+                    List<LogroCV> lstLogroCV = _unitOfWork.LogroCV.ObtenerListaLogro(model.IdCurriculum);
+                    List<string> lstDescripcionAptitud = new List<string>(); //Request.Form["gradoFormacion"].ToList();
+                    List<string> lstDescripcionLogro = new List<string>();//Request.Form["observacionesFormacion"].ToList();
+                    foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("aptitud_"))) {
+                        lstDescripcionAptitud.Add(Request.Form[element]);
+                    }
+                    foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("logro_"))) {
+                        lstDescripcionLogro.Add(Request.Form[element]);
+                    }
+                    _unitOfWork.AptitudCV.GuardarAptitud(lstAptitudCV, lstDescripcionAptitud, model.IdCurriculum, idUsuario);
+                    _unitOfWork.LogroCV.GuardarLogro(lstLogroCV, lstDescripcionLogro,  model.IdCurriculum, idUsuario);
 
                     #endregion
 

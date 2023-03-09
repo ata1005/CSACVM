@@ -190,9 +190,13 @@ function CargarFotos() {
 var contadorFormacion = 1;
 var contadorIdioma = 1;
 var contadorEntrada = 1;
+var contadorAptitud = 1;
+var contadorLogro = 1;
 var contadorMaxFormacion = $(".formacionContainerClass").length;
 var contadorMaxIdioma = $(".idiomaContainerClass").length;
 var contadorMaxEntrada = $(".entradaContainerClass").length;
+var contadorMaxAptitud = $(".aptitudContainerClass").length;
+var contadorMaxLogro = $(".logroContainerClass").length;
 
 //Funciones para añadir inputs de Formación, Idioma y Entrada.
 function addFormacion() {
@@ -292,6 +296,52 @@ function addEntrada() {
     $("#bodyEntrada").append(strNuevaFila);
 }
 
+function addAptitud() {
+    var strNuevaFila = "";
+    $("#btnAddAptitud").remove();
+    contadorAptitud = document.getElementsByClassName("aptitudContainerClass").length;
+    contadorAptitud = $(".aptitudContainerClass").length;
+    contadorMaxAptitud++;
+    if (contadorAptitud == 1) {
+        $(".btnRemoveAptitud").removeAttr("disabled");
+        $(".btnRemoveAptitud").attr("onclick", "javascript: removeAptitud(1);");
+    }
+    contadorAptitud = contadorMaxAptitud;
+    strNuevaFila = '<div class="container aptitudContainerClass" id="aptitudContainer_' + contadorAptitud + '"><div class="row">'
+    strNuevaFila = strNuevaFila + '<div class="col pe-2"><label class="form-label fw-bold">Habilidad:</label>';
+    strNuevaFila = strNuevaFila + '<input class="form-control" placeholder="Habilidad" aria-required="true" name="aptitud_' + contadorAptitud + '" id="aptitud_' + contadorAptitud + '" /></div></div>';
+    strNuevaFila = strNuevaFila + '<div class="row mt-3"><div class="col-4">';
+    strNuevaFila = strNuevaFila + '<button class="btn btn-primary btnRemoveAptitud" onclick="removeAptitud(' + contadorAptitud + ')">';
+    strNuevaFila = strNuevaFila + '<i class="fas fa-minus me-3"></i>Quitar Habilidad</button></div></div></div><hr id="hrAptitud_' + contadorAptitud + '">';
+    strNuevaFila = strNuevaFila + '<div class="col-4"><a class="btn btn-primary w-50" href="javascript:addAptitud();" id="btnAddAptitud">';
+    strNuevaFila = strNuevaFila + '<i class="fa-solid fa-plus me-3"></i>Añadir Habilidad</a></div>';
+
+    $("#bodyAptitud").append(strNuevaFila);
+}
+
+function addLogro() {
+    var strNuevaFila = "";
+    $("#btnAddLogro").remove();
+    contadorLogro = document.getElementsByClassName("logroContainerClass").length;
+    contadorLogro = $(".logroContainerClass").length;
+    contadorMaxLogro++;
+    if (contadorLogro == 1) {
+        $(".btnRemoveLogro").removeAttr("disabled");
+        $(".btnRemoveLogro").attr("onclick", "javascript: removeLogro(1);");
+    }
+    contadorLogro = contadorMaxLogro;
+    strNuevaFila = '<div class="container logroContainerClass" id="logroContainer_' + contadorLogro + '"><div class="row">'
+    strNuevaFila = strNuevaFila + '<div class="col pe-2"><label class="form-label fw-bold">Logro:</label>';
+    strNuevaFila = strNuevaFila + '<textarea class="form-control" rows="2" aria-required="true" name="logro_' + contadorLogro + '" id="logro_' + contadorLogro + '" /></textarea></div></div>';
+    strNuevaFila = strNuevaFila + '<div class="row mt-3"><div class="col-4">';
+    strNuevaFila = strNuevaFila + '<button class="btn btn-primary btnRemoveLogro" onclick="removeLogro(' + contadorLogro + ')">';
+    strNuevaFila = strNuevaFila + '<i class="fas fa-minus me-3"></i>Quitar Logro</button></div></div></div><hr id="hrLogro_' + contadorLogro + '">';
+    strNuevaFila = strNuevaFila + '<div class="col-4"><a class="btn btn-primary w-50" href="javascript:addLogro();" id="btnAddLogro">';
+    strNuevaFila = strNuevaFila + '<i class="fa-solid fa-plus me-3"></i>Añadir Logro</a></div>';
+
+    $("#bodyLogro").append(strNuevaFila);
+}
+
 //Funciones para quitar inputs de Formación, Idioma y Entrada.
 function removeFormacion(contInputs) {
     var idContainer = "#formacionContainer_" + contInputs;
@@ -329,5 +379,31 @@ function removeEntrada(contInputs) {
     if (numInputs == 2) {
         $(".btnRemoveEntrada").attr("disabled", true);
         $(".btnRemoveEntrada").attr("onclick", "javascript: void(0);");
+    }
+}
+
+function removeAptitud(contInputs) {
+    var idContainer = "#aptitudContainer_" + contInputs;
+    var hrContainer = "#hrAptitud_" + contInputs;
+    var numInputs = $(".aptitudContainerClass").length;
+    $(idContainer).remove();
+    $(hrContainer).remove();
+
+    if (numInputs == 2) {
+        $(".btnRemoveAptitud").attr("disabled", true);
+        $(".btnRemoveAptitud").attr("onclick", "javascript: void(0);");
+    }
+}
+
+function removeLogro(contInputs) {
+    var idContainer = "#logroContainer_" + contInputs;
+    var hrContainer = "#hrLogro_" + contInputs;
+    var numInputs = $(".logroContainerClass").length;
+    $(idContainer).remove();
+    $(hrContainer).remove();
+
+    if (numInputs == 2) {
+        $(".btnRemoveLogro").attr("disabled", true);
+        $(".btnRemoveLogro").attr("onclick", "javascript: void(0);");
     }
 }
