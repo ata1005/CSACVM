@@ -44,6 +44,10 @@ namespace CSACVM.AccesoDatos.Repositorio{
                 }
             }
         }
+        public void EliminarAptitud(AptitudCV aptitudCV) {
+            _db.AptitudCV.Remove(aptitudCV);
+            _db.SaveChanges();
+        }
 
     }
 }

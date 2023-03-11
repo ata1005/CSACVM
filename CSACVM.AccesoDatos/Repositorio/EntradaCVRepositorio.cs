@@ -76,5 +76,9 @@ namespace CSACVM.AccesoDatos.Repositorio{
                 contador++;
             }
         }
+        public void EliminarEntrada(EntradaCV entradaCV) {
+            _db.EntradaCV.Remove(entradaCV);
+            _db.SaveChanges();
+        }
     }
 }

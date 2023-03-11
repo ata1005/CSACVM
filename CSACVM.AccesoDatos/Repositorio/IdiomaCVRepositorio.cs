@@ -74,5 +74,10 @@ namespace CSACVM.AccesoDatos.Repositorio{
             }
         }
 
+        public void EliminarIdioma(IdiomaCV idiomaCV) {
+            _db.IdiomaCV.Remove(idiomaCV);
+            _db.SaveChanges();
+        }
+
     }
 }

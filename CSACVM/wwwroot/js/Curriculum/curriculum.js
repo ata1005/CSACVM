@@ -50,6 +50,18 @@ function inicializarTablaCurriculums(cvs) {
             },
             {
                 targets: 4,
+                title: "Eliminar",
+                visible: true,
+                orderable: false,
+                searchable: false,
+                className: 'dt-body-center text-center',
+                width: "10%",
+                render: function (data, type, row) {
+                    return '<a href="javascript:eliminarCurriculum(\'' + row.idCurriculum + '\');"><i class="fa-solid fa-trash fa-xl c-grey"></i></a>';
+                }
+            },
+            {
+                targets: 5,
                 title: "Exportar PDF",
                 visible: true,
                 orderable: false,
@@ -77,8 +89,31 @@ function inicializarTablaCurriculums(cvs) {
 
 }
 
+function eliminarCurriculum(idCurriculum) {
+    modal = $('#modalEliminarCV')[0];
+    $(modal).modal('toggle');
+    modal.style.display = "block";
+    var strCerrar = "modalEliminarCV";
+    var fila = '<div class="row mt-2 d-flex justify-content-center text-center" id="rowEliminar"><div class="col-2"><button type="button" class="btn btn-success" onclick="javascript:aceptarEliminar(\'' + idCurriculum + '\')">SI</button></div>';
+    fila = fila + '<div class="col-2"><button type="button" class="btn btn-danger" aria-label="Close" onclick="cerrarModalEliminar(\'' + strCerrar +'\')">NO</button></div></div>';
+    $("#modalBodyEliminar").append(fila);
+}
+
+function aceptarEliminar(idCurriculum) {
+    $.ajax({
+        type: "POST",
+        url: "/Curriculum/EliminarCurriculum",
+        data: {
+            'idCurriculum': parseInt(idCurriculum)
+        },
+        async: true,
+        success: function (response) {
+
+        }
+    });
+}
+
 function crearCurriculum() {
-    debugger;
     var divsCrearCV = "#divsCrearCV";
     var texto = $("#inputCrearCV").val()
     modal = $('#modalCrearCV')[0];
@@ -115,6 +150,11 @@ function cerrarModal(nombreModal) {
     modalH = $("#" + nombreModal);
     modalH.modal('hide');
     $("#divsCrearCV").children().remove();
+}
+function cerrarModalEliminar(nombreModal) {
+    modalH = $("#" + nombreModal);
+    modalH.modal('hide');
+    $("#rowEliminar").remove();
 }
 
 function editarCurriculum(idCurriculum) {

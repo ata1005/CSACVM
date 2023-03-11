@@ -45,9 +45,6 @@ namespace CSACVM.Controllers {
             Curriculum curriculum = _unitOfWork.Curriculum.GetFirstOrDefault(c => c.IdCurriculum == idCurriculum);
             FotoUsuarioCV rutaFoto = _unitOfWork.FotoUsuarioCV.GetFirstOrDefault(f => f.IdCurriculum == idCurriculum);
             UsuarioCV usuarioCV = _unitOfWork.UsuarioCV.GetFirstOrDefault(u => u.IdCurriculum == idCurriculum);
-            FormacionCV formacionCV = _unitOfWork.FormacionCV.GetFirstOrDefault(f2 => f2.IdCurriculum == idCurriculum);
-            IdiomaCV idiomaCV = _unitOfWork.IdiomaCV.GetFirstOrDefault(i => i.IdCurriculum == idCurriculum);
-            EntradaCV entradaCV = _unitOfWork.EntradaCV.GetFirstOrDefault(e => e.IdCurriculum == idCurriculum);
 
 
             //Si los modelos son null, creamos una instancia de ese modelo con el idCurriculum.
@@ -59,7 +56,6 @@ namespace CSACVM.Controllers {
                 Titulo = curriculum.Titulo,
                 Foto = rutaFoto != null ? rutaFoto.Ruta : "",
                 UsuarioCV = usuarioCV,
-                FormacionCV = formacionCV,
                 ListaFormacionCV = _unitOfWork.FormacionCV.ObtenerListaFormacion(idCurriculum),
                 ListaIdiomaCV = _unitOfWork.IdiomaCV.ObtenerListaIdioma(idCurriculum),
                 ListaEntradaCV = _unitOfWork.EntradaCV.ObtenerListaEntrada(idCurriculum),
@@ -88,36 +84,36 @@ namespace CSACVM.Controllers {
                     ImageFile = HttpContext.Request.Form.Files["fotoCurriculum"];
                     FotoUsuarioCV fotoUsuarioCV = _unitOfWork.FotoUsuarioCV.GetFirstOrDefault(f => f.IdCurriculum == model.IdCurriculum);
 
-                    //if (ImageFile != null) {
-                    //    ext = ImageFile.FileName.Split('.')[1];
-                    //    filename = "profilePhoto_" + idUsuario + "_" + model.IdCurriculum + "." + ext;
-                    //    fullpath = Path.Combine(folder, filename);
-                    //    pathDirectorio = folder + "/" + filename;
-                    //    guid = Guid.NewGuid().ToString();
-                    //    if (!Directory.Exists(folder)) {
-                    //        Directory.CreateDirectory(folder);
-                    //    }
+                    if (ImageFile != null) {
+                        ext = ImageFile.FileName.Split('.')[1];
+                        filename = "profilePhoto_" + idUsuario + "_" + model.IdCurriculum + "." + ext;
+                        fullpath = Path.Combine(folder, filename);
+                        pathDirectorio = folder + "/" + filename;
+                        guid = Guid.NewGuid().ToString();
+                        if (!Directory.Exists(folder)) {
+                            Directory.CreateDirectory(folder);
+                        }
 
-                    //    if (fotoUsuarioCV != null) {
-                    //        System.IO.File.Delete(fotoUsuarioCV.Ruta);
-                    //    }
+                        if (fotoUsuarioCV != null) {
+                            System.IO.File.Delete(fotoUsuarioCV.Ruta);
+                        }
 
-                    //    using (FileStream fileStream = System.IO.File.Create(fullpath)) {
-                    //        await ImageFile.CopyToAsync(fileStream);
+                        using (FileStream fileStream = System.IO.File.Create(fullpath)) {
+                            await ImageFile.CopyToAsync(fileStream);
 
-                    //    }
-                    //    if (fotoUsuarioCV != null) {
-                    //        _unitOfWork.FotoUsuarioCV.ChangePhoto(fotoUsuarioCV, pathDirectorio, guid, ext, idUsuario);
-                    //    } else {
-                    //        _unitOfWork.FotoUsuarioCV.AddPhoto(pathDirectorio, guid, ext, idUsuario, model.IdCurriculum);
-                    //    }
+                        }
+                        if (fotoUsuarioCV != null) {
+                            _unitOfWork.FotoUsuarioCV.ChangePhoto(fotoUsuarioCV, pathDirectorio, guid, ext, idUsuario);
+                        } else {
+                            _unitOfWork.FotoUsuarioCV.AddPhoto(pathDirectorio, guid, ext, idUsuario, model.IdCurriculum);
+                        }
 
-                    //}
+                    }
 
-                    ////Zona de guardado de UsuarioCV.
+                    //Zona de guardado de UsuarioCV.
 
-                    //UsuarioCV usuarioCV = _unitOfWork.UsuarioCV.GetFirstOrDefault(a => a.IdCurriculum == model.IdCurriculum);   
-                    //_unitOfWork.UsuarioCV.GuardarUsuarioCV(usuarioCV,model,idUsuario,fotoUsuarioCV);
+                    UsuarioCV usuarioCV = _unitOfWork.UsuarioCV.GetFirstOrDefault(a => a.IdCurriculum == model.IdCurriculum);
+                    _unitOfWork.UsuarioCV.GuardarUsuarioCV(usuarioCV, model, idUsuario, fotoUsuarioCV);
 
 
                     #endregion
@@ -131,22 +127,22 @@ namespace CSACVM.Controllers {
                     List<string> lstDateHastaFormacion = new List<string>(); //Request.Form["fechaHastaFormacion"].ToList();
 
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("gradoFormacion_"))) {
-                        lstGradoFormacion.Add(Request.Form[element]);
+                        if (Request.Form[element] != "") lstGradoFormacion.Add(Request.Form[element]);
                     }
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("ubicacionFormacion_"))) {
-                        lstUbicacionFormacion.Add(Request.Form[element]);
+                        if (Request.Form[element] != "") lstUbicacionFormacion.Add(Request.Form[element]);
                     }
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("observacionesFormacion_"))) {
-                        lstObservacionesFormacion.Add(Request.Form[element]);
+                        if (Request.Form[element] != "") lstObservacionesFormacion.Add(Request.Form[element]);
                     }
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("fechaDesdeFormacion_"))) {
-                        lstDateDesdeFormacion.Add(Request.Form[element]);
+                        if (Request.Form[element] != "") lstDateDesdeFormacion.Add(Request.Form[element]);
                     }
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("fechaHastaFormacion_"))) {
-                        lstDateHastaFormacion.Add(Request.Form[element]);
+                        if (Request.Form[element] != "") lstDateHastaFormacion.Add(Request.Form[element]);
                     }
-                 
-                    _unitOfWork.FormacionCV.GuardarFormacion(lstFormacionCV, lstGradoFormacion,lstUbicacionFormacion, lstObservacionesFormacion, lstDateDesdeFormacion, lstDateHastaFormacion, model.IdCurriculum, idUsuario);
+
+                    if (lstGradoFormacion.Count > 0) _unitOfWork.FormacionCV.GuardarFormacion(lstFormacionCV, lstGradoFormacion,lstUbicacionFormacion, lstObservacionesFormacion, lstDateDesdeFormacion, lstDateHastaFormacion, model.IdCurriculum, idUsuario);
                     #endregion
 
                     #region IdiomaCV.
@@ -158,22 +154,22 @@ namespace CSACVM.Controllers {
                     List<string> lstDateHastaIdioma = new List<string>(); //Request.Form["fechaHastaFormacion"].ToList();
 
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("descripcionIdioma_"))) {
-                        lstDescripcionIdioma.Add(Request.Form[element]);
+                        if (Request.Form[element] != "") lstDescripcionIdioma.Add(Request.Form[element]);
                     }
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("nivelIdioma_"))) {
-                        lstNivelIdioma.Add(Request.Form[element]);
+                        if (Request.Form[element] != "") lstNivelIdioma.Add(Request.Form[element]);
                     }
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("centroIdioma_"))) {
-                        lstCentroIdioma.Add(Request.Form[element]);
+                        if (Request.Form[element] != "") lstCentroIdioma.Add(Request.Form[element]);
                     }
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("fechaDesdeIdioma_"))) {
-                        lstDateDesdeIdioma.Add(Request.Form[element]);
+                        if (Request.Form[element] != "") lstDateDesdeIdioma.Add(Request.Form[element]);
                     }
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("fechaHastaIdioma_"))) {
-                        lstDateHastaIdioma.Add(Request.Form[element]);
+                        if (Request.Form[element] != "") lstDateHastaIdioma.Add(Request.Form[element]);
                     }
 
-                    _unitOfWork.IdiomaCV.GuardarIdioma(lstIdiomaCV, lstDescripcionIdioma, lstNivelIdioma, lstCentroIdioma, lstDateDesdeIdioma, lstDateHastaIdioma, model.IdCurriculum, idUsuario);
+                    if(lstDescripcionIdioma.Count > 0) _unitOfWork.IdiomaCV.GuardarIdioma(lstIdiomaCV, lstDescripcionIdioma, lstNivelIdioma, lstCentroIdioma, lstDateDesdeIdioma, lstDateHastaIdioma, model.IdCurriculum, idUsuario);
 
                     #endregion
 
@@ -187,25 +183,25 @@ namespace CSACVM.Controllers {
                     List<string> lstDateHastaEntrada = new List<string>(); //Request.Form["fechaHastaFormacion"].ToList();
 
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("puestoTrabajo_"))) {
-                        lstPuestoTrabajo.Add(Request.Form[element]);
+                        if (Request.Form[element] != "") lstPuestoTrabajo.Add(Request.Form[element]);
                     }
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("empresaAsociada_"))) {
-                        lstEmpresaAsociada.Add(Request.Form[element]);
+                        if (Request.Form[element] != "") lstEmpresaAsociada.Add(Request.Form[element]);
                     }
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("ubicacionEntrada_"))) {
-                        lstUbicacionEntrada.Add(Request.Form[element]);
+                        if (Request.Form[element] != "") lstUbicacionEntrada.Add(Request.Form[element]);
                     }
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("observacionesEntrada_"))) {
-                        lstObservacionesEntrada.Add(Request.Form[element]);
+                        if (Request.Form[element] != "") lstObservacionesEntrada.Add(Request.Form[element]);
                     }
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("fechaDesdeEntrada_"))) {
-                        lstDateDesdeEntrada.Add(Request.Form[element]);
+                        if (Request.Form[element] != "") lstDateDesdeEntrada.Add(Request.Form[element]);
                     }
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("fechaHastaEntrada_"))) {
-                        lstDateHastaEntrada.Add(Request.Form[element]);
+                        if (Request.Form[element] != "") lstDateHastaEntrada.Add(Request.Form[element]);
                     }
 
-                    _unitOfWork.EntradaCV.GuardarEntrada(lstEntradaCV, lstPuestoTrabajo, lstEmpresaAsociada, lstUbicacionEntrada, lstObservacionesEntrada, lstDateDesdeEntrada, lstDateHastaEntrada, model.IdCurriculum, idUsuario);
+                    if (lstPuestoTrabajo.Count > 0) _unitOfWork.EntradaCV.GuardarEntrada(lstEntradaCV, lstPuestoTrabajo, lstEmpresaAsociada, lstUbicacionEntrada, lstObservacionesEntrada, lstDateDesdeEntrada, lstDateHastaEntrada, model.IdCurriculum, idUsuario);
 
 
                     #endregion
@@ -216,17 +212,77 @@ namespace CSACVM.Controllers {
                     List<string> lstDescripcionAptitud = new List<string>(); //Request.Form["gradoFormacion"].ToList();
                     List<string> lstDescripcionLogro = new List<string>();//Request.Form["observacionesFormacion"].ToList();
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("aptitud_"))) {
-                        lstDescripcionAptitud.Add(Request.Form[element]);
+                        if (Request.Form[element] != "") lstDescripcionAptitud.Add(Request.Form[element]);
                     }
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("logro_"))) {
-                        lstDescripcionLogro.Add(Request.Form[element]);
+                        if (Request.Form[element] != "") lstDescripcionLogro.Add(Request.Form[element]);
                     }
-                    _unitOfWork.AptitudCV.GuardarAptitud(lstAptitudCV, lstDescripcionAptitud, model.IdCurriculum, idUsuario);
-                    _unitOfWork.LogroCV.GuardarLogro(lstLogroCV, lstDescripcionLogro,  model.IdCurriculum, idUsuario);
+                    if (lstAptitudCV.Count > 0) _unitOfWork.AptitudCV.GuardarAptitud(lstAptitudCV, lstDescripcionAptitud, model.IdCurriculum, idUsuario);
+                    if (lstDescripcionLogro.Count > 0) _unitOfWork.LogroCV.GuardarLogro(lstLogroCV, lstDescripcionLogro,  model.IdCurriculum, idUsuario);
 
                     #endregion
 
                     dbTGuardar.Commit();
+                } catch (Exception ex) {
+                    dbTGuardar.Rollback();
+                    throw;
+                }
+            }
+
+            return LocalRedirect("~/Curriculum/Curriculum");
+        }
+
+        public ActionResult EliminarCurriculum(int idCurriculum) {
+            using (var dbTGuardar = _unitOfWork.GetContext().Database.BeginTransaction()) {
+                try {
+                    //Obtención de los datos.
+                    Curriculum curriculum = _unitOfWork.Curriculum.GetFirstOrDefault(c => c.IdCurriculum == idCurriculum);               
+                    UsuarioCV usuarioCV = _unitOfWork.UsuarioCV.GetFirstOrDefault(u => u.IdCurriculum == idCurriculum);
+                    FotoUsuarioCV fotoUsuarioCV = _unitOfWork.FotoUsuarioCV.GetFirstOrDefault(f => f.IdCurriculum == idCurriculum);
+                    List<FormacionCV> lstFormacionCV = _unitOfWork.FormacionCV.ObtenerListaFormacion(idCurriculum);
+                    List<IdiomaCV> lstIdiomaCV = _unitOfWork.IdiomaCV.ObtenerListaIdioma(idCurriculum);
+                    List<EntradaCV> lstEntradaCV = _unitOfWork.EntradaCV.ObtenerListaEntrada(idCurriculum);
+                    List<AptitudCV> lstAptitudCV = _unitOfWork.AptitudCV.ObtenerListaAptitud(idCurriculum);
+                    List<LogroCV> lstLogroCV = _unitOfWork.LogroCV.ObtenerListaLogro(idCurriculum);
+
+                    //Eliminar instancia de UsuarioCV + Foto.
+                    if (usuarioCV != null) {
+                        _unitOfWork.UsuarioCV.EliminarUsuario(usuarioCV);
+                        if (fotoUsuarioCV != null) {
+                            _unitOfWork.FotoUsuarioCV.EliminarFotoUsuario(fotoUsuarioCV);
+                        }
+                    }
+
+                    //Eliminar instancia de FormaciónCV.
+                    foreach(FormacionCV formacion in lstFormacionCV) {
+                        _unitOfWork.FormacionCV.EliminarFormacion(formacion);
+                    }
+
+                    //Eliminar instancia de IdiomaCV.
+                    foreach (IdiomaCV idioma in lstIdiomaCV) {
+                        _unitOfWork.IdiomaCV.EliminarIdioma(idioma);
+                    }
+
+                    //Eliminar instancia de EntradaCV.
+                    foreach (EntradaCV entrada in lstEntradaCV) {
+                        _unitOfWork.EntradaCV.EliminarEntrada(entrada);
+                    }
+
+                    //Eliminar instancia de LogroCV + AptitudCV.
+                    foreach (AptitudCV aptitud in lstAptitudCV) {
+                        _unitOfWork.AptitudCV.EliminarAptitud(aptitud);
+                    }
+                    foreach (LogroCV logro in lstLogroCV) {
+                        _unitOfWork.LogroCV.EliminarLogro(logro);
+                    }
+
+                    //Eliminar de la tabla currículums.
+                    if (curriculum != null) {
+                        _unitOfWork.Curriculum.EliminarCurriculum(curriculum);
+                    }
+
+                    dbTGuardar.Commit();
+                    
                 } catch (Exception ex) {
                     dbTGuardar.Rollback();
                     throw;

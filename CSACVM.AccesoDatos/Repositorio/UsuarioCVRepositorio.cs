@@ -46,7 +46,12 @@ namespace CSACVM.AccesoDatos.Repositorio{
                 FechaCreacion = DateTime.Now
             };
 
-            _db.Add(usuario);
+            _db.UsuarioCV.Add(usuario);
+            _db.SaveChanges();
+        }
+
+        public void EliminarUsuario(UsuarioCV usuarioCV) {
+            _db.UsuarioCV.Remove(usuarioCV);
             _db.SaveChanges();
         }
     }

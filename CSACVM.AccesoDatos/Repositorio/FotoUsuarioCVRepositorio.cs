@@ -44,5 +44,9 @@ namespace CSACVM.AccesoDatos.Repositorio{
             _db.FotoUsuarioCV.Add(foto);
             _db.SaveChanges();
         }
+        public void EliminarFotoUsuario(FotoUsuarioCV fotoUsuarioCV) {
+            _db.FotoUsuarioCV.Remove(fotoUsuarioCV);
+            _db.SaveChanges();
+        }
     }
 }

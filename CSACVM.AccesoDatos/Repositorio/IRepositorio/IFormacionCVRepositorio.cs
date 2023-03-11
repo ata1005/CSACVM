@@ -5,5 +5,6 @@ namespace CSACVM.AccesoDatos.Repositorio.IRepositorio{
         void Update(FormacionCV obj);
         public List<FormacionCV> ObtenerListaFormacion(int idCurriculum);
         public void GuardarFormacion(List<FormacionCV> lstFormacionCV,List<string> lstGradoFormacion, List<string> lstUbicacionFormacion, List<string> lstObservacionesFormacion, List<string> lstDateDesdeFormacion, List<string> lstDateHastaFormacion, int idCurriculum, int idUser);
+        public void EliminarFormacion(FormacionCV formacion);
     }
 }

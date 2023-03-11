@@ -73,6 +73,10 @@ namespace CSACVM.AccesoDatos.Repositorio{
                 contador++;
             }
         }
+        public void EliminarFormacion(FormacionCV formacion) {
+            _db.FormacionCV.Remove(formacion);
+            _db.SaveChanges();
+        }
 
     }
 }

@@ -42,6 +42,10 @@ namespace CSACVM.AccesoDatos.Repositorio{
                 }
             }
         }
+        public void EliminarLogro(LogroCV logroCV) {
+            _db.LogroCV.Remove(logroCV);
+            _db.SaveChanges();
+        }
 
     }
 }
