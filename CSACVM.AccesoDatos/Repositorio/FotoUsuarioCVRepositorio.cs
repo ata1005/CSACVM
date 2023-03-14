@@ -25,7 +25,7 @@ namespace CSACVM.AccesoDatos.Repositorio{
             foto.FechaActualizacion = DateTime.Now;
             foto.ProcesoActualizacion = MethodBase.GetCurrentMethod().Name;
             foto.UsuarioActualizacion = idUsuario;
-            _db.FotoUsuarioCV.Add(foto);
+            _db.FotoUsuarioCV.Update(foto);
             _db.SaveChanges();
         }
 

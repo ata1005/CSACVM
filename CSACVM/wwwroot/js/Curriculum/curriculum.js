@@ -89,6 +89,11 @@ function inicializarTablaCurriculums(cvs) {
 
 }
 
+function exportarPDF(idCurriculum) {
+    let url = '/Curriculum/ExportarPDF?idCurriculum=' + idCurriculum;
+    window.open(url, '_blank');
+}
+
 function eliminarCurriculum(idCurriculum) {
     modal = $('#modalEliminarCV')[0];
     $(modal).modal('toggle');

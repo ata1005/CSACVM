@@ -6,7 +6,7 @@
         <div class="row-12 d-flex">
             <div class="col-2 d-flex" id="colImagen" data-type="image-model">
                 @if(Model.ProfilePhoto != null) {
-                    var ruta = "/ImagenPerfil/" + Model.ProfilePhoto.Split("/")[2];
+                    var ruta = "/ImagenPerfil/" + Model.ProfilePhoto.Split("/")[3];
                     <div class="divFotoNoBorder foto-message d-flex justify-content-center form-group" id="divFoto">
                         <label for="files" data-type="imagesloader">
                             <img class="tamImagen" src="@ruta"><input type="file" id="files" name="fotoPerfil" accept=".jpg,.jpeg,.png"/>

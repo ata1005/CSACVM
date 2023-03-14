@@ -67,32 +67,35 @@ namespace CSACVM.Controllers {
         public async Task<IActionResult> GuardarPerfil(ProfileVM model) {
             int idUser = Convert.ToInt32(HttpContext.Session.GetInt32("ID"));
             Usuario user = _unitOfWork.Usuario.GetFirstOrDefault(u => u.IdUsuario == idUser);
-            string folder = "wwwroot/ImagenPerfil";
+            string folder = "CSACVM/wwwroot/ImagenPerfil";
+            string absolutePath = System.IO.Path.GetFullPath(folder);
             string filename = "";
+            string fullfilename = "";
             string ext = "";
-            string fullpath = "";
+            string ruta = "";
             string pathDirectorio = "";
             ImageFile = HttpContext.Request.Form.Files["fotoPerfil"];
             
             if (ImageFile != null) {
                 ext = ImageFile.FileName.Split('.')[1];
-                filename = "profilePhoto_" + idUser + "." + ext;
-                fullpath = Path.Combine(folder, filename);
-                pathDirectorio = folder + "/" + filename;
+                filename = "profilePhoto_" + idUser;
+                fullfilename = filename + "." + ext;
+                ruta = folder + "/" + fullfilename;
+                pathDirectorio = absolutePath + "\\" + fullfilename;
                 if (!Directory.Exists(folder)) {
                     Directory.CreateDirectory(folder);
                 }
 
                 if (user.Foto != null) {
-                    System.IO.File.Delete(fullpath);
+                    System.IO.File.Delete(pathDirectorio);
                 } 
 
-                using (FileStream fileStream = System.IO.File.Create(fullpath)) {
+                using (FileStream fileStream = System.IO.File.Create(pathDirectorio)) {
                     await ImageFile.CopyToAsync(fileStream);
                    
                 }
 
-                _unitOfWork.Usuario.AddPhoto(user, pathDirectorio);
+                _unitOfWork.Usuario.AddPhoto(user, ruta);
                 
             }
          

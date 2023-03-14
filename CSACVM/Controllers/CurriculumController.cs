@@ -7,6 +7,8 @@ using CSACVM.AccesoDatos.Repositorio.IRepositorio;
 using Newtonsoft.Json;
 using CSACVM.AccesoDatos.Repositorio;
 using CSACVM.Modelos;
+using Rotativa.AspNetCore.Options;
+
 
 namespace CSACVM.Controllers {
     public class CurriculumController : Controller {
@@ -38,9 +40,12 @@ namespace CSACVM.Controllers {
             return LocalRedirect("~/Curriculum");
         }
 
+
         public RedirectToActionResult RedirectCurriculum(int? idCurriculum) {
             return RedirectToAction("EditarCurriculum", "Curriculum", new { idCurriculum });
         }
+
+
         public IActionResult EditarCurriculum(int idCurriculum) {
             Curriculum curriculum = _unitOfWork.Curriculum.GetFirstOrDefault(c => c.IdCurriculum == idCurriculum);
             FotoUsuarioCV rutaFoto = _unitOfWork.FotoUsuarioCV.GetFirstOrDefault(f => f.IdCurriculum == idCurriculum);
@@ -54,7 +59,7 @@ namespace CSACVM.Controllers {
             CurriculumModelVM model = new CurriculumModelVM() {
                 IdCurriculum = idCurriculum,
                 Titulo = curriculum.Titulo,
-                Foto = rutaFoto != null ? rutaFoto.Ruta : "",
+                Foto = rutaFoto != null ? rutaFoto.Ruta + "." + rutaFoto.Ext : "",
                 UsuarioCV = usuarioCV,
                 ListaFormacionCV = _unitOfWork.FormacionCV.ObtenerListaFormacion(idCurriculum),
                 ListaIdiomaCV = _unitOfWork.IdiomaCV.ObtenerListaIdioma(idCurriculum),
@@ -64,21 +69,38 @@ namespace CSACVM.Controllers {
             };
             return View("../Curriculum/EditarCurriculum", model);
         }
+
+        public ActionResult ExportarPDF(int idCurriculum) {
+
+            CurriculumModelVM model = new CurriculumModelVM() {
+
+            };
+
+            return new Rotativa.AspNetCore.ViewAsPdf("_ExportarPDF", model) {
+                PageSize = Size.A4,
+                PageOrientation = Orientation.Landscape,
+                PageMargins = { Left = 5, Right = 3, Bottom = 5 },
+                //CustomSwitches = "--footer-center \" " + tituloFooter + "  " + "P\u00E1gina" + ": [page]/[toPage]\"" + " --footer-line --footer-font-size \"8\" --footer-spacing 1 --footer-font-name \"Meridien\" --print-media-type"
+            };
+        }
         public IFormFile ImageFile { get; set; }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> GuardarCurriculum(CurriculumModelVM model) {
+        public async Task<IActionResult> GuardarCurriculumAsync(CurriculumModelVM model) {
             using (var dbTGuardar = _unitOfWork.GetContext().Database.BeginTransaction()) {
                 try {
                     int idUsuario = HttpContext.Session.GetInt32("ID").Value;
                     #region UsuarioCV.
 
                     //Zona de Imagen.
-                    string folder = "wwwroot/ImagenPerfilCV";
+                    //string illo = "C:\\Users\\alext\\Desktop\\TFG\\TFG\\Repositorio\\CSACVM\\CSACVM\\wwwroot\\ImagenPerfilCV";
+                    string folder = "CSACVM/wwwroot/ImagenPerfilCV";
+                    string absolutePath = System.IO.Path.GetFullPath(folder);
                     string filename = "";
+                    string fullfilename = "";
                     string ext = "";
-                    string fullpath = "";
+                    string ruta = "";
                     string pathDirectorio = "";
                     string guid = "";
                     ImageFile = HttpContext.Request.Form.Files["fotoCurriculum"];
@@ -86,26 +108,27 @@ namespace CSACVM.Controllers {
 
                     if (ImageFile != null) {
                         ext = ImageFile.FileName.Split('.')[1];
-                        filename = "profilePhoto_" + idUsuario + "_" + model.IdCurriculum + "." + ext;
-                        fullpath = Path.Combine(folder, filename);
-                        pathDirectorio = folder + "/" + filename;
+                        filename = "profilePhoto_" + idUsuario + "_" + model.IdCurriculum;
+                        fullfilename = filename + "." + ext;
+                        ruta = folder + "/" + filename;
+                        pathDirectorio = absolutePath + "\\" + fullfilename;
                         guid = Guid.NewGuid().ToString();
                         if (!Directory.Exists(folder)) {
                             Directory.CreateDirectory(folder);
                         }
 
                         if (fotoUsuarioCV != null) {
-                            System.IO.File.Delete(fotoUsuarioCV.Ruta);
+                            System.IO.File.Delete(pathDirectorio);
                         }
 
-                        using (FileStream fileStream = System.IO.File.Create(fullpath)) {
+                        using (FileStream fileStream = System.IO.File.Create(pathDirectorio)) {
                             await ImageFile.CopyToAsync(fileStream);
 
                         }
                         if (fotoUsuarioCV != null) {
-                            _unitOfWork.FotoUsuarioCV.ChangePhoto(fotoUsuarioCV, pathDirectorio, guid, ext, idUsuario);
+                            _unitOfWork.FotoUsuarioCV.ChangePhoto(fotoUsuarioCV, ruta, guid, ext, idUsuario);
                         } else {
-                            _unitOfWork.FotoUsuarioCV.AddPhoto(pathDirectorio, guid, ext, idUsuario, model.IdCurriculum);
+                            _unitOfWork.FotoUsuarioCV.AddPhoto(ruta, guid, ext, idUsuario, model.IdCurriculum);
                         }
 
                     }
@@ -127,22 +150,26 @@ namespace CSACVM.Controllers {
                     List<string> lstDateHastaFormacion = new List<string>(); //Request.Form["fechaHastaFormacion"].ToList();
 
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("gradoFormacion_"))) {
-                        if (Request.Form[element] != "") lstGradoFormacion.Add(Request.Form[element]);
+                        lstGradoFormacion.Add(Request.Form[element]);
                     }
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("ubicacionFormacion_"))) {
-                        if (Request.Form[element] != "") lstUbicacionFormacion.Add(Request.Form[element]);
+                        lstUbicacionFormacion.Add(Request.Form[element]);
                     }
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("observacionesFormacion_"))) {
-                        if (Request.Form[element] != "") lstObservacionesFormacion.Add(Request.Form[element]);
+                        lstObservacionesFormacion.Add(Request.Form[element]);
                     }
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("fechaDesdeFormacion_"))) {
-                        if (Request.Form[element] != "") lstDateDesdeFormacion.Add(Request.Form[element]);
+                        lstDateDesdeFormacion.Add(Request.Form[element]);
                     }
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("fechaHastaFormacion_"))) {
-                        if (Request.Form[element] != "") lstDateHastaFormacion.Add(Request.Form[element]);
+                        lstDateHastaFormacion.Add(Request.Form[element]);
                     }
 
-                    if (lstGradoFormacion.Count > 0) _unitOfWork.FormacionCV.GuardarFormacion(lstFormacionCV, lstGradoFormacion,lstUbicacionFormacion, lstObservacionesFormacion, lstDateDesdeFormacion, lstDateHastaFormacion, model.IdCurriculum, idUsuario);
+                    int vacioFormacion = 0;
+                    foreach(string formacion in lstGradoFormacion) {
+                        if (formacion != "") vacioFormacion++;
+                    }
+                    if (vacioFormacion > 0) _unitOfWork.FormacionCV.GuardarFormacion(lstFormacionCV, lstGradoFormacion,lstUbicacionFormacion, lstObservacionesFormacion, lstDateDesdeFormacion, lstDateHastaFormacion, model.IdCurriculum, idUsuario);
                     #endregion
 
                     #region IdiomaCV.
@@ -154,22 +181,26 @@ namespace CSACVM.Controllers {
                     List<string> lstDateHastaIdioma = new List<string>(); //Request.Form["fechaHastaFormacion"].ToList();
 
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("descripcionIdioma_"))) {
-                        if (Request.Form[element] != "") lstDescripcionIdioma.Add(Request.Form[element]);
+                        lstDescripcionIdioma.Add(Request.Form[element]);
                     }
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("nivelIdioma_"))) {
-                        if (Request.Form[element] != "") lstNivelIdioma.Add(Request.Form[element]);
+                        lstNivelIdioma.Add(Request.Form[element]);
                     }
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("centroIdioma_"))) {
-                        if (Request.Form[element] != "") lstCentroIdioma.Add(Request.Form[element]);
+                        lstCentroIdioma.Add(Request.Form[element]);
                     }
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("fechaDesdeIdioma_"))) {
-                        if (Request.Form[element] != "") lstDateDesdeIdioma.Add(Request.Form[element]);
+                        lstDateDesdeIdioma.Add(Request.Form[element]);
                     }
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("fechaHastaIdioma_"))) {
-                        if (Request.Form[element] != "") lstDateHastaIdioma.Add(Request.Form[element]);
+                        lstDateHastaIdioma.Add(Request.Form[element]);
                     }
 
-                    if(lstDescripcionIdioma.Count > 0) _unitOfWork.IdiomaCV.GuardarIdioma(lstIdiomaCV, lstDescripcionIdioma, lstNivelIdioma, lstCentroIdioma, lstDateDesdeIdioma, lstDateHastaIdioma, model.IdCurriculum, idUsuario);
+                    int vacioIdioma = 0;
+                    foreach (string idioma in lstDescripcionIdioma) {
+                        if (idioma != "") vacioIdioma++;
+                    }
+                    if (vacioIdioma > 0) _unitOfWork.IdiomaCV.GuardarIdioma(lstIdiomaCV, lstDescripcionIdioma, lstNivelIdioma, lstCentroIdioma, lstDateDesdeIdioma, lstDateHastaIdioma, model.IdCurriculum, idUsuario);
 
                     #endregion
 
@@ -183,25 +214,29 @@ namespace CSACVM.Controllers {
                     List<string> lstDateHastaEntrada = new List<string>(); //Request.Form["fechaHastaFormacion"].ToList();
 
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("puestoTrabajo_"))) {
-                        if (Request.Form[element] != "") lstPuestoTrabajo.Add(Request.Form[element]);
+                        lstPuestoTrabajo.Add(Request.Form[element]);
                     }
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("empresaAsociada_"))) {
-                        if (Request.Form[element] != "") lstEmpresaAsociada.Add(Request.Form[element]);
+                        lstEmpresaAsociada.Add(Request.Form[element]);
                     }
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("ubicacionEntrada_"))) {
-                        if (Request.Form[element] != "") lstUbicacionEntrada.Add(Request.Form[element]);
+                        lstUbicacionEntrada.Add(Request.Form[element]);
                     }
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("observacionesEntrada_"))) {
-                        if (Request.Form[element] != "") lstObservacionesEntrada.Add(Request.Form[element]);
+                        lstObservacionesEntrada.Add(Request.Form[element]);
                     }
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("fechaDesdeEntrada_"))) {
-                        if (Request.Form[element] != "") lstDateDesdeEntrada.Add(Request.Form[element]);
+                        lstDateDesdeEntrada.Add(Request.Form[element]);
                     }
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("fechaHastaEntrada_"))) {
-                        if (Request.Form[element] != "") lstDateHastaEntrada.Add(Request.Form[element]);
+                        lstDateHastaEntrada.Add(Request.Form[element]);
                     }
 
-                    if (lstPuestoTrabajo.Count > 0) _unitOfWork.EntradaCV.GuardarEntrada(lstEntradaCV, lstPuestoTrabajo, lstEmpresaAsociada, lstUbicacionEntrada, lstObservacionesEntrada, lstDateDesdeEntrada, lstDateHastaEntrada, model.IdCurriculum, idUsuario);
+                    int vacioEntrada = 0;
+                    foreach (string puesto in lstPuestoTrabajo) {
+                        if (puesto != "") vacioEntrada++;
+                    }
+                    if (vacioEntrada > 0) _unitOfWork.EntradaCV.GuardarEntrada(lstEntradaCV, lstPuestoTrabajo, lstEmpresaAsociada, lstUbicacionEntrada, lstObservacionesEntrada, lstDateDesdeEntrada, lstDateHastaEntrada, model.IdCurriculum, idUsuario);
 
 
                     #endregion
@@ -212,13 +247,22 @@ namespace CSACVM.Controllers {
                     List<string> lstDescripcionAptitud = new List<string>(); //Request.Form["gradoFormacion"].ToList();
                     List<string> lstDescripcionLogro = new List<string>();//Request.Form["observacionesFormacion"].ToList();
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("aptitud_"))) {
-                        if (Request.Form[element] != "") lstDescripcionAptitud.Add(Request.Form[element]);
+                        lstDescripcionAptitud.Add(Request.Form[element]);
                     }
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("logro_"))) {
-                        if (Request.Form[element] != "") lstDescripcionLogro.Add(Request.Form[element]);
+                        lstDescripcionLogro.Add(Request.Form[element]);
                     }
-                    if (lstAptitudCV.Count > 0) _unitOfWork.AptitudCV.GuardarAptitud(lstAptitudCV, lstDescripcionAptitud, model.IdCurriculum, idUsuario);
-                    if (lstDescripcionLogro.Count > 0) _unitOfWork.LogroCV.GuardarLogro(lstLogroCV, lstDescripcionLogro,  model.IdCurriculum, idUsuario);
+
+                    int vacioAptitud = 0;
+                    int vacioLogro = 0;
+                    foreach (string actitud in lstDescripcionAptitud) {
+                        if (actitud != "") vacioAptitud++;
+                    }
+                    foreach (string logro in lstDescripcionLogro) {
+                        if (logro != "") vacioLogro++;
+                    }
+                    if (vacioAptitud > 0) _unitOfWork.AptitudCV.GuardarAptitud(lstAptitudCV, lstDescripcionAptitud, model.IdCurriculum, idUsuario);
+                    if (vacioLogro > 0) _unitOfWork.LogroCV.GuardarLogro(lstLogroCV, lstDescripcionLogro,  model.IdCurriculum, idUsuario);
 
                     #endregion
 
