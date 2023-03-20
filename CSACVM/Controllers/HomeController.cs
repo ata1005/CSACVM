@@ -1,17 +1,30 @@
-﻿using CSACVM.Modelos.ViewModels;
+﻿using CSACVM.AccesoDatos.Repositorio.IRepositorio;
+using CSACVM.Modelos;
+using CSACVM.Modelos.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace CSACVM.Controllers {
     public class HomeController : Controller {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public HomeController(ILogger<HomeController> logger) {
-            _logger = logger;
+        public HomeController(IUnitOfWork unitOfWork) {
+            _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         }
 
         public IActionResult Index() {
-            return View();
+            string username = HttpContext.Session.GetString("NOMBRE");
+            string foto = "";
+            Usuario user = _unitOfWork.Usuario.GetFirstOrDefault(u => u.NombreUser == username);
+            if (user != null) {
+                if(user.Foto != null) foto = "/" + user.Foto.Split("/")[2] + "/" + user.Foto.Split("/")[3];
+            }
+            EntradaVM model = new EntradaVM() {
+                NombreUser = username,
+                RutaFoto = foto,
+                ListaEntradaVM = _unitOfWork.Entrada.ObtenerListaEntradaVM()
+            };
+            return View(model);
         }
 
         public IActionResult Privacy() {

@@ -71,16 +71,26 @@ namespace CSACVM.Controllers {
         }
 
         public ActionResult ExportarPDF(int idCurriculum) {
-
+            Curriculum curriculum = _unitOfWork.Curriculum.GetFirstOrDefault(c => c.IdCurriculum == idCurriculum);
+            FotoUsuarioCV rutaFoto = _unitOfWork.FotoUsuarioCV.GetFirstOrDefault(f => f.IdCurriculum == idCurriculum);
+            UsuarioCV usuarioCV = _unitOfWork.UsuarioCV.GetFirstOrDefault(u => u.IdCurriculum == idCurriculum);
             CurriculumModelVM model = new CurriculumModelVM() {
-
+                IdCurriculum = idCurriculum,
+                Titulo = curriculum.Titulo,
+                Foto = rutaFoto != null ? rutaFoto.Ruta + "." + rutaFoto.Ext : "",
+                UsuarioCV = usuarioCV,
+                ListaFormacionCV = _unitOfWork.FormacionCV.ObtenerListaFormacion(idCurriculum),
+                ListaIdiomaCV = _unitOfWork.IdiomaCV.ObtenerListaIdioma(idCurriculum),
+                ListaEntradaCV = _unitOfWork.EntradaCV.ObtenerListaEntrada(idCurriculum),
+                ListaAptitudCV = _unitOfWork.AptitudCV.ObtenerListaAptitud(idCurriculum),
+                ListaLogroCV = _unitOfWork.LogroCV.ObtenerListaLogro(idCurriculum)
             };
 
             return new Rotativa.AspNetCore.ViewAsPdf("_ExportarPDF", model) {
                 PageSize = Size.A4,
-                PageOrientation = Orientation.Landscape,
+                PageOrientation = Orientation.Portrait,
                 PageMargins = { Left = 5, Right = 3, Bottom = 5 },
-                //CustomSwitches = "--footer-center \" " + tituloFooter + "  " + "P\u00E1gina" + ": [page]/[toPage]\"" + " --footer-line --footer-font-size \"8\" --footer-spacing 1 --footer-font-name \"Meridien\" --print-media-type"
+                CustomSwitches = "--footer-center \" " + "P\u00E1gina" + ": [page]/[toPage]\"" + " --footer-line --footer-font-size \"8\" --footer-spacing 1 --footer-font-name \"Meridien\" --print-media-type"
             };
         }
         public IFormFile ImageFile { get; set; }

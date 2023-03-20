@@ -31,5 +31,7 @@ namespace CSACVM.Modelos {
         public int? IdCurriculum { get; set; }
         [ForeignKey("IdCurriculum")]
         public Curriculum? Curriculum { get; set; }
+        [MaxLength(int.MaxValue)]
+        public string? AcercaDe { get; set; }
     }
 }

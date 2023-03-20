@@ -1,0 +1,31 @@
+.tabla-informe {
+    border:2px double;
+}
+
+.logo-informe {
+    width: 85%;
+    height: auto;
+    object-fit: cover;
+    margin-left: 5px;
+    display: -webkit-box; 
+}
+
+.fontInforme{
+    font-size: 18px;
+}
+
+.fontInformeTitulos {
+    font-size: 22px;
+}
+
+.flexrow {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex !important;
+}
+
+    .flexrow > div {
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+        flex: 1;
+    }

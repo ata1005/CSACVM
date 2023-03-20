@@ -12,12 +12,15 @@ namespace CSACVM.Modelos {
 
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdEntrada { get; set; }
+        public int IdUsuario { get; set; }
 
         [ForeignKey("IdUsuario")]
         public Usuario Usuario { get; set; }
+        public int IdTipoEntrada { get; set; }
 
         [ForeignKey("IdTipoEntrada")]
         public TipoEntrada TipoEntrada { get; set; }
+        public int IdProyecto { get; set; }
 
         [ForeignKey("IdProyecto")]
         public Proyecto Proyecto { get; set; }
@@ -29,8 +32,8 @@ namespace CSACVM.Modelos {
         public string? TituloIssue { get; set; }
 
         [Required]
-        [MaxLength(50)]
-        public string? Descripcion { get; set; }
+        [MaxLength(150)]
+        public string Descripcion { get; set; }
 
         public Boolean Editada { get; set; } = false;
 

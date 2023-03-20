@@ -1,7 +1,92 @@
-﻿@{
+﻿@using CSACVM.Modelos.ViewModels
+@model CSACVM.Modelos.ViewModels.EntradaVM
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    
+<div class="row d-flex">
+    <div class="col-8">
+        @foreach(ListaEntradaVM entradaVM in Model.ListaEntradaVM) {
+            <div class="row">
+                @{
+                    string fotoUsuario = entradaVM.Usuario.Foto;
+                }
+                <div class="col-1">
+                    @fotoUsuario
+                </div>
+                <div class="col-11">
+                    <div class="row">
+                        @entradaVM.Usuario.NombreUser - @entradaVM.Entrada.FechaCreacion.Value.ToShortDateString()
+                    </div>
+                    <div class="row">
+                        @entradaVM.Entrada.Descripcion
+                    </div>
+                    <div class="row">
+                        Desplegable para ver "x" respuestas
+                    </div>
+                </div>
+                <hr class="mt-2 mb-2" />
+            </div>
+        }
+        
+        <div class="row">
+            <div class="col-1">
+                Imagen
+            </div>
+            <div class="col-11">
+                <div class="row">
+                    NombreUsuario - Fecha y Hora
+                </div>
+                <div class="row">
+                    Descripción de la entrada.
+                </div>
+                <div class="row">
+                    Desplegable para ver "x" respuestas
+                </div>
+            </div>
+            <hr class="mt-2 mb-2" />
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="position-fixed w-25">
+            <div class="container ms-5">
+                <div class="row-12">
+                    <img src="@Model.RutaFoto" style="width: 70px;height:80px" class="br-100"/>
+                    <label class="form-label fw-bold ms-2">@Model.NombreUser</label>
+                </div>
+                <div class="row-12 mt-3">
+                    <div class="accordion w-100" id="accordionExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                    Nueva Entrada
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
+                                <div class="accordion-body">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-12 mt-3">
+                    <div class="accordion" id="accordionExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                    Filtrar Noticias
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
+                                <div class="accordion-body">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
 </div>

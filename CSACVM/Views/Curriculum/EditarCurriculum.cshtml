@@ -39,9 +39,6 @@
                                     }
                                 </div>
                                 <div class="col-9">
-                                    @*<div class="row mt-2">
-                                    <h5>- Datos Personales -</h5>
-                                    </div>*@
                                     <div class="row">
                                         <div class="col-4 pe-2">
                                             <label class="form-label fw-bold">Nombre:</label>
@@ -56,9 +53,6 @@
                                             <input class="form-control" asp-for="@Model.UsuarioCV.Apellido2" placeholder="Segundo Apellido" aria-required="true" />
                                         </div>
                                     </div>
-                                    @*<div class="row mt-4">
-                                    <h5>- Contacto -</h5>
-                                    </div>*@
                                     <div class="row mt-3">
                                         <div class="col-4 pe-2">
                                             <label class="form-label fw-bold">Teléfono:</label>
@@ -75,9 +69,6 @@
                                     </div>
                                 </div>
                             </div>
-                            @* <div class="row mt-3">
-                            <h5>- Otros datos -</h5>
-                            </div>*@
                             <div class="row mt-3">
                                 <div class="col-4 pe-2">
                                     <label class="form-label fw-bold">Nacionalidad:</label>
@@ -90,6 +81,12 @@
                                 <div class="col-4 pe-2">
                                     <label class="form-label fw-bold">Fecha Nacimiento:</label>
                                     <input class="form-control" asp-for="@Model.UsuarioCV.FechaNacimiento" placeholder="Nacimiento" aria-required="true" type="date" />
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col pe-2">
+                                    <label class="form-label fw-bold">Acerca de:</label>
+                                     <textarea class="form-control" rows="3"  asp-for="@Model.UsuarioCV.AcercaDe"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -482,7 +479,7 @@
         </div>
         <div class="row d-flex justify-content-end mt-4">
             <div class="col-lg-3 col-md-3 col-sm-4 text-end">
-                <button class="btn btn-success bg-verde font-size-l btn-w-solicitud" formmethod="post" onclick="CargarFotos()"><i class="fa-solid fa-floppy-disk me-2"></i>GUARDAR CAMBIOS</button>
+                <button class="btn btn-success bg-verde font-size-l btn-w-solicitud" formmethod="post" asp-action="GuardarCurriculum" onclick="CargarFotos()"><i class="fa-solid fa-floppy-disk me-2"></i>GUARDAR CAMBIOS</button>
             </div>
         </div>
     </div>

@@ -504,6 +504,7 @@ table.dataTable {
                 }
 
     .dataTables_wrapper.no-footer .dataTables_scrollBody {
+        margin-bottom: 0.625rem;
         border-bottom: 1px solid rgba(0, 0, 0, 0.3)
     }
 

@@ -32,6 +32,7 @@ namespace CSACVM.AccesoDatos.Repositorio{
             usuario.UsuarioActualizacion = idUsuario;
             usuario.ProcesoActualizacion = MethodBase.GetCurrentMethod().Name;
             usuario.FechaActualizacion = DateTime.Now;
+            usuario.AcercaDe = model.UsuarioCV.AcercaDe;
             _db.Update(usuario);
             _db.SaveChanges();
         }
