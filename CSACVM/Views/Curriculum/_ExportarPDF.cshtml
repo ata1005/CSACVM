@@ -62,15 +62,20 @@
                 foreach (FormacionCV formacion in Model.ListaFormacionCV) {
                     <div class="row flexrow">
                         @{
-                            DateTime fechaHasta;
-                            if (formacion.FechaHasta == null) {
-                                fechaHasta = DateTime.Now;
+                            
+                            DateTime fechaDesde;
+                            if (formacion.FechaDesde == null) {
+                                fechaDesde = DateTime.Now;
                             } else {
-                                fechaHasta = formacion.FechaHasta;
+                                fechaDesde = Convert.ToDateTime(formacion.FechaDesde);
                             }
                         }
                         <label class="form-label fontInformeTitulos">@formacion.Grado - @formacion.Ubicacion</label>
-                        <label class="form-label"> - @formacion.FechaDesde.ToShortDateString() a @fechaHasta.ToShortDateString() - </label>
+                        @if(formacion.FechaHasta == null) {
+                            <label class="form-label"> - @fechaDesde.ToShortDateString() a Actualidad - </label>
+                        } else{
+                            <label class="form-label"> - @fechaDesde.ToShortDateString() a @Convert.ToDateTime(formacion.FechaHasta).ToShortDateString() - </label>
+                        }
                         <label class="form-label fontInforme">@formacion.Descripcion</label>
                     </div>
                 }
@@ -93,15 +98,19 @@
                 foreach (IdiomaCV idioma in Model.ListaIdiomaCV) {
                     <div class="row flexrow">
                         @{
-                            DateTime fechaHasta;
-                            if (idioma.FechaHasta == null) {
-                                fechaHasta = DateTime.Now;
+                            DateTime fechaDesde;
+                            if (idioma.FechaDesde == null) {
+                                fechaDesde = DateTime.Now;
                             } else {
-                                fechaHasta = idioma.FechaHasta;
+                                fechaDesde = Convert.ToDateTime(idioma.FechaDesde);
                             }
                         }
                         <label class="form-label fontInformeTitulos">@idioma.Descripcion - @idioma.Nivel</label>
-                        <label class="form-label"> - @idioma.FechaDesde.ToShortDateString() a @fechaHasta.ToShortDateString() - </label>
+                        @if(idioma.FechaHasta == null) {
+                            <label class="form-label"> - @fechaDesde.ToShortDateString() a Actualidad - </label>
+                        } else{
+                            <label class="form-label"> - @fechaDesde.ToShortDateString() a @Convert.ToDateTime(idioma.FechaHasta).ToShortDateString() - </label>
+                        }
                     </div>
                 }
             }

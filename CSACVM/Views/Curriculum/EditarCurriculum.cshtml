@@ -86,7 +86,7 @@
                             <div class="row mt-3">
                                 <div class="col pe-2">
                                     <label class="form-label fw-bold">Acerca de:</label>
-                                     <textarea class="form-control" rows="3"  asp-for="@Model.UsuarioCV.AcercaDe"></textarea>
+                                    <textarea class="form-control" rows="3" asp-for="@Model.UsuarioCV.AcercaDe"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -107,6 +107,12 @@
                                     <div class="container formacionContainerClass" id="formacionContainer_@contadorInputs">
                                         <div class="row">
                                             <div class="col-4 pe-2">
+                                                <label class="form-label fw-bold">Tipo de Formación:</label>
+                                                <select asp-items="@Model.ListaTipoFormacion" asp-for="@formacion.IdTipoFormacion" name="idTipoFormacion_@contadorInputs" id="idTipoFormacion_@contadorInputs" class="form-select">
+                                                    <option disabled selected>Seleccione</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-4 pe-2">
                                                 <label class="form-label fw-bold">Grado/Estudios:</label>
                                                 <input class="form-control" placeholder="Grado" aria-required="true" name="gradoFormacion_@contadorInputs" id="gradoFormacion_@contadorInputs" value="@formacion.Grado" />
                                             </div>
@@ -114,9 +120,12 @@
                                                 <label class="form-label fw-bold">Ubicación:</label>
                                                 <input class="form-control" placeholder="Ubicación" aria-required="true" name="ubicacionFormacion_@contadorInputs" id="ubicacionFormacion_@contadorInputs" value="@formacion.Ubicacion" />
                                             </div>
-                                            <div class="col-4 pe-2">
+                                            
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col pe-2">
                                                 <label class="form-label fw-bold">Observaciones:</label>
-                                                <input class="form-control" placeholder="Observaciones" aria-required="true" name="observacionesFormacion_@contadorInputs" id="observacionesFormacion_@contadorInputs" value="@formacion.Descripcion" />
+                                                <textarea class="form-control" rows="2" name="observacionesFormacion_@contadorInputs" id="observacionesFormacion_@contadorInputs" asp-for="@formacion.Descripcion"></textarea>
                                             </div>
                                         </div>
                                         <div class="row mt-3">
@@ -143,6 +152,12 @@
                                 <div class="container formacionContainerClass" id="formacionContainer_1">
                                     <div class="row">
                                         <div class="col-4 pe-2">
+                                            <label class="form-label fw-bold">Tipo de Formación:</label>
+                                            <select asp-items="@Model.ListaTipoFormacion" id="idTipoFormacion_1" name="idTipoFormacion_1" class="form-select">
+                                                    <option disabled selected>Seleccione</option>
+                                             </select>
+                                        </div>
+                                        <div class="col-4 pe-2">
                                             <label class="form-label fw-bold">Grado/Estudios:</label>
                                             <input class="form-control" placeholder="Grado" aria-required="true" name="gradoFormacion_1" id="gradoFormacion_1" />
                                         </div>
@@ -150,9 +165,11 @@
                                             <label class="form-label fw-bold">Ubicación:</label>
                                             <input class="form-control" placeholder="Ubicación" aria-required="true" name="ubicacionFormacion_1" id="ubicacionFormacion_1" />
                                         </div>
-                                        <div class="col-4 pe-2">
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col pe-2">
                                             <label class="form-label fw-bold">Observaciones:</label>
-                                            <input class="form-control" placeholder="Observaciones" aria-required="true" name="observacionesFormacion_1" id="observacionesFormacion_1" />
+                                            <textarea class="form-control" rows="2" name="observacionesFormacion_1" id="observacionesFormacion_1"></textarea>
                                         </div>
                                     </div>
                                     <div class="row mt-3">
@@ -195,11 +212,17 @@
                                 foreach (IdiomaCV idioma in Model.ListaIdiomaCV) {
                                     <div class="container idiomaContainerClass" id="idiomaContainer_@contadorIdioma">
                                         <div class="row">
-                                            <div class="col-4 pe-2">
-                                                <label class="form-label fw-bold">Descripción/Título:</label>
+                                            <div class="col-3 pe-2">
+                                                <label class="form-label fw-bold">Idioma:</label>
+                                                <select asp-items="@Model.ListaIdiomas" asp-for="@idioma.IdIdioma" name="idIdioma_@contadorIdioma" id="idIdioma_@contadorIdioma" class="form-select">
+                                                    <option disabled selected>Seleccione</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-3 pe-2">
+                                                <label class="form-label fw-bold">Título:</label>
                                                 <input class="form-control" placeholder="Descripción" aria-required="true" name="descripcionIdioma_@contadorIdioma" id="descripcionIdioma_@contadorIdioma" value="@idioma.Descripcion" />
                                             </div>
-                                            <div class="col-4 pe-2">
+                                            <div class="col-2 pe-2">
                                                 <label class="form-label fw-bold">Nivel:</label>
                                                 <input class="form-control" placeholder="Nivel" aria-required="true" name="nivelIdioma_@contadorIdioma" id="nivelIdioma_@contadorIdioma" value="@idioma.Nivel" />
                                             </div>
@@ -231,11 +254,17 @@
                             } else {
                                 <div class="container idiomaContainerClass" id="idiomaContainer_1">
                                     <div class="row">
-                                        <div class="col-4 pe-2">
+                                        <div class="col-3 pe-2">
+                                            <label class="form-label fw-bold">Idioma:</label>
+                                            <select asp-items="@Model.ListaIdiomas" name="idIdioma_1" id="idIdioma_1" class="form-select">
+                                                <option disabled selected>Seleccione</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-3 pe-2">
                                             <label class="form-label fw-bold">Descripción/Título:</label>
                                             <input class="form-control" placeholder="Descripción" aria-required="true" name="descripcionIdioma_1" id="descripcionIdioma_1" />
                                         </div>
-                                        <div class="col-4 pe-2">
+                                        <div class="col-2 pe-2">
                                             <label class="form-label fw-bold">Nivel:</label>
                                             <input class="form-control" placeholder="Nivel" aria-required="true" name="nivelIdioma_1" id="nivelIdioma_1" />
                                         </div>

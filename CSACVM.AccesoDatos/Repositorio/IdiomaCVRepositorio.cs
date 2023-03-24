@@ -19,7 +19,7 @@ namespace CSACVM.AccesoDatos.Repositorio{
 
         public List<IdiomaCV> ObtenerListaIdioma(int idCurriculum) => _db.IdiomaCV.Where(f => f.IdCurriculum == idCurriculum).ToList();
 
-        public void GuardarIdioma(List<IdiomaCV> lstIdiomaCV, List<string> lstDescripcionIdioma, List<string> lstNivelIdioma, List<string> lstCentroIdioma, List<string> lstDateDesdeIdioma, List<string> lstDateHastaIdioma, int idCurriculum, int idUser) {
+        public void GuardarIdioma(List<IdiomaCV> lstIdiomaCV, List<string> lstIdioma, List<string> lstDescripcionIdioma, List<string> lstNivelIdioma, List<string> lstCentroIdioma, List<string> lstDateDesdeIdioma, List<string> lstDateHastaIdioma, int idCurriculum, int idUser) {
             List<string> descripcionCambiar = new List<string>();
             List<int> entradaEliminar = new List<int>();
             foreach (IdiomaCV idioma in lstIdiomaCV) {
@@ -45,6 +45,7 @@ namespace CSACVM.AccesoDatos.Repositorio{
                 if (descripcionCambiar.Contains(desc)) {
                     IdiomaCV idioma = _db.IdiomaCV.Where(f => f.Descripcion == desc).FirstOrDefault();
                     idioma.Descripcion = lstDescripcionIdioma[contador];
+                    if (lstIdioma[contador] != "") idioma.IdIdioma = Convert.ToInt32(lstIdioma[contador]);
                     if (lstDateDesdeIdioma[contador] != "") idioma.FechaDesde = Convert.ToDateTime(lstDateDesdeIdioma[contador]);
                     if (lstDateHastaIdioma[contador] != "") idioma.FechaHasta = Convert.ToDateTime(lstDateHastaIdioma[contador]);
                     idioma.Centro = lstCentroIdioma[contador];
@@ -60,8 +61,9 @@ namespace CSACVM.AccesoDatos.Repositorio{
                         Descripcion = desc,
                         IdUsuario = idUser,
                         Centro = lstCentroIdioma[contador],
-                        FechaDesde = Convert.ToDateTime(lstDateDesdeIdioma[contador]),
-                        FechaHasta = Convert.ToDateTime(lstDateHastaIdioma[contador]),
+                        IdIdioma = lstIdioma[contador] != "" ? Convert.ToInt32(lstIdioma[contador]) : null,
+                        FechaDesde = lstDateDesdeIdioma[contador] != "" ? Convert.ToDateTime(lstDateDesdeIdioma[contador]) : null,
+                        FechaHasta = lstDateHastaIdioma[contador] != "" ? Convert.ToDateTime(lstDateHastaIdioma[contador]) : null,
                         Nivel = lstNivelIdioma[contador],
                         FechaCreacion = DateTime.Now,
                         ProcesoCreacion = MethodBase.GetCurrentMethod().Name,

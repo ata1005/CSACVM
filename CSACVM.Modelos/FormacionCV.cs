@@ -19,11 +19,14 @@ namespace CSACVM.Modelos {
         public string Grado { get; set; }
         public string Ubicacion { get; set; }
         public string? Descripcion { get; set; }
-        public DateTime FechaDesde { get; set; }
-        public DateTime FechaHasta { get; set; }
+        public DateTime? FechaDesde { get; set; }
+        public DateTime? FechaHasta { get; set; }
         public int? IdCurriculum { get; set; }
         [ForeignKey("IdCurriculum")]
         public Curriculum? Curriculum { get; set; }
+        public int? IdTipoFormacion { get; set; }
+        [ForeignKey("IdTipoFormacion")]
+        public TipoFormacion? TipoFormacion { get; set; }
 
     }
 }

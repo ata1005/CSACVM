@@ -19,7 +19,7 @@ namespace CSACVM.AccesoDatos.Repositorio{
 
         public List<FormacionCV> ObtenerListaFormacion(int idCurriculum) => _db.FormacionCV.Where(f => f.IdCurriculum== idCurriculum).ToList();
 
-        public void GuardarFormacion(List<FormacionCV> lstFormacionCV,List<string> lstGradoFormacion, List<string> lstUbicacionFormacion, List<string> lstObservacionesFormacion, List<string> lstDateDesdeFormacion, List<string> lstDateHastaFormacion, int idCurriculum, int idUser) {
+        public void GuardarFormacion(List<FormacionCV> lstFormacionCV, List<string> lstTipoFormacion,List<string> lstGradoFormacion, List<string> lstUbicacionFormacion, List<string> lstObservacionesFormacion, List<string> lstDateDesdeFormacion, List<string> lstDateHastaFormacion, int idCurriculum, int idUser) {
 
             List<string> gradoCambiar = new List<string>();
             List<int> entradaEliminar = new List<int>();
@@ -46,6 +46,7 @@ namespace CSACVM.AccesoDatos.Repositorio{
                 if (gradoCambiar.Contains(grado)) {
                     FormacionCV formacion = _db.FormacionCV.Where(f => f.Grado == grado).FirstOrDefault();
                     formacion.Descripcion = lstObservacionesFormacion[contador];
+                    if (lstTipoFormacion[contador] != "") formacion.IdTipoFormacion = Convert.ToInt32(lstTipoFormacion[contador]);
                     if (lstDateDesdeFormacion[contador] != "") formacion.FechaDesde = Convert.ToDateTime(lstDateDesdeFormacion[contador]);
                     if (lstDateHastaFormacion[contador] != "") formacion.FechaHasta = Convert.ToDateTime(lstDateHastaFormacion[contador]);
                     formacion.Ubicacion = lstUbicacionFormacion[contador];
@@ -60,8 +61,9 @@ namespace CSACVM.AccesoDatos.Repositorio{
                         Grado = grado,
                         IdUsuario = idUser,
                         Descripcion = lstObservacionesFormacion[contador],
-                        FechaDesde = Convert.ToDateTime(lstDateDesdeFormacion[contador]),
-                        FechaHasta = Convert.ToDateTime(lstDateHastaFormacion[contador]),
+                        IdTipoFormacion = lstTipoFormacion[contador] != "" ? Convert.ToInt32(lstTipoFormacion[contador]) : null,
+                        FechaDesde = lstDateDesdeFormacion[contador] != "" ? Convert.ToDateTime(lstDateDesdeFormacion[contador]) : null,
+                        FechaHasta = lstDateDesdeFormacion[contador] != "" ? Convert.ToDateTime(lstDateHastaFormacion[contador]) : null,
                         Ubicacion = lstUbicacionFormacion[contador],
                         FechaCreacion = DateTime.Now,
                         ProcesoCreacion = MethodBase.GetCurrentMethod().Name,

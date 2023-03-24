@@ -26,7 +26,7 @@ namespace CSACVM.AccesoDatos.Repositorio
             Respuesta = new RespuestaRepositorio(_db);
             Rol = new RolRepositorio(_db);
             TipoEntrada = new TipoEntradaRepositorio(_db);
-            
+            TipoFormacion = new TipoFormacionRepositorio(_db);
             TipoNotificacion = new TipoNotificacionRepositorio(_db);
             Curriculum = new CurriculumRepositorio(_db);
             FotoUsuarioCV = new FotoUsuarioCVRepositorio(_db);
@@ -52,6 +52,7 @@ namespace CSACVM.AccesoDatos.Repositorio
         public ITipoNotificacionRepositorio TipoNotificacion { get; private set; }
         public ICurriculumRepositorio Curriculum { get; private set; }
         public IFotoUsuarioCVRepositorio FotoUsuarioCV { get; private set; }
+        public ITipoFormacionRepositorio TipoFormacion { get; private set; }
         public Microsoft.EntityFrameworkCore.DbContext GetContext(){
             return this._db;
         }

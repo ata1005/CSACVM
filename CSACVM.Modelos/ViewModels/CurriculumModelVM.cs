@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -17,6 +18,8 @@ namespace CSACVM.Modelos.ViewModels {
         public List<EntradaCV> ListaEntradaCV { get; set; }
         public List<AptitudCV> ListaAptitudCV { get; set; }
         public List<LogroCV> ListaLogroCV { get; set; }
+        public IEnumerable<SelectListItem> ListaTipoFormacion { get; set; }
+        public IEnumerable<SelectListItem> ListaIdiomas { get; set; }
         
     }
 }

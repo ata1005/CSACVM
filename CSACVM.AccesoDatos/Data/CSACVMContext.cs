@@ -31,6 +31,7 @@ namespace CSACVM.AccesoDatos.Data
         public DbSet<UsuarioCV> UsuarioCV { get; set; }
         public DbSet<FotoUsuarioCV> FotoUsuarioCV { get; set; }
         public DbSet<Curriculum> Curriculum { get; set; }
+        public DbSet<TipoFormacion> TipoFormacion { get; set; }
 
     }
 }

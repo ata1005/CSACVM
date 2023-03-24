@@ -255,15 +255,18 @@ function addFormacion() {
         $(".btnRemoveFormacion").attr("onclick", "javascript: removeFormacion(1);");
     }
     contadorFormacion = contadorMaxFormacion;
+    var strOptionsFormacion = '<option value="1">Educación Secundaria</option><option value="2">Bachillerato</option><option value="3">Grado Medio</option><option value="4">Grado Superior</option><option value="5">Grado Universitario</option><option value="6">Máster Universitario</option><option value="7">Doctorado</option><option value="8">Estudios No Oficiales</option>';
+
     
-    
-    strNuevaFila = '<div class="container formacionContainerClass" id="formacionContainer_' + contadorFormacion +'"><div class="row">'
+    strNuevaFila = '<div class="container formacionContainerClass" id="formacionContainer_' + contadorFormacion + '"><div class="row">'
+    strNuevaFila = strNuevaFila + '<div class="col-4 pe-2"><label class="form-label fw-bold"> Tipo de Formación:</label>';
+    strNuevaFila = strNuevaFila + '<select asp-items="@Model.ListaTipoFormacion" name ="idTipoFormacion_' + contadorFormacion + '" id="idTipoFormacion_' + contadorFormacion + '" class="form-select"><option disabled selected>Seleccione</option>' + strOptionsFormacion + '</select></div>';
     strNuevaFila = strNuevaFila + '<div class="col-4 pe-2"><label class="form-label fw-bold">Grado/Estudios:</label>';
     strNuevaFila = strNuevaFila + '<input class="form-control" placeholder="Grado" aria-required="true" name="gradoFormacion_' + contadorFormacion + '" id="gradoFormacion_' + contadorFormacion + '"/></div>';
     strNuevaFila = strNuevaFila + '<div class="col-4 pe-2"><label class="form-label fw-bold">Ubicación:</label>';
-    strNuevaFila = strNuevaFila + '<input class="form-control" placeholder="Ubicación" aria-required="true" name="ubicacionFormacion_' + contadorFormacion + '" id="ubicacionFormacion_' + contadorFormacion + '" /></div>';
-    strNuevaFila = strNuevaFila + '<div class="col-4 pe-2"><label class="form-label fw-bold">Observaciones:</label>';
-    strNuevaFila = strNuevaFila + '<input class="form-control" placeholder="Observaciones" aria-required="true" name="observacionesFormacion_' + contadorFormacion + '" id="observacionesFormacion_' + contadorFormacion + '" /></div></div>';
+    strNuevaFila = strNuevaFila + '<input class="form-control" placeholder="Ubicación" aria-required="true" name="ubicacionFormacion_' + contadorFormacion + '" id="ubicacionFormacion_' + contadorFormacion + '" /></div></div>';
+    strNuevaFila = strNuevaFila + '<div class="row mt-3"><div class="col pe-2"><label class="form-label fw-bold">Observaciones:</label>';
+    strNuevaFila = strNuevaFila + '<textarea class="form-control" rows="2" name="observacionesFormacion_' + contadorFormacion + '" id = "observacionesFormacion_' + contadorFormacion + '"></textarea></div></div>';
     strNuevaFila = strNuevaFila + '<div class="row mt-3"><div class="col-4 pe-2"><label class="form-label fw-bold">Fecha Desde:</label>';
     strNuevaFila = strNuevaFila + '<input class="form-control" placeholder="Desde" aria-required="true" type="month" name="fechaDesdeFormacion_' + contadorFormacion + '" id="fechaDesdeFormacion_' + contadorFormacion + '"/></div>';
     strNuevaFila = strNuevaFila + '<div class="col-4 pe-2"><label class="form-label fw-bold">Fecha Hasta:</label>';
@@ -288,10 +291,14 @@ function addIdioma() {
         $(".btnRemoveIdioma").attr("onclick", "javascript: removeIdioma(1);");
     }
     contadorIdioma = contadorMaxIdioma;
+
+    var strOptionsIdioma = '<option value="1">Otro Idioma</option><option value="2">Inglés</option><option value="4">Francés</option><option value="5">Alemán</option><option value="6">Portugués</option><option value="7">Japonés</option><option value="8">Chino</option>';
     strNuevaFila = '<div class="container idiomaContainerClass" id="idiomaContainer_' + contadorIdioma + '"><div class="row">'
-    strNuevaFila = strNuevaFila + '<div class="col-4 pe-2"><label class="form-label fw-bold">Descripción/Título:</label>';
+    strNuevaFila = strNuevaFila + '<div class="col-3 pe-2"><label class="form-label fw-bold"> Idioma:</label>';
+    strNuevaFila = strNuevaFila + '<select name ="idIdioma_' + contadorIdioma + '" id="idIdioma_' + contadorIdioma + '" class="form-select"><option disabled selected>Seleccione</option>' + strOptionsIdioma + '</select></div>';
+    strNuevaFila = strNuevaFila + '<div class="col-3 pe-2"><label class="form-label fw-bold">Descripción/Título:</label>';
     strNuevaFila = strNuevaFila + '<input class="form-control" placeholder="Descripción" aria-required="true" name="descripcionIdioma_' + contadorIdioma + '" id="descripcionIdioma_' + contadorIdioma + '"/></div>';
-    strNuevaFila = strNuevaFila + '<div class="col-4 pe-2"><label class="form-label fw-bold">Nivel:</label>';
+    strNuevaFila = strNuevaFila + '<div class="col-2 pe-2"><label class="form-label fw-bold">Nivel:</label>';
     strNuevaFila = strNuevaFila + '<input class="form-control" placeholder="Nivel" aria-required="true" name="nivelIdioma_' + contadorIdioma + '" id="nivelIdioma_' + contadorIdioma + '" /></div>';
     strNuevaFila = strNuevaFila + '<div class="col-4 pe-2"><label class="form-label fw-bold">Centro:</label>';
     strNuevaFila = strNuevaFila + '<input class="form-control" placeholder="Centro" aria-required="true" name="centroIdioma_' + contadorIdioma + '" id="centroIdioma_' + contadorIdioma + '" /></div></div>';

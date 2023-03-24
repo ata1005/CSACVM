@@ -27,6 +27,7 @@ namespace CSACVM.AccesoDatos.Repositorio.IRepositorio{
         ITipoNotificacionRepositorio TipoNotificacion { get; }
         ICurriculumRepositorio Curriculum { get; }
         IFotoUsuarioCVRepositorio FotoUsuarioCV { get; }
+        ITipoFormacionRepositorio TipoFormacion { get; }
         Microsoft.EntityFrameworkCore.DbContext GetContext();
         void Save();
     }

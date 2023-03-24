@@ -19,10 +19,26 @@ namespace CSACVM.Controllers {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         }
 
-        public IActionResult Curriculum(){
+        public IActionResult CurriculumIndex() {
             int idUsuario = HttpContext.Session.GetInt32("ID").Value;
+            Usuario user = _unitOfWork.Usuario.GetFirstOrDefault(u => u.IdUsuario == idUsuario);
+            if (user.EsAdmin) {
+                return RedirectToAction("CurriculumAdmin");
+                
+            } else {
+                return RedirectToAction("Curriculum", new { id = idUsuario });
+            }
+        }
+
+        public ActionResult Curriculum(int id) {
             CurriculumVM curriculum = new() {
-                ListaCurriculums = _unitOfWork.Curriculum.ObtenerCurriculumsUsuario(idUsuario)
+                ListaCurriculums = _unitOfWork.Curriculum.ObtenerCurriculumsUsuario(id)
+            };
+            return View(curriculum);
+        }
+        public ActionResult CurriculumAdmin() {
+            CurriculumAdminVM curriculum = new() {
+                ListaCurriculums = _unitOfWork.Curriculum.GetAll().ToList(),
             };
             return View(curriculum);
         }
@@ -30,7 +46,7 @@ namespace CSACVM.Controllers {
         public async Task<IActionResult> NuevoCurriculum(string titulo) {
             using (var dbTGuardar = _unitOfWork.GetContext().Database.BeginTransaction()) {
                 try {
-                    _unitOfWork.Curriculum.GuardarNuevoCurriculum(titulo, HttpContext.Session.GetInt32("ID").Value);                  
+                    _unitOfWork.Curriculum.GuardarNuevoCurriculum(titulo, HttpContext.Session.GetInt32("ID").Value);
                     dbTGuardar.Commit();
                 } catch (Exception ex) {
                     dbTGuardar.Rollback();
@@ -54,7 +70,7 @@ namespace CSACVM.Controllers {
 
             //Si los modelos son null, creamos una instancia de ese modelo con el idCurriculum.
             if (usuarioCV == null) _unitOfWork.UsuarioCV.NuevoUsuarioCV(HttpContext.Session.GetInt32("ID").Value, idCurriculum);
-            
+
 
             CurriculumModelVM model = new CurriculumModelVM() {
                 IdCurriculum = idCurriculum,
@@ -65,7 +81,9 @@ namespace CSACVM.Controllers {
                 ListaIdiomaCV = _unitOfWork.IdiomaCV.ObtenerListaIdioma(idCurriculum),
                 ListaEntradaCV = _unitOfWork.EntradaCV.ObtenerListaEntrada(idCurriculum),
                 ListaAptitudCV = _unitOfWork.AptitudCV.ObtenerListaAptitud(idCurriculum),
-                ListaLogroCV = _unitOfWork.LogroCV.ObtenerListaLogro(idCurriculum)
+                ListaLogroCV = _unitOfWork.LogroCV.ObtenerListaLogro(idCurriculum),
+                ListaIdiomas = _unitOfWork.Idioma.ObtenerIdiomas(),
+                ListaTipoFormacion = _unitOfWork.TipoFormacion.ObtenerTipoFormacion(),
             };
             return View("../Curriculum/EditarCurriculum", model);
         }
@@ -153,12 +171,16 @@ namespace CSACVM.Controllers {
 
                     #region FormacionCV.
                     List<FormacionCV> lstFormacionCV = _unitOfWork.FormacionCV.ObtenerListaFormacion(model.IdCurriculum);
+                    List<string> lstTipoFormacion = new List<string>();
                     List<string> lstGradoFormacion = new List<string>(); //Request.Form["gradoFormacion"].ToList();
                     List<string> lstObservacionesFormacion = new List<string>();//Request.Form["observacionesFormacion"].ToList();                  
                     List<string> lstUbicacionFormacion = new List<string>();//Request.Form["ubicacionFormacion"].ToList();
                     List<string> lstDateDesdeFormacion = new List<string>(); //Request.Form["fechaDesdeFormacion"].ToList();
                     List<string> lstDateHastaFormacion = new List<string>(); //Request.Form["fechaHastaFormacion"].ToList();
 
+                    foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("idTipoFormacion_"))) {
+                        lstTipoFormacion.Add(Request.Form[element]);
+                    }
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("gradoFormacion_"))) {
                         lstGradoFormacion.Add(Request.Form[element]);
                     }
@@ -176,20 +198,24 @@ namespace CSACVM.Controllers {
                     }
 
                     int vacioFormacion = 0;
-                    foreach(string formacion in lstGradoFormacion) {
+                    foreach (string formacion in lstGradoFormacion) {
                         if (formacion != "") vacioFormacion++;
                     }
-                    if (vacioFormacion > 0) _unitOfWork.FormacionCV.GuardarFormacion(lstFormacionCV, lstGradoFormacion,lstUbicacionFormacion, lstObservacionesFormacion, lstDateDesdeFormacion, lstDateHastaFormacion, model.IdCurriculum, idUsuario);
+                    if (vacioFormacion > 0) _unitOfWork.FormacionCV.GuardarFormacion(lstFormacionCV,lstTipoFormacion, lstGradoFormacion, lstUbicacionFormacion, lstObservacionesFormacion, lstDateDesdeFormacion, lstDateHastaFormacion, model.IdCurriculum, idUsuario);
                     #endregion
 
                     #region IdiomaCV.
                     List<IdiomaCV> lstIdiomaCV = _unitOfWork.IdiomaCV.ObtenerListaIdioma(model.IdCurriculum);
+                    List<string> lstIdioma = new List<string>();
                     List<string> lstDescripcionIdioma = new List<string>(); //Request.Form["gradoFormacion"].ToList();
                     List<string> lstNivelIdioma = new List<string>();//Request.Form["observacionesFormacion"].ToList();                  
                     List<string> lstCentroIdioma = new List<string>();//Request.Form["ubicacionFormacion"].ToList();
                     List<string> lstDateDesdeIdioma = new List<string>(); //Request.Form["fechaDesdeFormacion"].ToList();
                     List<string> lstDateHastaIdioma = new List<string>(); //Request.Form["fechaHastaFormacion"].ToList();
 
+                    foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("idIdioma_"))) {
+                        lstIdioma.Add(Request.Form[element]);
+                    }
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("descripcionIdioma_"))) {
                         lstDescripcionIdioma.Add(Request.Form[element]);
                     }
@@ -210,7 +236,7 @@ namespace CSACVM.Controllers {
                     foreach (string idioma in lstDescripcionIdioma) {
                         if (idioma != "") vacioIdioma++;
                     }
-                    if (vacioIdioma > 0) _unitOfWork.IdiomaCV.GuardarIdioma(lstIdiomaCV, lstDescripcionIdioma, lstNivelIdioma, lstCentroIdioma, lstDateDesdeIdioma, lstDateHastaIdioma, model.IdCurriculum, idUsuario);
+                    if (vacioIdioma > 0) _unitOfWork.IdiomaCV.GuardarIdioma(lstIdiomaCV,lstIdioma, lstDescripcionIdioma, lstNivelIdioma, lstCentroIdioma, lstDateDesdeIdioma, lstDateHastaIdioma, model.IdCurriculum, idUsuario);
 
                     #endregion
 
@@ -218,7 +244,7 @@ namespace CSACVM.Controllers {
                     List<EntradaCV> lstEntradaCV = _unitOfWork.EntradaCV.ObtenerListaEntrada(model.IdCurriculum);
                     List<string> lstPuestoTrabajo = new List<string>(); //Request.Form["gradoFormacion"].ToList();
                     List<string> lstEmpresaAsociada = new List<string>();//Request.Form["observacionesFormacion"].ToList();
-                    List<string> lstUbicacionEntrada= new List<string>();//Request.Form["ubicacionFormacion"].ToList();
+                    List<string> lstUbicacionEntrada = new List<string>();//Request.Form["ubicacionFormacion"].ToList();
                     List<string> lstObservacionesEntrada = new List<string>();
                     List<string> lstDateDesdeEntrada = new List<string>(); //Request.Form["fechaDesdeFormacion"].ToList();
                     List<string> lstDateHastaEntrada = new List<string>(); //Request.Form["fechaHastaFormacion"].ToList();
@@ -272,7 +298,7 @@ namespace CSACVM.Controllers {
                         if (logro != "") vacioLogro++;
                     }
                     if (vacioAptitud > 0) _unitOfWork.AptitudCV.GuardarAptitud(lstAptitudCV, lstDescripcionAptitud, model.IdCurriculum, idUsuario);
-                    if (vacioLogro > 0) _unitOfWork.LogroCV.GuardarLogro(lstLogroCV, lstDescripcionLogro,  model.IdCurriculum, idUsuario);
+                    if (vacioLogro > 0) _unitOfWork.LogroCV.GuardarLogro(lstLogroCV, lstDescripcionLogro, model.IdCurriculum, idUsuario);
 
                     #endregion
 
@@ -290,7 +316,7 @@ namespace CSACVM.Controllers {
             using (var dbTGuardar = _unitOfWork.GetContext().Database.BeginTransaction()) {
                 try {
                     //Obtención de los datos.
-                    Curriculum curriculum = _unitOfWork.Curriculum.GetFirstOrDefault(c => c.IdCurriculum == idCurriculum);               
+                    Curriculum curriculum = _unitOfWork.Curriculum.GetFirstOrDefault(c => c.IdCurriculum == idCurriculum);
                     UsuarioCV usuarioCV = _unitOfWork.UsuarioCV.GetFirstOrDefault(u => u.IdCurriculum == idCurriculum);
                     FotoUsuarioCV fotoUsuarioCV = _unitOfWork.FotoUsuarioCV.GetFirstOrDefault(f => f.IdCurriculum == idCurriculum);
                     List<FormacionCV> lstFormacionCV = _unitOfWork.FormacionCV.ObtenerListaFormacion(idCurriculum);
@@ -308,7 +334,7 @@ namespace CSACVM.Controllers {
                     }
 
                     //Eliminar instancia de FormaciónCV.
-                    foreach(FormacionCV formacion in lstFormacionCV) {
+                    foreach (FormacionCV formacion in lstFormacionCV) {
                         _unitOfWork.FormacionCV.EliminarFormacion(formacion);
                     }
 
@@ -336,7 +362,7 @@ namespace CSACVM.Controllers {
                     }
 
                     dbTGuardar.Commit();
-                    
+
                 } catch (Exception ex) {
                     dbTGuardar.Rollback();
                     throw;

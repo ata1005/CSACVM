@@ -1,0 +1,4 @@
+2023-03-24 14:35:27.502 +01:00 [ERR] Failed executing DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [FormacionCV] ADD CONSTRAINT [FK_FormacionCV_TipoFormacion_IdTipoFormacion] FOREIGN KEY ([IdTipoFormacion]) REFERENCES [TipoFormacion] ([IdTipoFormacion]) ON DELETE CASCADE;
+2023-03-24 14:37:05.363 +01:00 [ERR] Failed executing DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [IdiomaCV] ADD CONSTRAINT [FK_IdiomaCV_Idioma_IdIdioma] FOREIGN KEY ([IdIdioma]) REFERENCES [Idioma] ([IdIdioma]) ON DELETE CASCADE;
