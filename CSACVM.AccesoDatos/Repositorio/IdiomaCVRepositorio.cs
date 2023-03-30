@@ -1,6 +1,7 @@
 ﻿using CSACVM.AccesoDatos.Data;
 using CSACVM.AccesoDatos.Repositorio.IRepositorio;
 using CSACVM.Modelos;
+using CSACVM.Modelos.ViewModels;
 using System.Reflection;
 
 namespace CSACVM.AccesoDatos.Repositorio{
@@ -79,6 +80,26 @@ namespace CSACVM.AccesoDatos.Repositorio{
         public void EliminarIdioma(IdiomaCV idiomaCV) {
             _db.IdiomaCV.Remove(idiomaCV);
             _db.SaveChanges();
+        }
+
+        public void ClonadoIdiomaCV(Curriculum clonado, CurriculumModelVM model) {
+            foreach (IdiomaCV idioma in model.ListaIdiomaCV) {
+                IdiomaCV nueva = new IdiomaCV() {
+                    IdIdioma = idioma.IdIdioma,
+                    IdCurriculum = clonado.IdCurriculum,
+                    IdUsuario = idioma.IdUsuario,
+                    Descripcion = idioma.Descripcion,
+                    FechaDesde = idioma.FechaDesde,
+                    FechaHasta = idioma.FechaHasta,
+                    Centro = idioma.Centro,
+                    Nivel = idioma.Nivel,
+                    FechaCreacion = DateTime.Now,
+                    ProcesoCreacion = MethodBase.GetCurrentMethod().Name
+                };
+
+                _db.IdiomaCV.Add(nueva);
+                _db.SaveChanges();
+            }
         }
 
     }

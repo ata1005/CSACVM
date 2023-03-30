@@ -1,6 +1,7 @@
 ﻿using CSACVM.AccesoDatos.Data;
 using CSACVM.AccesoDatos.Repositorio.IRepositorio;
 using CSACVM.Modelos;
+using CSACVM.Modelos.ViewModels;
 using System.Reflection;
 
 namespace CSACVM.AccesoDatos.Repositorio{
@@ -45,6 +46,20 @@ namespace CSACVM.AccesoDatos.Repositorio{
         public void EliminarLogro(LogroCV logroCV) {
             _db.LogroCV.Remove(logroCV);
             _db.SaveChanges();
+        }
+
+        public void ClonadoLogroCV(Curriculum clonado, CurriculumModelVM model) {
+            foreach (LogroCV logro in model.ListaLogroCV) {
+                LogroCV nueva = new LogroCV() {
+                    IdCurriculum = clonado.IdCurriculum,
+                    Descripcion = logro.Descripcion,
+                    FechaCreacion = DateTime.Now,
+                    ProcesoCreacion = MethodBase.GetCurrentMethod().Name
+                };
+
+                _db.LogroCV.Add(nueva);
+                _db.SaveChanges();
+            }
         }
 
     }

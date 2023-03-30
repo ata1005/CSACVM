@@ -7,5 +7,6 @@ namespace CSACVM.AccesoDatos.Repositorio.IRepositorio{
         public void GuardarUsuarioCV(UsuarioCV usuario,CurriculumModelVM model, int idUsuario, FotoUsuarioCV foto);
         public void NuevoUsuarioCV(int idUsuario,int idCurriculum);
         public void EliminarUsuario(UsuarioCV usuarioCV);
+        public void ClonadoUsuarioCV(Curriculum clonado, CurriculumModelVM model);
     }
 }

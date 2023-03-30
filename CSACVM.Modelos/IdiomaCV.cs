@@ -20,6 +20,9 @@ namespace CSACVM.Modelos {
         [ForeignKey("IdUsuario")]
         public Usuario Usuario { get; set; }
 
+        public int? IdNivelIdioma { get; set; }
+        [ForeignKey("IdNivelIdioma")]
+        public NivelIdioma? NivelIdioma { get; set; }
         [MaxLength(50)]
         public string Nivel { get; set; }
 

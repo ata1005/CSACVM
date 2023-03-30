@@ -57,11 +57,23 @@ function inicializarTablaCurriculums(cvs) {
                 className: 'dt-body-center text-center',
                 width: "10%",
                 render: function (data, type, row) {
-                    return '<a href="javascript:eliminarCurriculum(\'' + row.idCurriculum + '\');"><i class="fa-solid fa-trash fa-xl c-grey"></i></a>';
+                    return '<a href="javascript:eliminarCurriculum(\'' + row.idCurriculum + '\');"><i class="fa-solid fa-trash fa-xl"></i></a>';
                 }
             },
             {
                 targets: 5,
+                title: "Clonar",
+                visible: true,
+                orderable: false,
+                searchable: false,
+                className: 'dt-body-center text-center',
+                width: "10%",
+                render: function (data, type, row) {
+                    return '<a href="javascript:clonarCurriculum(\'' + row.idCurriculum + '\');"><i class="fa-solid fa-clone fa-xl"></i></a>';
+                }
+            },
+            {
+                targets: 6,
                 title: "Exportar PDF",
                 visible: true,
                 orderable: false,
@@ -69,7 +81,7 @@ function inicializarTablaCurriculums(cvs) {
                 className: 'dt-body-center text-center',
                 width: "10%",
                 render: function (data, type, row) {
-                    return '<a href="javascript:exportarPDF(\'' + row.idCurriculum + '\');"><i class="fa-solid fa-file-pdf fa-xl c-grey"></i></a>';
+                    return '<a href="javascript:exportarPDF(\'' + row.idCurriculum + '\');"><i class="fa-solid fa-file-pdf fa-xl text-danger"></i></a>';
                 }
             },
             
@@ -113,7 +125,7 @@ function aceptarEliminar(idCurriculum) {
         },
         async: true,
         success: function (response) {
-
+            window.location.href = response.redirect;
         }
     });
 }
@@ -146,7 +158,7 @@ function confirmarCrearCV() {
         },
         async: true,
         success: function (response) {
-            
+            window.location.href = response.redirect;
         }
     });
 }
@@ -164,6 +176,10 @@ function cerrarModalEliminar(nombreModal) {
 
 function editarCurriculum(idCurriculum) {
     window.location.href = "/Curriculum/RedirectCurriculum/?idCurriculum=" + idCurriculum;
+}
+
+function clonarCurriculum(idCurriculum) {
+    window.location.href = "/Curriculum/ClonarCurriculum?idCurriculum=" + idCurriculum;
 }
 
 // ZONA DE IMAGENES

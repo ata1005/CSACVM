@@ -1,6 +1,7 @@
 ﻿using CSACVM.AccesoDatos.Data;
 using CSACVM.AccesoDatos.Repositorio.IRepositorio;
 using CSACVM.Modelos;
+using CSACVM.Modelos.ViewModels;
 using System.Reflection;
 
 namespace CSACVM.AccesoDatos.Repositorio{
@@ -79,6 +80,26 @@ namespace CSACVM.AccesoDatos.Repositorio{
         public void EliminarEntrada(EntradaCV entradaCV) {
             _db.EntradaCV.Remove(entradaCV);
             _db.SaveChanges();
+        }
+
+        public void ClonadoEntradaCV(Curriculum clonado, CurriculumModelVM model) {
+            foreach (EntradaCV entrada in model.ListaEntradaCV) {
+                EntradaCV nueva = new EntradaCV() {
+                    EmpresaAsociada = entrada.EmpresaAsociada,
+                    IdCurriculum = clonado.IdCurriculum,
+                    IdUsuario = entrada.IdUsuario,
+                    Observaciones = entrada.Observaciones,
+                    FechaDesde = entrada.FechaDesde,
+                    FechaHasta = entrada.FechaHasta,
+                    PuestoTrabajo = entrada.PuestoTrabajo,
+                    Ubicacion = entrada.Ubicacion,
+                    FechaCreacion = DateTime.Now,
+                    ProcesoCreacion = MethodBase.GetCurrentMethod().Name
+                };
+
+                _db.EntradaCV.Add(nueva);
+                _db.SaveChanges();
+            }
         }
     }
 }

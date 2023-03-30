@@ -1,6 +1,7 @@
 ﻿using CSACVM.AccesoDatos.Data;
 using CSACVM.AccesoDatos.Repositorio.IRepositorio;
 using CSACVM.Modelos;
+using CSACVM.Modelos.ViewModels;
 using System.Reflection;
 
 namespace CSACVM.AccesoDatos.Repositorio{
@@ -47,6 +48,20 @@ namespace CSACVM.AccesoDatos.Repositorio{
         public void EliminarAptitud(AptitudCV aptitudCV) {
             _db.AptitudCV.Remove(aptitudCV);
             _db.SaveChanges();
+        }
+
+        public void ClonadoAptitudCV(Curriculum clonado, CurriculumModelVM model) {
+            foreach (AptitudCV aptitud in model.ListaAptitudCV) {
+                AptitudCV nueva = new AptitudCV() {
+                    IdCurriculum = clonado.IdCurriculum,
+                    Descripcion = aptitud.Descripcion,
+                    FechaCreacion = DateTime.Now,
+                    ProcesoCreacion = MethodBase.GetCurrentMethod().Name
+                };
+
+                _db.AptitudCV.Add(nueva);
+                _db.SaveChanges();
+            }
         }
 
     }

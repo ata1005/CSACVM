@@ -7,5 +7,6 @@ namespace CSACVM.AccesoDatos.Repositorio.IRepositorio{
         public List<Curriculum> ObtenerCurriculumsUsuario(int idUsuario);
         public void GuardarNuevoCurriculum(string titulo, int idUsuario);
         public void EliminarCurriculum(Curriculum curriculum);
+        public void ActualizarNombre(Curriculum curriculum, CurriculumModelVM model);
     }
 }

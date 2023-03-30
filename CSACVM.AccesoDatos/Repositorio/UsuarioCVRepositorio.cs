@@ -4,17 +4,14 @@ using CSACVM.Modelos;
 using CSACVM.Modelos.ViewModels;
 using System.Reflection;
 
-namespace CSACVM.AccesoDatos.Repositorio{
-    public class UsuarioCVRepositorio : Repositorio<UsuarioCV>, IUsuarioCVRepositorio
-    {
+namespace CSACVM.AccesoDatos.Repositorio {
+    public class UsuarioCVRepositorio : Repositorio<UsuarioCV>, IUsuarioCVRepositorio {
         private CSACVMContext _db;
-        public UsuarioCVRepositorio(CSACVMContext db) : base(db)
-        {
+        public UsuarioCVRepositorio(CSACVMContext db) : base(db) {
             _db = db;
         }
-        
-        public void Update(UsuarioCV obj)
-        {
+
+        public void Update(UsuarioCV obj) {
             _db.UsuarioCV.Update(obj);
         }
 
@@ -37,10 +34,10 @@ namespace CSACVM.AccesoDatos.Repositorio{
             _db.SaveChanges();
         }
 
-        public void NuevoUsuarioCV(int idUsuario,int idCurriculum) {
+        public void NuevoUsuarioCV(int idUsuario, int idCurriculum) {
 
             UsuarioCV usuario = new UsuarioCV() {
-                IdUsuario= idUsuario,
+                IdUsuario = idUsuario,
                 IdCurriculum = idCurriculum,
                 UsuarioCreacion = idUsuario,
                 ProcesoCreacion = MethodBase.GetCurrentMethod().Name,
@@ -53,6 +50,28 @@ namespace CSACVM.AccesoDatos.Repositorio{
 
         public void EliminarUsuario(UsuarioCV usuarioCV) {
             _db.UsuarioCV.Remove(usuarioCV);
+            _db.SaveChanges();
+        }
+
+        public void ClonadoUsuarioCV(Curriculum clonado, CurriculumModelVM model) {
+            FotoUsuarioCV foto = _db.FotoUsuarioCV.Where(f => f.IdCurriculum == clonado.IdCurriculum).FirstOrDefault();
+
+            UsuarioCV usuario = new UsuarioCV() {
+                IdCurriculum = clonado.IdCurriculum,
+                Nombre = model.UsuarioCV.Nombre,
+                Apellido1 = model.UsuarioCV.Apellido1,
+                Apellido2 = model.UsuarioCV.Apellido2,
+                Email = model.UsuarioCV.Email,
+                EnlaceContacto = model.UsuarioCV.EnlaceContacto,
+                FechaNacimiento = model.UsuarioCV.FechaNacimiento,
+                Nacionalidad = model.UsuarioCV.Nacionalidad,
+                Profesion = model.UsuarioCV.Profesion,
+                Telefono = model.UsuarioCV.Telefono,
+                IdFotoUsuarioCV = foto != null ? foto.IdFotoUsuarioCV : null,
+                FechaCreacion = DateTime.Now,
+                ProcesoCreacion = MethodBase.GetCurrentMethod().Name
+            };
+            _db.UsuarioCV.Add(usuario);
             _db.SaveChanges();
         }
     }

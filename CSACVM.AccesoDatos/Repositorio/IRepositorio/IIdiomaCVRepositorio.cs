@@ -1,4 +1,5 @@
 ﻿using CSACVM.Modelos;
+using CSACVM.Modelos.ViewModels;
 
 namespace CSACVM.AccesoDatos.Repositorio.IRepositorio{
     public interface IIdiomaCVRepositorio : IRepositorio<IdiomaCV> {
@@ -6,5 +7,6 @@ namespace CSACVM.AccesoDatos.Repositorio.IRepositorio{
         public List<IdiomaCV> ObtenerListaIdioma(int idCurriculum);
         public void GuardarIdioma(List<IdiomaCV> lstIdiomaCV, List<string> lstIdioma, List<string> lstDescripcionIdioma, List<string> lstNivelIdioma, List<string> lstCentroIdioma, List<string> lstDateDesdeIdioma, List<string> lstDateHastaIdioma, int idCurriculum, int idUser);
         public void EliminarIdioma(IdiomaCV idiomaCV);
+        public void ClonadoIdiomaCV(Curriculum clonado, CurriculumModelVM model);
     }
 }

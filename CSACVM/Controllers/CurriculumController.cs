@@ -8,7 +8,9 @@ using Newtonsoft.Json;
 using CSACVM.AccesoDatos.Repositorio;
 using CSACVM.Modelos;
 using Rotativa.AspNetCore.Options;
-
+using System.Reflection;
+using static System.Net.Mime.MediaTypeNames;
+using System;
 
 namespace CSACVM.Controllers {
     public class CurriculumController : Controller {
@@ -104,12 +106,87 @@ namespace CSACVM.Controllers {
                 ListaLogroCV = _unitOfWork.LogroCV.ObtenerListaLogro(idCurriculum)
             };
 
-            return new Rotativa.AspNetCore.ViewAsPdf("_ExportarPDF", model) {
+            return new Rotativa.AspNetCore.ViewAsPdf("_ExportarPDF_2", model) {
                 PageSize = Size.A4,
                 PageOrientation = Orientation.Portrait,
                 PageMargins = { Left = 5, Right = 3, Bottom = 5 },
                 CustomSwitches = "--footer-center \" " + "P\u00E1gina" + ": [page]/[toPage]\"" + " --footer-line --footer-font-size \"8\" --footer-spacing 1 --footer-font-name \"Meridien\" --print-media-type"
             };
+        }
+
+        public async Task<ActionResult> ClonarCurriculumAsync(int idCurriculum) {
+            using (var dbTGuardar = _unitOfWork.GetContext().Database.BeginTransaction()) {
+                try {
+                    int idUsuario = HttpContext.Session.GetInt32("ID").Value;
+                    Curriculum curriculum = _unitOfWork.Curriculum.GetFirstOrDefault(c => c.IdCurriculum == idCurriculum);
+                    FotoUsuarioCV rutaFoto = _unitOfWork.FotoUsuarioCV.GetFirstOrDefault(f => f.IdCurriculum == idCurriculum);
+                    UsuarioCV usuarioCV = _unitOfWork.UsuarioCV.GetFirstOrDefault(u => u.IdCurriculum == idCurriculum);
+                    CurriculumModelVM model = new CurriculumModelVM() {
+                        IdCurriculum = idCurriculum,
+                        Titulo = curriculum.Titulo,
+                        Foto = rutaFoto != null ? rutaFoto.Ruta + "." + rutaFoto.Ext : "",
+                        UsuarioCV = usuarioCV,
+                        ListaFormacionCV = _unitOfWork.FormacionCV.ObtenerListaFormacion(idCurriculum),
+                        ListaIdiomaCV = _unitOfWork.IdiomaCV.ObtenerListaIdioma(idCurriculum),
+                        ListaEntradaCV = _unitOfWork.EntradaCV.ObtenerListaEntrada(idCurriculum),
+                        ListaAptitudCV = _unitOfWork.AptitudCV.ObtenerListaAptitud(idCurriculum),
+                        ListaLogroCV = _unitOfWork.LogroCV.ObtenerListaLogro(idCurriculum)
+                    };
+
+                    Curriculum clonado = new() {
+                        IdUsuario = idUsuario,
+                        Titulo = curriculum.Titulo + "_CPY",
+                        FechaCurriculum = DateTime.Now,
+                        FechaCreacion = DateTime.Now,
+                        ProcesoCreacion = MethodBase.GetCurrentMethod().Name
+                    };
+
+                    _unitOfWork.Curriculum.Add(clonado);
+                    model.IdCurriculum = clonado.IdCurriculum;
+                    _unitOfWork.Save();
+                    model.IdCurriculum = clonado.IdCurriculum;
+
+                    //string folder = "CSACVM/wwwroot/ImagenPerfilCV";
+                    //string absolutePath = System.IO.Path.GetFullPath(folder);
+                    //string filename = "";
+                    //string fullfilename = "";
+                    //string ext = "";
+                    //string ruta = "";
+                    //string pathDirectorio = "";
+                    //string guid = "";
+
+                    //if (rutaFoto != null) {
+                    //    ext = model.Foto.Split('.')[1];
+                    //    filename = "profilePhoto_" + idUsuario + "_" + clonado.IdCurriculum;
+                    //    fullfilename = filename + "." + ext;
+                    //    ruta = folder + "/" + filename;
+                    //    pathDirectorio = absolutePath + "\\" + fullfilename;
+                    //    guid = Guid.NewGuid().ToString();
+                    //    if (!Directory.Exists(folder)) {
+                    //        Directory.CreateDirectory(folder);
+                    //    }
+
+                    //    using (FileStream fileStream = System.IO.File.Create(pathDirectorio)) {
+                    //        await ImageFile.CopyToAsync(fileStream);
+                    //    }
+                    //    _unitOfWork.FotoUsuarioCV.AddPhoto(ruta, guid, ext, idUsuario, clonado.IdCurriculum);
+                    //}
+                    
+                    _unitOfWork.UsuarioCV.ClonadoUsuarioCV(clonado, model);
+                    _unitOfWork.FormacionCV.ClonadoFormacionCV(clonado, model);
+                    _unitOfWork.EntradaCV.ClonadoEntradaCV(clonado, model);
+                    _unitOfWork.IdiomaCV.ClonadoIdiomaCV(clonado, model);
+                    _unitOfWork.LogroCV.ClonadoLogroCV(clonado, model);
+                    _unitOfWork.AptitudCV.ClonadoAptitudCV(clonado, model);
+
+                    _unitOfWork.Save();
+                    dbTGuardar.Commit();
+                } catch (Exception ex) {
+                    dbTGuardar.Rollback();
+                    throw;
+                }
+            }
+            return LocalRedirect("~/Curriculum/Curriculum");
         }
         public IFormFile ImageFile { get; set; }
 
@@ -118,6 +195,9 @@ namespace CSACVM.Controllers {
         public async Task<IActionResult> GuardarCurriculumAsync(CurriculumModelVM model) {
             using (var dbTGuardar = _unitOfWork.GetContext().Database.BeginTransaction()) {
                 try {
+                    Curriculum curriculum = _unitOfWork.Curriculum.GetFirstOrDefault(c => c.IdCurriculum == model.IdCurriculum);
+                    _unitOfWork.Curriculum.ActualizarNombre(curriculum, model);
+
                     int idUsuario = HttpContext.Session.GetInt32("ID").Value;
                     #region UsuarioCV.
 

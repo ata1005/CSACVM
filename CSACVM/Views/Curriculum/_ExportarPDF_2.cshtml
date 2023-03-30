@@ -1,0 +1,133 @@
+﻿@using CSACVM.Modelos.ViewModels
+@model CSACVM.Modelos.ViewModels.CurriculumModelVM
+@{
+    Layout = null;
+}
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/comunes.css" />
+    <link rel="stylesheet" href="~/css/bootswatch.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/all.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Informes/informes.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="row flexrow">
+        <div class="col-4">
+            <div class="row text-center">
+                @if (Model.Foto != "") {
+                    var ruta = "/ImagenPerfilCV/" + Model.Foto.Split("/")[2];
+                    <img class=" br-100" src="@ruta" style="width: 80px;height:90px">
+                }
+                <div class="mt-2 row-12">
+                    <label class="form-label fontInformeTitulos fw-bold">@Model.UsuarioCV.Nombre</label>
+                    <label class="form-label fontInformeTitulos fw-bold">@Model.UsuarioCV.Apellido1</label>
+                    <label class="form-label fontInformeTitulos fw-bold">@Model.UsuarioCV.Apellido2</label>
+                </div>
+                <div class="row">
+                    <label class="form-label fontInforme">@Model.UsuarioCV.Profesion</label>
+                </div>
+                
+            </div>
+            <div class="row">
+                @if (Model.ListaIdiomaCV.Count > 0) {
+                    <div class="row mt-5 flexrow">
+                        <h2 class="fontInformeTitulos fw-bold">Idiomas</h2>
+                    </div>
+                    <hr/>
+                    foreach (IdiomaCV idioma in Model.ListaIdiomaCV) {
+                        <div class="row flexrow">
+                            @{
+                                DateTime fechaDesde;
+                                if (idioma.FechaDesde == null) {
+                                    fechaDesde = DateTime.Now;
+                                } else {
+                                    fechaDesde = Convert.ToDateTime(idioma.FechaDesde);
+                                }
+                            }
+                            <label class="form-label fontInformeTitulos">@idioma.Descripcion - @idioma.Nivel</label>
+                            @if (idioma.FechaHasta == null) {
+                                <label class="form-label"> - @fechaDesde.ToShortDateString() a Actualidad - </label>
+                            } else {
+                                <label class="form-label"> - @fechaDesde.ToShortDateString() a @Convert.ToDateTime(idioma.FechaHasta).ToShortDateString() - </label>
+                            }
+                        </div>
+                    }
+                }
+                @if (Model.ListaAptitudCV.Count > 0 || Model.ListaLogroCV.Count > 0) {
+                    <div class="row mt-5 flexrow">
+                        <h2 class="fontInformeTitulos fw-bold">Aptitudes y Logros</h2>
+                    </div>
+                    <hr class="w-75" />
+                    foreach (AptitudCV aptitud in Model.ListaAptitudCV) {
+                        <div class="row flexrow">
+                            <label class="form-label">@aptitud.Descripcion</label>
+                        </div>
+                    }
+                    foreach (LogroCV logro in Model.ListaLogroCV) {
+                        <div class="row flexrow">
+                            <label class="form-label">@logro.Descripcion</label>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="row mt-3">
+                <h2 class="fontInformeTitulos fw-bold">Acerca de @Model.UsuarioCV.Nombre</h2>
+            </div>
+            <hr />
+            <div class="row flexrow">
+                <label class="form-label">@Model.UsuarioCV.AcercaDe</label>
+            </div>
+            @if (Model.ListaEntradaCV.Count > 0) {
+                <div class="row mt-3 flexrow">
+                    <h2 class="fontInformeTitulos fw-bold">Experiencia laboral</h2>
+                </div>
+                <hr/>
+                foreach (EntradaCV entrada in Model.ListaEntradaCV) {
+                    <div class="row mt-2 flexrow">
+                        @{
+                            DateTime fechaHasta;
+                            if (entrada.FechaHasta == null) {
+                                fechaHasta = DateTime.Now;
+                            } else {
+                                fechaHasta = entrada.FechaHasta;
+                            }
+                        }
+                        <label class="form-label fontInformeTitulos">@entrada.PuestoTrabajo - @entrada.EmpresaAsociada</label>
+                        <label class="form-label"> - @entrada.FechaDesde.ToShortDateString() a @fechaHasta.ToShortDateString() - </label>
+                        <label class="form-label fontInforme">@entrada.Observaciones</label>
+                    </div>
+                }
+            }
+            @if (Model.ListaFormacionCV.Count > 0) {
+                <div class="row mt-5 flexrow">
+                    <h2 class="fontInformeTitulos fw-bold">Formación Académica</h2>
+                </div>
+                <hr/>
+                foreach (FormacionCV formacion in Model.ListaFormacionCV) {
+                    <div class="row mt-2 flexrow">
+                        @{
+
+                            DateTime fechaDesde;
+                            if (formacion.FechaDesde == null) {
+                                fechaDesde = DateTime.Now;
+                            } else {
+                                fechaDesde = Convert.ToDateTime(formacion.FechaDesde);
+                            }
+                        }
+                        <label class="form-label fontInformeTitulos">@formacion.Grado - @formacion.Ubicacion</label>
+                        @if (formacion.FechaHasta == null) {
+                            <label class="form-label"> - @fechaDesde.ToShortDateString() a Actualidad - </label>
+                        } else {
+                            <label class="form-label"> - @fechaDesde.ToShortDateString() a @Convert.ToDateTime(formacion.FechaHasta).ToShortDateString() - </label>
+                        }
+                        <label class="form-label fontInforme">@formacion.Descripcion</label>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</body>
+
+
+

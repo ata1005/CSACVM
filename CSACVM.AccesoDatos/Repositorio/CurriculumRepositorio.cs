@@ -30,10 +30,19 @@ namespace CSACVM.AccesoDatos.Repositorio{
             _db.Curriculum.Add(curriculum);
             _db.SaveChanges();
         }
+
         public void EliminarCurriculum(Curriculum curriculum) {
             _db.Curriculum.Remove(curriculum);
             _db.SaveChanges();
         }
+
+        public void ActualizarNombre(Curriculum curriculum, CurriculumModelVM model) {
+            curriculum.Titulo= model.Titulo;
+            curriculum.ProcesoActualizacion = MethodBase.GetCurrentMethod().Name;
+            curriculum.FechaActualizacion = DateTime.Now;
+        }
+
+
 
     }
 }

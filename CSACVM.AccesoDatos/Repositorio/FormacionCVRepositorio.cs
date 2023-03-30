@@ -1,6 +1,7 @@
 ﻿using CSACVM.AccesoDatos.Data;
 using CSACVM.AccesoDatos.Repositorio.IRepositorio;
 using CSACVM.Modelos;
+using CSACVM.Modelos.ViewModels;
 using System.Reflection;
 
 namespace CSACVM.AccesoDatos.Repositorio{
@@ -78,6 +79,26 @@ namespace CSACVM.AccesoDatos.Repositorio{
         public void EliminarFormacion(FormacionCV formacion) {
             _db.FormacionCV.Remove(formacion);
             _db.SaveChanges();
+        }
+
+        public void ClonadoFormacionCV(Curriculum clonado, CurriculumModelVM model) {
+            foreach(FormacionCV formacion in model.ListaFormacionCV) {
+                FormacionCV nueva = new FormacionCV() {
+                    Descripcion= formacion.Descripcion,
+                    IdCurriculum = clonado.IdCurriculum,
+                    IdUsuario = formacion.IdUsuario,
+                    Grado = formacion.Grado,
+                    FechaDesde= formacion.FechaDesde,
+                    FechaHasta =formacion.FechaHasta,
+                    IdTipoFormacion = formacion.IdTipoFormacion,
+                    Ubicacion = formacion.Ubicacion,
+                    FechaCreacion = DateTime.Now,
+                    ProcesoCreacion = MethodBase.GetCurrentMethod().Name
+                };
+
+                _db.FormacionCV.Add(nueva);
+                _db.SaveChanges();
+            }
         }
 
     }

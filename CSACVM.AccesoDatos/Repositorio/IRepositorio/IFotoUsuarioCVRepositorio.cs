@@ -1,4 +1,5 @@
 ﻿using CSACVM.Modelos;
+using CSACVM.Modelos.ViewModels;
 
 namespace CSACVM.AccesoDatos.Repositorio.IRepositorio{
     public interface IFotoUsuarioCVRepositorio : IRepositorio<FotoUsuarioCV> {

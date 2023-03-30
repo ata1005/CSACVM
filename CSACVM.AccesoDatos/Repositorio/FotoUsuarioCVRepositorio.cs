@@ -4,6 +4,7 @@ using CSACVM.Modelos;
 using static System.Net.Mime.MediaTypeNames;
 using System;
 using System.Reflection;
+using CSACVM.Modelos.ViewModels;
 
 namespace CSACVM.AccesoDatos.Repositorio{
     public class FotoUsuarioCVRepositorio : Repositorio<FotoUsuarioCV>, IFotoUsuarioCVRepositorio {
@@ -48,5 +49,6 @@ namespace CSACVM.AccesoDatos.Repositorio{
             _db.FotoUsuarioCV.Remove(fotoUsuarioCV);
             _db.SaveChanges();
         }
+        
     }
 }
