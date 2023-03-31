@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CSACVM.Modelos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,6 +29,7 @@ namespace CSACVM.AccesoDatos.Repositorio.IRepositorio{
         ICurriculumRepositorio Curriculum { get; }
         IFotoUsuarioCVRepositorio FotoUsuarioCV { get; }
         ITipoFormacionRepositorio TipoFormacion { get; }
+        INivelIdiomaRepositorio NivelIdioma { get; }
         Microsoft.EntityFrameworkCore.DbContext GetContext();
         void Save();
     }

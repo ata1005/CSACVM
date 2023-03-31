@@ -1,5 +1,4 @@
-﻿
-function inicializarTablaCurriculums(cvs) {
+﻿function inicializarTablaCurriculums(cvs) {
     $("#tablaCurriculums").DataTable({
         data: cvs,
         orderCellsTop: true,
@@ -19,7 +18,7 @@ function inicializarTablaCurriculums(cvs) {
                 targets: 1,
                 title: "Título del currículum",
                 data: "titulo",
-                width: "30%",
+                width: "28%",
                 visible: true,
                 searchable: false
             },
@@ -27,7 +26,8 @@ function inicializarTablaCurriculums(cvs) {
                 targets: 2,
                 title: "Fecha creación",
                 data: "fechaCurriculum",
-                type:'datetime-moment',
+                type: 'datetime-moment',
+                className: 'dt-body-center text-center',
                 width: "20%",
                 visible: true,
                 orderable: false,
@@ -38,48 +38,66 @@ function inicializarTablaCurriculums(cvs) {
             },
             {
                 targets: 3,
+                title: "Última actualización",
+                data: "fechaActualizacion",
+                type: 'datetime-moment',
+                className: 'dt-body-center text-center',
+                width: "20%",
+                visible: true,
+                orderable: false,
+                searchable: false,
+                render: function (data, type, row) {
+                    if (row.fechaActualizacion != null) {
+                        return moment(new Date(data).toString()).format('D/M/YYYY HH:mm');
+                    } else {
+                        return '<i class="fa-solid fa-minus c-grey"></i>';
+                    }
+                }
+            },
+            {
+                targets: 4,
                 title: "Editar",
                 visible: true,
                 orderable: false,
                 searchable: false,
                 className: 'dt-body-center text-center',
-                width: "10%",
+                width: "8%",
                 render: function (data, type, row) {
                     return '<a href="javascript:editarCurriculum(\'' + row.idCurriculum + '\');"><i class="fa-solid fa-pen fa-xl c-grey"></i></a>';
                 }
             },
             {
-                targets: 4,
+                targets: 5,
                 title: "Eliminar",
                 visible: true,
                 orderable: false,
                 searchable: false,
                 className: 'dt-body-center text-center',
-                width: "10%",
+                width: "8%",
                 render: function (data, type, row) {
                     return '<a href="javascript:eliminarCurriculum(\'' + row.idCurriculum + '\');"><i class="fa-solid fa-trash fa-xl"></i></a>';
                 }
             },
             {
-                targets: 5,
+                targets: 6,
                 title: "Clonar",
                 visible: true,
                 orderable: false,
                 searchable: false,
                 className: 'dt-body-center text-center',
-                width: "10%",
+                width: "8%",
                 render: function (data, type, row) {
                     return '<a href="javascript:clonarCurriculum(\'' + row.idCurriculum + '\');"><i class="fa-solid fa-clone fa-xl"></i></a>';
                 }
             },
             {
-                targets: 6,
-                title: "Exportar PDF",
+                targets: 7,
+                title: "PDF",
                 visible: true,
                 orderable: false,
                 searchable: false,
                 className: 'dt-body-center text-center',
-                width: "10%",
+                width: "8%",
                 render: function (data, type, row) {
                     return '<a href="javascript:exportarPDF(\'' + row.idCurriculum + '\');"><i class="fa-solid fa-file-pdf fa-xl text-danger"></i></a>';
                 }
@@ -309,14 +327,15 @@ function addIdioma() {
     contadorIdioma = contadorMaxIdioma;
 
     var strOptionsIdioma = '<option value="1">Otro Idioma</option><option value="2">Inglés</option><option value="4">Francés</option><option value="5">Alemán</option><option value="6">Portugués</option><option value="7">Japonés</option><option value="8">Chino</option>';
+    var strOptionsNivelIdioma = '<option value="1">Básico</option><option value="2">Intermedio</option><option value="3">Intermedio-Alto</option><option value="4">Avanzado</option><option value="5">Nativo</option>';
     strNuevaFila = '<div class="container idiomaContainerClass" id="idiomaContainer_' + contadorIdioma + '"><div class="row">'
     strNuevaFila = strNuevaFila + '<div class="col-3 pe-2"><label class="form-label fw-bold"> Idioma:</label>';
     strNuevaFila = strNuevaFila + '<select name ="idIdioma_' + contadorIdioma + '" id="idIdioma_' + contadorIdioma + '" class="form-select"><option disabled selected>Seleccione</option>' + strOptionsIdioma + '</select></div>';
+    strNuevaFila = strNuevaFila + '<div class="col-3 pe-2"><label class="form-label fw-bold"> Nivel:</label>';
+    strNuevaFila = strNuevaFila + '<select name ="idNivelIdioma_' + contadorIdioma + '" id="idNivelIdioma_' + contadorIdioma + '" class="form-select"><option disabled selected>Seleccione</option>' + strOptionsNivelIdioma + '</select></div>';
     strNuevaFila = strNuevaFila + '<div class="col-3 pe-2"><label class="form-label fw-bold">Descripción/Título:</label>';
     strNuevaFila = strNuevaFila + '<input class="form-control" placeholder="Descripción" aria-required="true" name="descripcionIdioma_' + contadorIdioma + '" id="descripcionIdioma_' + contadorIdioma + '"/></div>';
-    strNuevaFila = strNuevaFila + '<div class="col-2 pe-2"><label class="form-label fw-bold">Nivel:</label>';
-    strNuevaFila = strNuevaFila + '<input class="form-control" placeholder="Nivel" aria-required="true" name="nivelIdioma_' + contadorIdioma + '" id="nivelIdioma_' + contadorIdioma + '" /></div>';
-    strNuevaFila = strNuevaFila + '<div class="col-4 pe-2"><label class="form-label fw-bold">Centro:</label>';
+    strNuevaFila = strNuevaFila + '<div class="col-3 pe-2"><label class="form-label fw-bold">Centro:</label>';
     strNuevaFila = strNuevaFila + '<input class="form-control" placeholder="Centro" aria-required="true" name="centroIdioma_' + contadorIdioma + '" id="centroIdioma_' + contadorIdioma + '" /></div></div>';
     strNuevaFila = strNuevaFila + '<div class="row mt-3"><div class="col-4 pe-2"><label class="form-label fw-bold">Fecha Desde:</label>';
     strNuevaFila = strNuevaFila + '<input class="form-control" placeholder="Desde" aria-required="true" type="month" name="fechaDesdeIdioma_' + contadorIdioma + '" id="fechaDesdeIdioma_' + contadorIdioma + '"/></div>';

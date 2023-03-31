@@ -24,7 +24,6 @@ namespace CSACVM.Modelos {
         [ForeignKey("IdNivelIdioma")]
         public NivelIdioma? NivelIdioma { get; set; }
         [MaxLength(50)]
-        public string Nivel { get; set; }
 
         public string Centro { get; set; }
 

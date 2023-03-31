@@ -26,7 +26,6 @@ namespace CSACVM.Controllers {
             Usuario user = _unitOfWork.Usuario.GetFirstOrDefault(u => u.IdUsuario == idUsuario);
             if (user.EsAdmin) {
                 return RedirectToAction("CurriculumAdmin");
-                
             } else {
                 return RedirectToAction("Curriculum", new { id = idUsuario });
             }
@@ -68,8 +67,6 @@ namespace CSACVM.Controllers {
             Curriculum curriculum = _unitOfWork.Curriculum.GetFirstOrDefault(c => c.IdCurriculum == idCurriculum);
             FotoUsuarioCV rutaFoto = _unitOfWork.FotoUsuarioCV.GetFirstOrDefault(f => f.IdCurriculum == idCurriculum);
             UsuarioCV usuarioCV = _unitOfWork.UsuarioCV.GetFirstOrDefault(u => u.IdCurriculum == idCurriculum);
-
-
             //Si los modelos son null, creamos una instancia de ese modelo con el idCurriculum.
             if (usuarioCV == null) _unitOfWork.UsuarioCV.NuevoUsuarioCV(HttpContext.Session.GetInt32("ID").Value, idCurriculum);
 
@@ -86,6 +83,7 @@ namespace CSACVM.Controllers {
                 ListaLogroCV = _unitOfWork.LogroCV.ObtenerListaLogro(idCurriculum),
                 ListaIdiomas = _unitOfWork.Idioma.ObtenerIdiomas(),
                 ListaTipoFormacion = _unitOfWork.TipoFormacion.ObtenerTipoFormacion(),
+                ListaNivelIdiomas = _unitOfWork.NivelIdioma.ObtenerNivelIdioma()
             };
             return View("../Curriculum/EditarCurriculum", model);
         }
@@ -94,13 +92,23 @@ namespace CSACVM.Controllers {
             Curriculum curriculum = _unitOfWork.Curriculum.GetFirstOrDefault(c => c.IdCurriculum == idCurriculum);
             FotoUsuarioCV rutaFoto = _unitOfWork.FotoUsuarioCV.GetFirstOrDefault(f => f.IdCurriculum == idCurriculum);
             UsuarioCV usuarioCV = _unitOfWork.UsuarioCV.GetFirstOrDefault(u => u.IdCurriculum == idCurriculum);
+            Dictionary<string, string> idiomaDict = new Dictionary<string, string>();
+            List<IdiomaCV> ListaIdiomas = _unitOfWork.IdiomaCV.ObtenerListaIdioma(idCurriculum);
+
+            foreach(IdiomaCV idioma in ListaIdiomas) {
+                string descripcion = _unitOfWork.Idioma.GetFirstOrDefault(i => i.IdIdioma == idioma.IdIdioma).Descripcion;
+                string nivel = _unitOfWork.NivelIdioma.GetFirstOrDefault(n => n.idNivelIdioma == idioma.IdNivelIdioma).Descripcion;
+                idiomaDict.Add(descripcion, nivel);
+            }
+
             CurriculumModelVM model = new CurriculumModelVM() {
                 IdCurriculum = idCurriculum,
                 Titulo = curriculum.Titulo,
                 Foto = rutaFoto != null ? rutaFoto.Ruta + "." + rutaFoto.Ext : "",
                 UsuarioCV = usuarioCV,
                 ListaFormacionCV = _unitOfWork.FormacionCV.ObtenerListaFormacion(idCurriculum),
-                ListaIdiomaCV = _unitOfWork.IdiomaCV.ObtenerListaIdioma(idCurriculum),
+                ListaIdiomaCV = ListaIdiomas,
+                DictIdiomasCV = idiomaDict,
                 ListaEntradaCV = _unitOfWork.EntradaCV.ObtenerListaEntrada(idCurriculum),
                 ListaAptitudCV = _unitOfWork.AptitudCV.ObtenerListaAptitud(idCurriculum),
                 ListaLogroCV = _unitOfWork.LogroCV.ObtenerListaLogro(idCurriculum)
@@ -299,7 +307,7 @@ namespace CSACVM.Controllers {
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("descripcionIdioma_"))) {
                         lstDescripcionIdioma.Add(Request.Form[element]);
                     }
-                    foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("nivelIdioma_"))) {
+                    foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("idNivelIdioma_"))) {
                         lstNivelIdioma.Add(Request.Form[element]);
                     }
                     foreach (string element in Request.Form.Keys.Where(x => x.StartsWith("centroIdioma_"))) {

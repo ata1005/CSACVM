@@ -14,8 +14,12 @@
     font-size: 18px;
 }
 
-.fontInformeTitulos {
+.fontInformeApartado {
     font-size: 22px;
+}
+
+.fontInformeTitulos {
+    font-size: 26px;
 }
 
 .flexrow {

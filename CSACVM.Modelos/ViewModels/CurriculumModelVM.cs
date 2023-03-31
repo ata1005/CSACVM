@@ -20,7 +20,9 @@ namespace CSACVM.Modelos.ViewModels {
         public List<LogroCV> ListaLogroCV { get; set; }
         public IEnumerable<SelectListItem> ListaTipoFormacion { get; set; }
         public IEnumerable<SelectListItem> ListaIdiomas { get; set; }
-        
+        public IEnumerable<SelectListItem> ListaNivelIdiomas { get; set; }
+        public Dictionary<string,string> DictIdiomasCV { get; set; }
+
     }
 }
 

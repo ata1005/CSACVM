@@ -219,14 +219,16 @@
                                                 </select>
                                             </div>
                                             <div class="col-3 pe-2">
-                                                <label class="form-label fw-bold">Título:</label>
-                                                <input class="form-control" placeholder="Descripción" aria-required="true" name="descripcionIdioma_@contadorIdioma" id="descripcionIdioma_@contadorIdioma" value="@idioma.Descripcion" />
-                                            </div>
-                                            <div class="col-2 pe-2">
                                                 <label class="form-label fw-bold">Nivel:</label>
-                                                <input class="form-control" placeholder="Nivel" aria-required="true" name="nivelIdioma_@contadorIdioma" id="nivelIdioma_@contadorIdioma" value="@idioma.Nivel" />
+                                                <select asp-items="@Model.ListaNivelIdiomas" asp-for="@idioma.IdNivelIdioma" name="idNivelIdioma_@contadorIdioma" id="idNivelIdioma_@contadorIdioma" class="form-select">
+                                                    <option disabled selected>Seleccione</option>
+                                                </select>
                                             </div>
-                                            <div class="col-4 pe-2">
+                                            <div class="col-3 pe-2">
+                                                <label class="form-label fw-bold">Descripcion/Título:</label>
+                                                <input class="form-control" placeholder="Ej: First Certificate" aria-required="true" name="descripcionIdioma_@contadorIdioma" id="descripcionIdioma_@contadorIdioma" value="@idioma.Descripcion" />
+                                            </div>
+                                            <div class="col-3 pe-2">
                                                 <label class="form-label fw-bold">Centro:</label>
                                                 <input class="form-control" placeholder="Centro" aria-required="true" name="centroIdioma_@contadorIdioma" id="centroIdioma_@contadorIdioma" value="@idioma.Centro" />
                                             </div>
@@ -261,14 +263,16 @@
                                             </select>
                                         </div>
                                         <div class="col-3 pe-2">
+                                            <label class="form-label fw-bold">Nivel:</label>
+                                            <select asp-items="@Model.ListaNivelIdiomas" name="idNivelIdioma_1" id="idNivelIdioma_1" class="form-select">
+                                                <option disabled selected>Seleccione</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-3 pe-2">
                                             <label class="form-label fw-bold">Descripción/Título:</label>
                                             <input class="form-control" placeholder="Descripción" aria-required="true" name="descripcionIdioma_1" id="descripcionIdioma_1" />
                                         </div>
-                                        <div class="col-2 pe-2">
-                                            <label class="form-label fw-bold">Nivel:</label>
-                                            <input class="form-control" placeholder="Nivel" aria-required="true" name="nivelIdioma_1" id="nivelIdioma_1" />
-                                        </div>
-                                        <div class="col-4 pe-2">
+                                        <div class="col-3 pe-2">
                                             <label class="form-label fw-bold">Centro:</label>
                                             <input class="form-control" placeholder="Centro" aria-required="true" name="centroIdioma_1" id="centroIdioma_1" />
                                         </div>

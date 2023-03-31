@@ -50,7 +50,7 @@ namespace CSACVM.AccesoDatos.Repositorio{
                     if (lstDateDesdeIdioma[contador] != "") idioma.FechaDesde = Convert.ToDateTime(lstDateDesdeIdioma[contador]);
                     if (lstDateHastaIdioma[contador] != "") idioma.FechaHasta = Convert.ToDateTime(lstDateHastaIdioma[contador]);
                     idioma.Centro = lstCentroIdioma[contador];
-                    idioma.Nivel = lstNivelIdioma[contador];
+                    idioma.IdNivelIdioma = Convert.ToInt32(lstNivelIdioma[contador]);
                     idioma.FechaActualizacion = DateTime.Now;
                     idioma.ProcesoActualizacion = MethodBase.GetCurrentMethod().Name;
                     idioma.UsuarioActualizacion = idUser;
@@ -65,7 +65,7 @@ namespace CSACVM.AccesoDatos.Repositorio{
                         IdIdioma = lstIdioma[contador] != "" ? Convert.ToInt32(lstIdioma[contador]) : null,
                         FechaDesde = lstDateDesdeIdioma[contador] != "" ? Convert.ToDateTime(lstDateDesdeIdioma[contador]) : null,
                         FechaHasta = lstDateHastaIdioma[contador] != "" ? Convert.ToDateTime(lstDateHastaIdioma[contador]) : null,
-                        Nivel = lstNivelIdioma[contador],
+                        IdNivelIdioma = Convert.ToInt32(lstNivelIdioma[contador]),
                         FechaCreacion = DateTime.Now,
                         ProcesoCreacion = MethodBase.GetCurrentMethod().Name,
                         UsuarioCreacion = idUser
@@ -92,7 +92,7 @@ namespace CSACVM.AccesoDatos.Repositorio{
                     FechaDesde = idioma.FechaDesde,
                     FechaHasta = idioma.FechaHasta,
                     Centro = idioma.Centro,
-                    Nivel = idioma.Nivel,
+                    IdNivelIdioma = idioma.IdNivelIdioma,
                     FechaCreacion = DateTime.Now,
                     ProcesoCreacion = MethodBase.GetCurrentMethod().Name
                 };
