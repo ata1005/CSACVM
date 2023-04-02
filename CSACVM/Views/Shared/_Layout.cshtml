@@ -1,5 +1,9 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+@{
+    string EsAdmin = Context.Session.GetString("ADMIN");
+    string a = "";
+}
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -53,31 +57,45 @@
                         <span class="nav-item ms-2">Editar Perfil</span>
                     </a>
                     <hr />
-                    <a asp-controller="Personal" asp-action="Contactos" class="nav-link">
-                        <i class="fa-solid fa-user-group"></i>
-                        <span class="nav-item ms-2">Contactos</span>
-                    </a>
+                    @if (EsAdmin == "False") {
+                        <a asp-controller="Personal" asp-action="Contactos" class="nav-link">
+                            <i class="fa-solid fa-user-group"></i>
+                            <span class="nav-item ms-2">Contactos</span>
+                        </a>
+                    }
                     @*<a asp-controller="Personal" asp-action="Mensajes" class="nav-link">
                     <i class="fa-solid fa-envelope"></i>
                     <span class="nav-item ms-2">Mensajes</span>
                     </a>*@
-                    <a asp-controller="Directorio" asp-action="Directorio" class="nav-link">
-                        <i class="fa-solid fa-folder-closed"></i>
-                        <span class="nav-item ms-2">Directorio</span>
-                    </a>
+                    @if (EsAdmin == "False") {
+                        <a asp-controller="Directorio" asp-action="Directorio" class="nav-link">
+                            <i class="fa-solid fa-folder-closed"></i>
+                            <span class="nav-item ms-2">Directorio</span>
+                        </a>
+                    }
+                    @if (EsAdmin != "False") {
+                        <a asp-controller="Mantenimiento" asp-action="MantenimientoUsuario" class="nav-link">
+                            <i class="fa-solid fa-user-pen"></i>
+                            <span class="nav-item ms-2">Administrar Usuarios</span>
+                        </a>
+                    }
                     <a asp-controller="Curriculum" asp-action="CurriculumIndex" class="nav-link">
                         <i class="fa-solid fa-file"></i>
                         <span class="nav-item ms-2">Currículum Vitae</span>
                     </a>
-                    <a asp-controller="Personal" asp-action="Notificaciones" class="nav-link">
-                        <i class="fa-solid fa-bell"></i>
-                        <span class="nav-item ms-2">Notificaciones</span>
-                    </a>
+                    @if (EsAdmin == "False") {
+                        <a asp-controller="Personal" asp-action="Notificaciones" class="nav-link">
+                            <i class="fa-solid fa-bell"></i>
+                            <span class="nav-item ms-2">Notificaciones</span>
+                        </a>
+                    }
                     <hr />
-                    <a asp-controller="Home" asp-action="Index" class="nav-link">
-                        <i class="fa-solid fa-calendar-days"></i>
-                        <span class="nav-item ms-2">Eventos</span>
-                    </a>
+                    @if (EsAdmin == "False") {
+                        <a asp-controller="Home" asp-action="Index" class="nav-link">
+                            <i class="fa-solid fa-calendar-days"></i>
+                            <span class="nav-item ms-2">Eventos</span>
+                        </a>
+                    }
                 </nav>
             </div>
         </aside>

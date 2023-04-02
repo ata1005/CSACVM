@@ -11,6 +11,7 @@ using Rotativa.AspNetCore.Options;
 using System.Reflection;
 using static System.Net.Mime.MediaTypeNames;
 using System;
+using CSACVM.AccesoDatos;
 
 namespace CSACVM.Controllers {
     public class CurriculumController : Controller {
@@ -39,11 +40,17 @@ namespace CSACVM.Controllers {
         }
         public ActionResult CurriculumAdmin() {
             CurriculumAdminVM curriculum = new() {
-                ListaCurriculums = _unitOfWork.Curriculum.GetAll().ToList(),
+                ListaCurriculums = _unitOfWork.DatatableCurriculumAdminVM.ObtenerCurriculums(),
+                ListaIdioma = _unitOfWork.Idioma.ObtenerIdiomas(),
+                ListaTipoFormacion = _unitOfWork.TipoFormacion.ObtenerTipoFormacion(),
+                ListaNivelIdioma = _unitOfWork.NivelIdioma.ObtenerNivelIdioma()
             };
             return View(curriculum);
         }
-
+        public JsonResult ObtenerCurriculumsFiltro(BusquedaFiltros filtros) {
+            List<DatatableCurriculumAdminVM> curriculums = _unitOfWork.DatatableCurriculumAdminVM.ObtenerCurriculums(filtros);
+            return Json(curriculums);
+        }
         public async Task<IActionResult> NuevoCurriculum(string titulo) {
             using (var dbTGuardar = _unitOfWork.GetContext().Database.BeginTransaction()) {
                 try {
