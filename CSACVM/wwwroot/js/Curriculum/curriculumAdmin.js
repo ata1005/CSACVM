@@ -53,7 +53,7 @@
                 className: 'dt-body-center text-center',
                 width: "8%",
                 render: function (data, type, row) {
-                    return '<a href="javascript:editarCurriculum(\'' + row.idCurriculum + '\');"><i class="fa-solid fa-pen fa-xl c-grey"></i></a>';
+                    return '<a href="javascript:verCurriculum(\'' + row.idCurriculum + '\');"><i class="fa-solid fa-magnifying-glass fa-xl c-grey"></i></a>';
                 }
             },
             {
@@ -151,18 +151,42 @@ function exportarPDF(idCurriculum) {
     window.open(url, '_blank');
 }
 
+function verCurriculum(idCurriculum) {
+    $.ajax({
+        type: "GET",
+        url: "/Curriculum/ObtenerDatosModalVer",
+        data: {
+            'idCurriculum': parseInt(idCurriculum)
+        },
+        async: true,
+        success: function (response) {
+            var strNuevaFila = "";
+            var divVerCV = "#divVerCV";
+            modal = $('#modalVerCVAdmin')[0];
+            $(modal).modal('toggle');
+            modal.style.display = "block";
+            strNuevaFila = ('<div class="row-12 d-flex ms-3">');
+            strNuevaFila = strNuevaFila + '<div class="col-4 d-flex pe-2"><label class="form-label fw-bold"style="font-size:18px;text-decoration:underline"> Nombre completo:</label><p class="form-label ms-2" style="font-size:18px"> ' + response.nombreCompleto + '</p></div>';
+            strNuevaFila = strNuevaFila + '<div class="col-4 d-flex pe-2"><label class="form-label fw-bold"style="font-size:18px;text-decoration:underline"> Fecha Nacimiento:</label><p class="form-label ms-2" style="font-size:18px"> ' + response.fechaNac + '</p></div>';
+            strNuevaFila = strNuevaFila + '<div class="col-4 d-flex pe-2"><label class="form-label fw-bold"style="font-size:18px;text-decoration:underline"> Nacionalidad:</label><p class="form-label ms-2" style="font-size:18px"> ' + response.nacionalidad + '</p></div></div>';
+            strNuevaFila = strNuevaFila + '<div class="row-12 mt-2 d-flex ms-3">';
+            strNuevaFila = strNuevaFila + '<div class="col-4 d-flex pe-2"><label class="form-label fw-bold"style="font-size:18px;text-decoration:underline"> Profesión:</label><p class="form-label ms-2" style="font-size:18px"> ' + response.profesion + '</p></div>';
+            strNuevaFila = strNuevaFila + '<div class="col-4 d-flex pe-2"><label class="form-label fw-bold"style="font-size:18px;text-decoration:underline"> Telefono:</label><p class="form-label ms-2" style="font-size:18px"> ' + response.telefono + '</p></div>';
+            strNuevaFila = strNuevaFila + '<div class="col-4 d-flex pe-2"><label class="form-label fw-bold" style="font-size:18px;text-decoration:underline"> Email:</label><p class="form-label ms-2" style="font-size:18px"> ' + response.email + '</p></div></div>';
+            strNuevaFila = strNuevaFila + '<div class="row-12 mt-2 ms-3">';
+            strNuevaFila = strNuevaFila + '<div class ="col-12 pe-2"><label class="form-label fw-bold"style="font-size:18px;text-decoration:underline"> Acerca de:</label>';
+            strNuevaFila = strNuevaFila + '<p class="form-label ms-2" style="font-size:18px"> ' + response.acercaDe + '</p></div ></div >';
 
-
+            $("#modalBodyVerCV").children(divVerCV).append(strNuevaFila);
+        }
+    });
+}
 
 function cerrarModal(nombreModal) {
     modalH = $("#" + nombreModal);
     modalH.modal('hide');
-    $("#divsCrearCV").children().remove();
+    $("#divVerCV").children().remove();
 }
-function cerrarModalEliminar(nombreModal) {
-    modalH = $("#" + nombreModal);
-    modalH.modal('hide');
-    $("#rowEliminar").remove();
-}
+
 
 

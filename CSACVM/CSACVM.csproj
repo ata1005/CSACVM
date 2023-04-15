@@ -33,9 +33,13 @@
     <Folder Include="wwwroot\images\" />
     <Folder Include="wwwroot\ImagenPerfil\" />
     <Folder Include="wwwroot\ImagenPerfilCV\" />
+    <Folder Include="wwwroot\webfonts\" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Update="Views\Curriculum\_ExportarPDF_2.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>

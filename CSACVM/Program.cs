@@ -23,8 +23,11 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 builder.Host.UseSerilog((hostContext, services, configuration) => configuration.ReadFrom.Configuration(hostContext.Configuration));
 builder.Services.AddSession();
+//builder.Services.AddDbContext<CSACVMContext>(options => options.UseSqlServer(
+//   "server=(localdb)\\MSSQLLocalDB; Database=CSA_CVM;Trusted_Connection=True;MultipleActiveResultSets=True"));
+
 builder.Services.AddDbContext<CSACVMContext>(options => options.UseSqlServer(
-   "server=(localdb)\\MSSQLLocalDB; Database=CSA_CVM;Trusted_Connection=True;MultipleActiveResultSets=True"));
+    builder.Configuration.GetConnectionString("DefaultConnection")));
 //builder.Services.AddDbContext<CSACVMContext>(options => options.UseSqlServer(
 //    builder.Configuration["ConnectionStrings:DefaultConnection"]));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();

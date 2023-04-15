@@ -51,6 +51,15 @@ namespace CSACVM.Controllers {
             List<DatatableCurriculumAdminVM> curriculums = _unitOfWork.DatatableCurriculumAdminVM.ObtenerCurriculums(filtros);
             return Json(curriculums);
         }
+
+        public JsonResult ObtenerDatosModalVer(int idCurriculum) {
+            UsuarioCV user = _unitOfWork.UsuarioCV.GetFirstOrDefault(u => u.IdCurriculum== idCurriculum);
+            string nombre = user.Nombre + " " + user.Apellido1 + " " + user.Apellido2;
+            var datos = new {nombreCompleto = nombre, nacionalidad = user.Nacionalidad, fechaNac = Convert.ToDateTime(user.FechaNacimiento).ToShortDateString().ToString(),
+                                profesion = user.Profesion, telefono = user.Telefono, email = user.Email, acercaDe =user.AcercaDe};
+
+            return Json(datos);
+        }
         public async Task<IActionResult> NuevoCurriculum(string titulo) {
             using (var dbTGuardar = _unitOfWork.GetContext().Database.BeginTransaction()) {
                 try {

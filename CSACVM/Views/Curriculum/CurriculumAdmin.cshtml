@@ -1,6 +1,7 @@
 ﻿@using CSACVM.Modelos.ViewModels
 @model CSACVM.Modelos.ViewModels.CurriculumAdminVM
 <link rel="stylesheet" type="text/css" href="~/css/datatables.min.css" />
+<link rel="stylesheet" type="text/css" href="~/css/comunes.css" />
 <div class="row">
     <div class="row ">
         <div class="col-3">
@@ -93,7 +94,20 @@
         </div>
     </div>
 </div>
-
+<div class="modal fade" id="modalVerCVAdmin" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-w" role="document">
+        <div class="modal-content ">
+            <div class="modal-header border-bottom-0">
+                <h3>Datos Principales</h3>
+                <button type="button" class="btn btn-secondary fa-solid fa-xmark close ms-auto" aria-label="Close" onclick="cerrarModal('modalVerCVAdmin')"></button>
+            </div>
+            <div class="modal-body" id="modalBodyVerCV">
+                <div class="row-12 ms-2" id="divVerCV">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript" src="~/js/Curriculum/curriculumAdmin.js" asp-append-version="true"></script>
 <script type="text/javascript" src="~/js/datatables.min.js" asp-append-version="true"></script>
 <script type="text/javascript" src="~/js/moment.js" asp-append-version="true"></script>
