@@ -16,14 +16,10 @@ namespace CSACVM.Modelos {
 
         [ForeignKey("IdUsuario")]
         public Usuario Usuario { get; set; }
-        public int IdTipoEntrada { get; set; }
-
-        [ForeignKey("IdTipoEntrada")]
-        public TipoEntrada TipoEntrada { get; set; }
-        public int IdProyecto { get; set; }
+        public int? IdProyecto { get; set; }
 
         [ForeignKey("IdProyecto")]
-        public Proyecto Proyecto { get; set; }
+        public Proyecto? Proyecto { get; set; }
 
         [MaxLength(10)]
         public string? Lenguaje { get; set; }
@@ -35,9 +31,9 @@ namespace CSACVM.Modelos {
         [MaxLength(150)]
         public string Descripcion { get; set; }
 
-        public Boolean Editada { get; set; } = false;
+        public bool Editada { get; set; } = false;
 
-        public Boolean Resuelta { get; set; } = false;
+        public bool Resuelta { get; set; } = false;
 
         public int NumRespuestas { get; set; }
 

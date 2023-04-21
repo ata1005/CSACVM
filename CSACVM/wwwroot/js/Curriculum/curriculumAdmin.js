@@ -85,7 +85,6 @@
 }
 
 function filtrarCurriculums() {
-    debugger;
     if (parseInt($("#filtroFechaNacimientoDesde").val()) > parseInt($("#filtroFechaNacimientoHasta").val()) && ($("#filtroFechaNacimientoDesde").val().toString() != "" && $("#filtroFechaNacimientoHasta").val().toString() != "")) {
         $("#alertFechas").removeClass("d-none");
         $("#alertFechas").addClass("d-flex");
@@ -165,15 +164,21 @@ function verCurriculum(idCurriculum) {
             modal = $('#modalVerCVAdmin')[0];
             $(modal).modal('toggle');
             modal.style.display = "block";
-            strNuevaFila = ('<div class="row-12 d-flex ms-3">');
-            strNuevaFila = strNuevaFila + '<div class="col-4 d-flex pe-2"><label class="form-label fw-bold"style="font-size:18px;text-decoration:underline"> Nombre completo:</label><p class="form-label ms-2" style="font-size:18px"> ' + response.nombreCompleto + '</p></div>';
-            strNuevaFila = strNuevaFila + '<div class="col-4 d-flex pe-2"><label class="form-label fw-bold"style="font-size:18px;text-decoration:underline"> Fecha Nacimiento:</label><p class="form-label ms-2" style="font-size:18px"> ' + response.fechaNac + '</p></div>';
-            strNuevaFila = strNuevaFila + '<div class="col-4 d-flex pe-2"><label class="form-label fw-bold"style="font-size:18px;text-decoration:underline"> Nacionalidad:</label><p class="form-label ms-2" style="font-size:18px"> ' + response.nacionalidad + '</p></div></div>';
-            strNuevaFila = strNuevaFila + '<div class="row-12 mt-2 d-flex ms-3">';
-            strNuevaFila = strNuevaFila + '<div class="col-4 d-flex pe-2"><label class="form-label fw-bold"style="font-size:18px;text-decoration:underline"> Profesión:</label><p class="form-label ms-2" style="font-size:18px"> ' + response.profesion + '</p></div>';
-            strNuevaFila = strNuevaFila + '<div class="col-4 d-flex pe-2"><label class="form-label fw-bold"style="font-size:18px;text-decoration:underline"> Telefono:</label><p class="form-label ms-2" style="font-size:18px"> ' + response.telefono + '</p></div>';
-            strNuevaFila = strNuevaFila + '<div class="col-4 d-flex pe-2"><label class="form-label fw-bold" style="font-size:18px;text-decoration:underline"> Email:</label><p class="form-label ms-2" style="font-size:18px"> ' + response.email + '</p></div></div>';
-            strNuevaFila = strNuevaFila + '<div class="row-12 mt-2 ms-3">';
+            strNuevaFila = '<div class="row-12 d-flex ms-3">';
+            //Columna Foto
+            strNuevaFila = strNuevaFila + '<div class="col-3"> <img class="tamImagen" src="' + response.foto + '"></div>';
+            //Fila al lado de la foto
+            strNuevaFila = strNuevaFila + '<div class="col-9"><div class="row d-flex mt-2">';
+            strNuevaFila = strNuevaFila + '<div class="col-6 d-flex pe-2"><label class="form-label fw-bold"style="font-size:18px;text-decoration:underline"> Nombre completo:</label><p class="form-label ms-2" style="font-size:18px"> ' + response.nombreCompleto + '</p></div>';
+            strNuevaFila = strNuevaFila + '<div class="col-6 d-flex pe-2"><label class="form-label fw-bold"style="font-size:18px;text-decoration:underline"> Fecha Nacimiento:</label><p class="form-label ms-2" style="font-size:18px"> ' + response.fechaNac + '</p></div></div>';
+            //Segunda fila al lado de la foto
+            strNuevaFila = strNuevaFila + '<div class="row d-flex mt-2"><div class="col-6 d-flex pe-2"><label class="form-label fw-bold"style="font-size:18px;text-decoration:underline"> Telefono:</label><p class="form-label ms-2" style="font-size:18px"> ' + response.telefono + '</p></div>';
+            strNuevaFila = strNuevaFila + '<div class="col-6 d-flex pe-2"><label class="form-label fw-bold" style="font-size:18px;text-decoration:underline"> Email:</label><p class="form-label ms-2" style="font-size:18px"> ' + response.email + '</p></div></div>';
+            //Tercera fila al lado de la foto
+            strNuevaFila = strNuevaFila + '<div class="row d-flex mt-2"><div class="col-6 d-flex pe-2"><label class="form-label fw-bold"style="font-size:18px;text-decoration:underline"> Nacionalidad:</label><p class="form-label ms-2" style="font-size:18px"> ' + response.nacionalidad + '</p></div>';
+            strNuevaFila = strNuevaFila + '<div class="col-6 d-flex pe-2"><label class="form-label fw-bold"style="font-size:18px;text-decoration:underline"> Profesión:</label><p class="form-label ms-2" style="font-size:18px"> ' + response.profesion + '</p></div></div></div></div>';
+            //Fila del AcercaDe
+            strNuevaFila = strNuevaFila + '<div class="row-12 mt-3 ms-3">';
             strNuevaFila = strNuevaFila + '<div class ="col-12 pe-2"><label class="form-label fw-bold"style="font-size:18px;text-decoration:underline"> Acerca de:</label>';
             strNuevaFila = strNuevaFila + '<p class="form-label ms-2" style="font-size:18px"> ' + response.acercaDe + '</p></div ></div >';
 

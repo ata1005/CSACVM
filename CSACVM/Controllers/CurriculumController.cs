@@ -55,8 +55,15 @@ namespace CSACVM.Controllers {
         public JsonResult ObtenerDatosModalVer(int idCurriculum) {
             UsuarioCV user = _unitOfWork.UsuarioCV.GetFirstOrDefault(u => u.IdCurriculum== idCurriculum);
             string nombre = user.Nombre + " " + user.Apellido1 + " " + user.Apellido2;
+            string rutaFoto = "";
+            FotoUsuarioCV foto = _unitOfWork.FotoUsuarioCV.GetFirstOrDefault(f => f.IdCurriculum == idCurriculum);
+
+            if(foto != null) {
+                rutaFoto = "/ImagenPerfilCV/" + foto.Ruta.Split("/")[2] + "." + foto.Ext;
+            }
+
             var datos = new {nombreCompleto = nombre, nacionalidad = user.Nacionalidad, fechaNac = Convert.ToDateTime(user.FechaNacimiento).ToShortDateString().ToString(),
-                                profesion = user.Profesion, telefono = user.Telefono, email = user.Email, acercaDe =user.AcercaDe};
+                                profesion = user.Profesion, telefono = user.Telefono, email = user.Email, acercaDe =user.AcercaDe, foto =rutaFoto};
 
             return Json(datos);
         }

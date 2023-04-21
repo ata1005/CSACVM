@@ -9,6 +9,7 @@ namespace CSACVM.Modelos.ViewModels {
     public class EntradaVM {
         public string NombreUser { get; set; }
         public string RutaFoto { get; set; }
+        public string? TextoPublicacion { get; set; }
         public List<ListaEntradaVM> ListaEntradaVM { get; set; }
     }
 }

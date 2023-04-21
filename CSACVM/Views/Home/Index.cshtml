@@ -3,49 +3,51 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-
+<link rel="stylesheet" type="text/css" href="~/css/comunes.css" />
 <div class="row d-flex">
     <div class="col-8">
+        <div class="row mt-2 mb-4">
+            <form>
+                <div class="card">
+                    <div class="card-header"><h5>Nueva publicación</h5></div>
+                    <div class="card-body">
+                        <textarea rows="2" aria-valuemin="1" class="form-control" maxlength="200" asp-for="TextoPublicacion"></textarea>
+                        <div class="row mt-2 d-flex justify-content-end">
+                            <div class="col-3 text-end">
+                                <button class="btn btn-primary" asp-controller="Home" asp-action="NuevaEntrada">Publicar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
         @foreach(ListaEntradaVM entradaVM in Model.ListaEntradaVM) {
-            <div class="row">
+            <div class="row mt-3">
                 @{
-                    string fotoUsuario = entradaVM.Usuario.Foto;
+                    string fotoUsuario = "/"+ entradaVM.Usuario.Foto.Split("/")[2] +"/"+ entradaVM.Usuario.Foto.Split("/")[3];
                 }
                 <div class="col-1">
-                    @fotoUsuario
+                    <img src="@fotoUsuario" style="width: 60px;height:70px" class="br-100">
                 </div>
-                <div class="col-11">
+                <div class="col-10 ms-2">
                     <div class="row">
-                        @entradaVM.Usuario.NombreUser - @entradaVM.Entrada.FechaCreacion.Value.ToShortDateString()
+                        @{
+                            string arr = "@";
+                        }
+                        @arr@entradaVM.Usuario.NombreUser - @entradaVM.Entrada.FechaCreacion.Value.ToShortDateString() @entradaVM.Entrada.FechaCreacion.Value.ToShortTimeString()
                     </div>
                     <div class="row">
                         @entradaVM.Entrada.Descripcion
                     </div>
                     <div class="row">
-                        Desplegable para ver "x" respuestas
+                        @*<a>Ver "x" respuestas</a>*@
                     </div>
                 </div>
-                <hr class="mt-2 mb-2" />
+                <hr class="mt-4 mb-4" />
             </div>
         }
         
-        <div class="row">
-            <div class="col-1">
-                Imagen
-            </div>
-            <div class="col-11">
-                <div class="row">
-                    NombreUsuario - Fecha y Hora
-                </div>
-                <div class="row">
-                    Descripción de la entrada.
-                </div>
-                <div class="row">
-                    Desplegable para ver "x" respuestas
-                </div>
-            </div>
-            <hr class="mt-2 mb-2" />
-        </div>
+        
     </div>
     <div class="col-4">
         <div class="position-fixed w-25">
@@ -55,31 +57,56 @@
                     <label class="form-label fw-bold ms-2">@Model.NombreUser</label>
                 </div>
                 <div class="row-12 mt-3">
-                    <div class="accordion w-100" id="accordionExample">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingOne">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                    Nueva Entrada
-                                </button>
-                            </h2>
-                            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
-                                <div class="accordion-body">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row-12 mt-3">
                     <div class="accordion" id="accordionExample">
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="headingOne">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                    Filtrar Noticias
+                                    Filtrar Publicaciones
                                 </button>
                             </h2>
                             <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
                                 <div class="accordion-body">
+                                    <div class="row">
+                                        <label class="form-label fw-bold ">Fecha</label>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <input type="datetime-local" id="filtroEntradaFechaDesde" name="filtroEntradaFechaDesde" class="form-control" />
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="datetime-local" id="filtroEntradaFechaHasta" name="filtroEntradaFechaHasta" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <label class="form-label fw-bold ">Nombre Usuario</label>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-9">
+                                            <input class="form-control" id="filtroNombreEntrada"/>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <label class="form-label fw-bold ">Palabra clave</label>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-9">
+                                            <input class="form-control" id="filtroDescripcionEntrada" />
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row d-flex justify-content-end">
+                                        <div class="col-3 text-end">
+                                            <button class="btn btn-primary" onclick="filtrarEntradas()">Filtrar</button>
+                                        </div>
+                                    </div>
                                 </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="alert alert-danger mt-3 d-none justify-content-between" id="alertFechasEntrada">
+                                La edad elegida debe ser del tipo desde-hasta, siendo el orden menor a mayor (ej. Edad: 18 a 24).
+                                <button type="button" class="btn-close" data-hide="alert" onclick="$('#alertFechasEntrada').addClass('d-none')" aria-label="Close"></button>
                             </div>
                         </div>
                     </div>
@@ -88,5 +115,5 @@
             
         </div>
     </div>
-
 </div>
+<script type="text/javascript" src="~/js/Home/index.js" asp-append-version="true"></script>

@@ -2,6 +2,7 @@
 using CSACVM.AccesoDatos.Repositorio.IRepositorio;
 using CSACVM.Modelos;
 using CSACVM.Modelos.ViewModels;
+using System.Reflection;
 
 namespace CSACVM.AccesoDatos.Repositorio{
     public class EntradaRepositorio : Repositorio<Entrada>, IEntradaRepositorio
@@ -34,6 +35,19 @@ namespace CSACVM.AccesoDatos.Repositorio{
             }
 
             return listaEntradas;
+        }
+
+        public void NuevaEntrada(EntradaVM model, int idUser) {
+            Entrada entrada = new Entrada() {
+                IdUsuario = idUser,
+                Descripcion = model.TextoPublicacion,
+                ProcesoCreacion = MethodBase.GetCurrentMethod().Name,
+                FechaCreacion = DateTime.Now,
+                UsuarioCreacion = idUser
+            };
+
+            _db.Entrada.Add(entrada);
+            _db.SaveChanges();
         }
     }
 }
