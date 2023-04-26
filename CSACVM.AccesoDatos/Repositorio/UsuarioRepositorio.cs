@@ -3,6 +3,7 @@ using CSACVM.AccesoDatos.Repositorio.IRepositorio;
 using CSACVM.Modelos;
 using CSACVM.Modelos.ViewModels;
 using CSACVM.Utilidades;
+using System.Reflection;
 
 namespace CSACVM.AccesoDatos.Repositorio{
     public class UsuarioRepositorio : Repositorio<Usuario>, IUsuarioRepositorio
@@ -118,6 +119,18 @@ namespace CSACVM.AccesoDatos.Repositorio{
 
         public void AddPhoto(Usuario user, string fullpath) {
             user.Foto= fullpath;
+        }
+
+        public void ActualizarUser(Usuario user, string nombreUser, string nombre, string apellido, bool activo, bool esAdmin) {
+            user.NombreUser= nombreUser;
+            user.Nombre= nombre;
+            user.Apellido= apellido;
+            user.Activo= activo;
+            user.EsAdmin= esAdmin;
+            user.FechaActualizacion = DateTime.Now;
+            user.ProcesoActualizacion = MethodBase.GetCurrentMethod().Name;
+            _db.Usuario.Update(user);
+            _db.SaveChanges();
         }
     }
 }
