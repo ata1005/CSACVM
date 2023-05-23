@@ -70,7 +70,7 @@
                     } else {
                         return '<i class="fa-solid fa-xl fa-xmark text-danger"></i>';
                     }
-                    
+
                 }
             },
             {
@@ -148,3 +148,58 @@ function guardarCambios() {
         }
     });
 }
+
+function filtrarUsuarios() {
+
+    var datosBusqueda = {
+        filtroNombre: String($("#filtroNombre").val()),
+        filtroLogin: String($("#filtroLogin").val()),
+        filtroApellido: String($("#filtroApellido").val()),
+        filtroAdmin: document.getElementById("filtroAdmin").checked,
+        filtroActivo: document.getElementById("filtroActivo").checked,
+        filtroTodos: document.getElementById("filtroTodos").checked,
+    }
+
+    //Obtenemos los datos filtrados y recargamos la tabla de las solicitudes.
+    $.ajax({
+        type: "GET",
+        url: "/Mantenimiento/ObtenerUsuariosFiltro",
+        data: datosBusqueda,
+        async: true,
+        success: function (response) {
+            recargarTabla(response);
+            $('#tablaUsuariosAdmin').DataTable().columns.adjust();
+        }
+    });
+
+}
+
+/**
+ * Función para recargar la tabla con los filtros.
+ * 
+ * @var data datos de la tabla
+ */
+function recargarTabla(data) {
+    if ($.fn.dataTable.isDataTable($("#tablaUsuariosAdmin"))) {
+        $('#tablaUsuariosAdmin').DataTable().clear().draw();
+        $('#tablaUsuariosAdmin').DataTable().rows.add(data).draw();
+        $('#tablaUsuariosAdmin').DataTable().columns.adjust();
+    } else {
+        inicializarTablaUsuariosAdmin(data);
+    }
+}
+
+$("#filtroTodos").change(function (e) {
+    debugger;
+    //var sel = document.getElementById("IdIdValorUnidadCajaBalde");
+    e.stopImmediatePropagation();
+    if (document.getElementById("filtroTodos").checked) {
+        $("#filtroActivo").attr('disabled', true);
+        $("#filtroAdmin").attr('disabled', true);
+        $("#filtroActivo").prop('checked', false);
+        $("#filtroAdmin").prop('checked', false);
+    } else {
+        $("#filtroActivo").removeAttr("disabled");
+        $("#filtroAdmin").removeAttr("disabled");
+    }
+});

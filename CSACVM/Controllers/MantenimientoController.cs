@@ -45,5 +45,10 @@ namespace CSACVM.Controllers {
                 }
             }
         }
+
+        public JsonResult ObtenerUsuariosFiltro(BusquedaFiltrosUsuario filtros) {
+            List<DatatableUsuarioAdminVM> curriculums = _unitOfWork.DatatableUsuarioAdminVM.ObtenerUsuarios(filtros);
+            return Json(curriculums);
+        }
     }
 }

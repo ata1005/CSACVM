@@ -79,10 +79,17 @@
                             <span class="nav-item ms-2">Administrar Usuarios</span>
                         </a>
                     }
+                    @if (EsAdmin != "False") {
+                        <a asp-controller="Login" asp-action="Register" class="nav-link">
+                            <i class="fa-solid fa-user-plus"></i>
+                            <span class="nav-item ms-2">Registrar Usuarios</span>
+                        </a>
+                    }
                     <a asp-controller="Curriculum" asp-action="CurriculumIndex" class="nav-link">
                         <i class="fa-solid fa-file"></i>
                         <span class="nav-item ms-2">Currículum Vitae</span>
                     </a>
+                    
                     @if (EsAdmin == "False") {
                         <a asp-controller="Personal" asp-action="Notificaciones" class="nav-link">
                             <i class="fa-solid fa-bell"></i>
