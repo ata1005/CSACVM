@@ -19,7 +19,7 @@ namespace CSACVM.Controllers {
 
         public IActionResult MantenimientoUsuario(){
             UsuarioAdminVM user = new() {
-                ListaUsuarios = _unitOfWork.DatatableUsuarioAdminVM.ObtenerUsuarios(),
+                ListaUsuarios = _unitOfWork.DatatableUsuarioAdminVM.ObtenerUsuarios().OrderBy(u => u.NombreUser).ToList(),
             };
             return View(user);
         }

@@ -32,6 +32,8 @@ namespace CSACVM.AccesoDatos.Repositorio.IRepositorio{
         INivelIdiomaRepositorio NivelIdioma { get; }
         IDatatableCurriculumAdminVMRepositorio DatatableCurriculumAdminVM { get; }
         IDatatableUsuarioAdminVMRepositorio DatatableUsuarioAdminVM { get; }
+        IContactoRepositorio Contacto { get; }
+        IDatatableBuscarUsuarioVMRepositorio DatatableBuscarUsuarioVM { get; }
         Microsoft.EntityFrameworkCore.DbContext GetContext();
         void Save();
     }

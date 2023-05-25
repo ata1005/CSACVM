@@ -21,7 +21,7 @@ namespace CSACVM.AccesoDatos.Repositorio{
         public List<ListaEntradaVM> ObtenerListaEntradaVM() {
             List<ListaEntradaVM> listaEntradas = new List<ListaEntradaVM>();
 
-            List<Entrada> entradas = _db.Entrada.OrderBy(e => e.FechaCreacion).ToList();
+            List<Entrada> entradas = _db.Entrada.OrderByDescending(e => e.FechaCreacion).ToList();
 
             foreach(Entrada entrada in entradas) { 
                 Usuario user = _db.Usuario.Where(u => u.IdUsuario == entrada.IdUsuario).FirstOrDefault();
@@ -29,10 +29,12 @@ namespace CSACVM.AccesoDatos.Repositorio{
                 ListaEntradaVM listaModel = new ListaEntradaVM() {
                     Usuario = user,
                     Entrada = entrada
-                };
+                };  
 
                 listaEntradas.Add(listaModel);
             }
+
+            
 
             return listaEntradas;
         }

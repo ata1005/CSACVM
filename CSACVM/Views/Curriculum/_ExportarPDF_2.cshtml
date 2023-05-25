@@ -16,6 +16,8 @@
                 @if (Model.Foto != "") {
                     var ruta = "/ImagenPerfilCV/" + Model.Foto.Split("/")[2];
                     <img class=" br-100" src="@ruta" style="width: 110px;height:120px">
+                }else{
+                    <img class=" br-100" src="/images/defaultUser.jpg" style="width: 110px;height:120px">
                 }
                 <div class="mt-2 row-12">
                     <label class="form-label fontInformeTitulos fw-bold">@Model.UsuarioCV.Nombre</label>

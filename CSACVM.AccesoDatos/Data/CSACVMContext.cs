@@ -33,6 +33,7 @@ namespace CSACVM.AccesoDatos.Data
         public DbSet<Curriculum> Curriculum { get; set; }
         public DbSet<TipoFormacion> TipoFormacion { get; set; }
         public DbSet<NivelIdioma> NivelIdioma { get;set; }
+        public DbSet<Contacto> Contacto { get; set; }
 
     }
 }

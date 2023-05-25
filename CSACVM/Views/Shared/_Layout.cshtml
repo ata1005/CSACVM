@@ -18,7 +18,7 @@
 </head>
 <body>
     <header class="col-12 position-fixed" style="z-index:100">
-        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-light border-bottom box-shadow mb-3" style="background:#BEBEBE">
             <div class="container-fluid">
                 <div class="col-2">
                     <img class="img-fluid logo w-25" src="~/images/CSA_LOGO.jpeg" alt="Logotipo" />
@@ -30,14 +30,6 @@
                 </div>
 
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
-                        </li>
-                        <li class="nav-item d-flex text-center align-items-baseline ms-1">
-                            <input type="text" placeholder="Buscar" class="form-control ms-1" />
-                        </li>
-                    </ul>
                     <ul class="navbar-nav d-flex justify-content-end flex-grow-1">
                         <li class="nav-item align-items-end ms-2 d-flex">
                             <a class="fa-2xl fa fa-power-off nav-link" id="btnLogout" asp-controller="Login" asp-action="Logout"></a>
@@ -52,15 +44,19 @@
         <aside class="nav overflow-auto col-2" style="margin-top:120px">
             <div class="position-fixed">
                 <nav class="nav-list align-items-center">
-                    <a asp-controller="Login" asp-action="Profile" class="nav-link">
+                    <a asp-controller="Login" asp-action="Profile" class="nav-link text-dark">
                         <i class="fa-solid fa-user-pen"></i>
-                        <span class="nav-item ms-2">Editar Perfil</span>
+                        <span class="nav-item ms-2 text-decoration-underline">Editar Perfil</span>
+                    </a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">
+                                <i class="fa-solid fa-flag"></i>
+                                <span class="nav-item ms-2 text-decoration-underline">Página principal</span>
                     </a>
                     <hr />
                     @if (EsAdmin == "False") {
-                        <a asp-controller="Personal" asp-action="Contactos" class="nav-link">
+                        <a asp-controller="Personal" asp-action="Contactos" class="nav-link text-dark">
                             <i class="fa-solid fa-user-group"></i>
-                            <span class="nav-item ms-2">Contactos</span>
+                            <span class="nav-item ms-2 text-decoration-underline">Contactos</span>
                         </a>
                     }
                     @*<a asp-controller="Personal" asp-action="Mensajes" class="nav-link">
@@ -68,37 +64,37 @@
                     <span class="nav-item ms-2">Mensajes</span>
                     </a>*@
                     @if (EsAdmin == "False") {
-                        <a asp-controller="Directorio" asp-action="Directorio" class="nav-link">
-                            <i class="fa-solid fa-folder-closed"></i>
-                            <span class="nav-item ms-2">Directorio</span>
+                        <a asp-controller="Directorio" asp-action="Directorio" class="nav-link text-dark">
+                            <i class="fa-solid fa-folder-closed text-warning"></i>
+                            <span class="nav-item ms-2 text-decoration-underline">Directorio</span>
                         </a>
                     }
                     @if (EsAdmin != "False") {
-                        <a asp-controller="Mantenimiento" asp-action="MantenimientoUsuario" class="nav-link">
-                            <i class="fa-solid fa-user-pen"></i>
-                            <span class="nav-item ms-2">Administrar Usuarios</span>
+                        <a asp-controller="Mantenimiento" asp-action="MantenimientoUsuario" class="nav-link text-dark">
+                            <i class="fa-solid fa-user-pen text-success"></i>
+                            <span class="nav-item ms-2 text-decoration-underline">Administrar Usuarios</span>
                         </a>
                     }
                     @if (EsAdmin != "False") {
-                        <a asp-controller="Login" asp-action="Register" class="nav-link">
-                            <i class="fa-solid fa-user-plus"></i>
-                            <span class="nav-item ms-2">Registrar Usuarios</span>
+                        <a asp-controller="Login" asp-action="Register" class="nav-link text-dark">
+                            <i class="fa-solid fa-user-plus text-primary"></i>
+                            <span class="nav-item ms-2 text-decoration-underline">Registrar Usuarios</span>
                         </a>
                     }
-                    <a asp-controller="Curriculum" asp-action="CurriculumIndex" class="nav-link">
-                        <i class="fa-solid fa-file"></i>
-                        <span class="nav-item ms-2">Currículum Vitae</span>
+                    <a asp-controller="Curriculum" asp-action="CurriculumIndex" class="nav-link text-dark">
+                        <i class="fa-solid fa-file text-danger"></i>
+                        <span class="nav-item ms-2 text-decoration-underline">Currículum Vitae</span>
                     </a>
-                    
+
                     @if (EsAdmin == "False") {
-                        <a asp-controller="Personal" asp-action="Notificaciones" class="nav-link">
+                        <a asp-controller="Personal" asp-action="Notificaciones" class="nav-link" hidden>
                             <i class="fa-solid fa-bell"></i>
                             <span class="nav-item ms-2">Notificaciones</span>
                         </a>
                     }
                     <hr />
                     @if (EsAdmin == "False") {
-                        <a asp-controller="Home" asp-action="Index" class="nav-link">
+                        <a asp-controller="Home" asp-action="Index" class="nav-link" hidden>
                             <i class="fa-solid fa-calendar-days"></i>
                             <span class="nav-item ms-2">Eventos</span>
                         </a>

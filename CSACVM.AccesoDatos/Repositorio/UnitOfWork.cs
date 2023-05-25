@@ -33,6 +33,8 @@ namespace CSACVM.AccesoDatos.Repositorio
             NivelIdioma = new NivelIdiomaRepositorio(_db);
             DatatableCurriculumAdminVM = new DatatableCurriculumAdminVMRepositorio(_db);
             DatatableUsuarioAdminVM = new DatatableUsuarioAdminVMRepositorio(_db);
+            DatatableBuscarUsuarioVM = new DatatableBuscarUsuarioVMRepositorio(_db);
+            Contacto = new ContactoRepositorio(_db);
         }
         public IUsuarioRepositorio Usuario { get; private set; }
         public IUsuarioCVRepositorio UsuarioCV { get; private set; }
@@ -59,6 +61,8 @@ namespace CSACVM.AccesoDatos.Repositorio
         public INivelIdiomaRepositorio NivelIdioma { get; private set; }
         public IDatatableCurriculumAdminVMRepositorio DatatableCurriculumAdminVM { get; private set; }
         public IDatatableUsuarioAdminVMRepositorio DatatableUsuarioAdminVM { get; private set; }
+        public IDatatableBuscarUsuarioVMRepositorio DatatableBuscarUsuarioVM { get; private set; }
+        public IContactoRepositorio Contacto { get; private set; }
         public Microsoft.EntityFrameworkCore.DbContext GetContext(){
             return this._db;
         }

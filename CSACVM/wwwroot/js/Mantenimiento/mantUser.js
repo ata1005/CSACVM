@@ -4,7 +4,7 @@
         orderCellsTop: true,
         paging: false,
         destroy: true,
-        order: [2, "desc"],
+        order: [1, "asc"],
         scrollX: true,
         columnDefs: [
             {
@@ -190,7 +190,6 @@ function recargarTabla(data) {
 }
 
 $("#filtroTodos").change(function (e) {
-    debugger;
     //var sel = document.getElementById("IdIdValorUnidadCajaBalde");
     e.stopImmediatePropagation();
     if (document.getElementById("filtroTodos").checked) {

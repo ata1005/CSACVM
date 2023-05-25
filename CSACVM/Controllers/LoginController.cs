@@ -180,7 +180,7 @@ namespace CSACVM.Controllers {
             }
 
             //Si se registra se redirige al Login para iniciar sesión.
-            return LocalRedirect("~/Login/Login");
+            return LocalRedirect("~/Home/Index");
         }
     }
 }

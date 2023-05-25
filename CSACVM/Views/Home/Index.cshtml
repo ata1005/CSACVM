@@ -24,10 +24,19 @@
         @foreach(ListaEntradaVM entradaVM in Model.ListaEntradaVM) {
             <div class="row mt-3">
                 @{
-                    string fotoUsuario = "/"+ entradaVM.Usuario.Foto.Split("/")[2] +"/"+ entradaVM.Usuario.Foto.Split("/")[3];
+                    string fotoUsuario = "";
+                    if(entradaVM.Usuario != null) {
+                        if (entradaVM.Usuario.Foto != null) fotoUsuario = "/" + entradaVM.Usuario.Foto.Split("/")[2] + "/" + entradaVM.Usuario.Foto.Split("/")[3];
+                    }
+                    
                 }
                 <div class="col-1">
-                    <img src="@fotoUsuario" style="width: 60px;height:70px" class="br-100">
+                    @if(fotoUsuario != "") {
+                        <img src="@fotoUsuario" style="width: 60px;height:70px" class="br-100">
+                    } else{
+                        <img src="/images/defaultUser.jpg" style="width: 60px;height:70px" class="br-100">
+                    }
+
                 </div>
                 <div class="col-10 ms-2">
                     <div class="row">
@@ -53,8 +62,13 @@
         <div class="position-fixed w-25">
             <div class="container ms-5">
                 <div class="row-12">
-                    <img src="@Model.RutaFoto" style="width: 70px;height:80px" class="br-100"/>
-                    <label class="form-label fw-bold ms-2">@Model.NombreUser</label>
+                    @if(Model.RutaFoto != "") {
+                        <img src="@Model.RutaFoto" style="width: 70px;height:80px" class="br-100"/>
+                        <label class="form-label fw-bold ms-2">@Model.NombreUser</label>
+                    }else{
+                        <img src="/images/defaultUser.jpg" style="width: 70px;height:80px" class="br-100" />
+                        <label class="form-label fw-bold ms-2">@Model.NombreUser</label>
+                    }
                 </div>
                 <div class="row-12 mt-3">
                     <div class="accordion" id="accordionExample">

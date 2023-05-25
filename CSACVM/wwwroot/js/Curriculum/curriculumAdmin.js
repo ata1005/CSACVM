@@ -151,6 +151,7 @@ function exportarPDF(idCurriculum) {
 }
 
 function verCurriculum(idCurriculum) {
+
     $.ajax({
         type: "GET",
         url: "/Curriculum/ObtenerDatosModalVer",
@@ -159,6 +160,7 @@ function verCurriculum(idCurriculum) {
         },
         async: true,
         success: function (response) {
+            debugger;
             var strNuevaFila = "";
             var divVerCV = "#divVerCV";
             modal = $('#modalVerCVAdmin')[0];
@@ -166,7 +168,12 @@ function verCurriculum(idCurriculum) {
             modal.style.display = "block";
             strNuevaFila = '<div class="row-12 d-flex ms-3">';
             //Columna Foto
-            strNuevaFila = strNuevaFila + '<div class="col-3"> <img class="tamImagen" src="' + response.foto + '"></div>';
+            if (response.foto == "") {
+                strNuevaFila = strNuevaFila + '<div class="col-3"> <img class="tamImagen" src="/images/defaultUser.jpg"></div>';
+            } else {
+                strNuevaFila = strNuevaFila + '<div class="col-3"> <img class="tamImagen" src="' + response.foto + '"></div>';
+            }
+            
             //Fila al lado de la foto
             strNuevaFila = strNuevaFila + '<div class="col-9"><div class="row d-flex mt-2">';
             strNuevaFila = strNuevaFila + '<div class="col-6 d-flex pe-2"><label class="form-label fw-bold"style="font-size:18px;text-decoration:underline"> Nombre completo:</label><p class="form-label ms-2" style="font-size:18px"> ' + response.nombreCompleto + '</p></div>';

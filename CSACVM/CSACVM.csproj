@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Content Remove="wwwroot\js\mantUser.js" />
+    <Content Remove="wwwroot\js\Personal\contactos.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,6 +47,7 @@
 
   <ItemGroup>
     <None Include="wwwroot\js\Mantenimiento\mantUser.js" />
+    <None Include="wwwroot\js\Personal\contactos.js" />
   </ItemGroup>
 
   <ItemGroup>
