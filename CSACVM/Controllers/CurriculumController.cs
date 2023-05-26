@@ -77,7 +77,7 @@ namespace CSACVM.Controllers {
                     throw;
                 }
             }
-            return LocalRedirect("~/Curriculum");
+            return LocalRedirect("~/Home/Index");
         }
 
 
@@ -420,7 +420,7 @@ namespace CSACVM.Controllers {
                 }
             }
 
-            return LocalRedirect("~/Curriculum/Curriculum");
+            return LocalRedirect("~/Home/Index");
         }
 
         public ActionResult EliminarCurriculum(int idCurriculum) {
@@ -480,7 +480,7 @@ namespace CSACVM.Controllers {
                 }
             }
 
-            return LocalRedirect("~/Curriculum/Curriculum");
+            return LocalRedirect("~/Home/Index");
         }
 
 

@@ -34,7 +34,6 @@ namespace CSACVM.AccesoDatos.Repositorio{
             FotoUsuarioCV foto = new FotoUsuarioCV() {
                 Ruta = fullpath,
                 Guid = guid,
-                IdUsuarioCV = idUsuario,
                 Ext = ext,
                 IdCurriculum = idCurriculum,
                 FechaCreacion = DateTime.Now,

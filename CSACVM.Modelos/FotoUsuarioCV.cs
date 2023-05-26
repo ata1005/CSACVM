@@ -11,10 +11,7 @@ namespace CSACVM.Modelos {
     public class FotoUsuarioCV : DatosAuditoria {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdFotoUsuarioCV { get; set; }
-        public int IdUsuarioCV { get; set; }
 
-        [ForeignKey("IdUsuarioCV")]
-        public UsuarioCV UsuarioCV { get; set; }
         public string? Ruta { get; set; }
         public string? Ext { get; set; }
         [MaxLength(36)]

@@ -143,7 +143,7 @@ function aceptarEliminar(idCurriculum) {
         },
         async: true,
         success: function (response) {
-            window.location.href = response.redirect;
+            
         }
     });
 }
@@ -176,7 +176,7 @@ function confirmarCrearCV() {
         },
         async: true,
         success: function (response) {
-            window.location.href = response.redirect;
+           
         }
     });
 }
