@@ -30,7 +30,7 @@ namespace CSACVM.Controllers {
             return RedirectToAction("EditarNota", "EditarNota", new { idNota });
         }
 
-        [HttpGet]
+
         public async Task<IActionResult> EliminarNota(int idNota) {
             using (var dbTGuardar = _unitOfWork.GetContext().Database.BeginTransaction()) {
                 try {

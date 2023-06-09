@@ -6,10 +6,6 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Content Remove="wwwroot\js\mantUser.js" />
-    <Content Remove="wwwroot\js\Personal\contactos.js" />
-  </ItemGroup>
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\js\mantUser.js" />
@@ -45,10 +41,6 @@
     <Folder Include="wwwroot\webfonts\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="wwwroot\js\Mantenimiento\mantUser.js" />
-    <None Include="wwwroot\js\Personal\contactos.js" />
-  </ItemGroup>
 
   <ItemGroup>
     <Content Update="appsettings.json">

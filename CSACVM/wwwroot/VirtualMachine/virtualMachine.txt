@@ -1,0 +1,30 @@
+-------------------------------------
+Datos de la máquina virtual - CSACVM:
+-------------------------------------
+
+Usuario: um_csa
+Contraseña: 6958
+
+El usuario viene seleccionado por defecto, al iniciar la máquina solo nos pedirá introducir
+la contraseña.
+
+Descarga de la máquina en: https://universidaddeburgos-my.sharepoint.com/:u:/g/personal/ata1005_alu_ubu_es/EUvah_9hxRBIp0zGI5CLFZYBLkIaAKMgmARvh2f6nfChqQ?e=9HijTD
+
+Especificaciones/necesidades de la máquina:
+-------------------------------------------
+
+Disco virtual: 50 GB
+RAM: 4 GB
+Procesadores: 3-4
+
+
+Para entrar en la aplicación, se abre cualquier navegador de los instalados (edge, chrome, firefox)
+y se introduce la dirección http://localhost:81
+
+Es posible que si se accede nada más iniciar la máquina, el IIS tarde en arrancar la web, debemos
+esperar un poco y reiniciar la pestaña del navegador. 
+
+Para más información acerca de la máquina virtual, su configuración y más, ver el apartado D) del 
+anexo en el apartado de documentación.
+
+
