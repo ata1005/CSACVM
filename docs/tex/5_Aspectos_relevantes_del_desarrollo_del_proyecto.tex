@@ -1,0 +1,97 @@
+\capitulo{5}{Aspectos relevantes del desarrollo del proyecto}
+
+
+\section{Metodología de gestión del proyecto}
+La metodología que se ha utilizado desde el principio ha sido la del modelo en cascada. La planificación que se realizó tomó este modelo para realizar cada una de las fases del proyecto de una forma lineal y efectiva.
+
+Sin embargo, al poco tiempo del desarrollo fue necesario reconsiderar varias etapas, por lo que añadí el modelo de ruta crítica y así combinar ambos para tener una metodología consistente y que me permitiese hacer cambios sin romper la planificación inicial, o al menos aprovechando todos los recursos y el tiempo.
+
+La aplicación de esta metodología resulta efectiva en los siguientes aspectos:
+\begin{itemize}
+ \item Reconfiguración de fases: al tener un modelo por el que estructurarlas (ruta crítica con prioridad temporal y necesidad de proceso), podía mover o cambiar cada fase en función de esto y el proyecto no se ve afectado.
+ \item Economía del tiempo: la economía del tiempo se basa en aprovechar el tiempo que se necesita para realizar algo y así utilizar el restante para otras actividades o descanso. En este caso, con el modelo elegido que combina dos metodologías distintas, he podido aprovechar el tiempo para hacer las fases más prioritarias al principio, y, si sobraba tiempo, hacer el mayor número de mejoras posible.
+ \item Cada una de las fases fue constante y proporcional en el tiempo, ajustándose bien a lo previsto inicialmente.
+ \item Asegura que los procesos más necesarios se cumplen y dejar lo menos importante para el final hizo que se aprovechase bien el tiempo invertido y que ninguno de los requisitos funcionales quedase sin cubrir.
+\end{itemize}
+
+\section{Análisis de requisitos}
+Los requisitos de software y arquitectura fueron bastante claros desde un principio, a excepción de algunas librerías extra que se han añadido a posteriori conforme se desarrollaba el proyecto y se modificaba o añadía alguna fase.
+
+De esta forma, todas las herramientas que se utilizan han sido las mismas desde este análisis hasta el final del proyecto, solo añadiendo o cambiando algunas de ellas (cambios de versiones, añadidas librerías nuevas para el lado del cliente, etc.).
+
+\section{Diseño de la base de datos}
+La base de datos es una de las cosas que más ha ido cambiando desde que se diseñó al principio del proyecto, dada la necesidad de crear nuevas tablas en función de funcionalidades que al principio no se habían tenido en cuenta, o bien borrado y modificación de otras tablas que no se utilizaban o habían sido cambiadas en función de los cambios entre varias fases o etapas.
+
+Esto se puede ver claramente en la carpeta de migraciones\footnote{Migraciones: https://github.com/ata1005/CSACVM/tree/master/CSACVM.AccesoDatos/Migrations} (\href{https://github.com/ata1005/CSACVM/tree/master/CSACVM.AccesoDatos/Migrations}{Migraciones - CSACVM}). En este directorio se guardan cada una de las migraciones que se han realizado en el proyecto con la base de datos. Cualquier cambio de tablas viene reflejado en esta carpeta.
+
+\section{Iniciación del proyecto, dependencias y librerías}
+En esta etapa ha ocurrido uno de los mayores problemas del desarrollo de la aplicación. Hay varias librerías y dependencias que no admitían ciertas versiones de otras, de modo que se ha tenido que cambiar la versión de éstas sobre la marcha.
+
+Esto ha hecho que ciertos elementos de configuración del proyecto se modifiquen de forma brusca y han ocasionado uno de los mayores problemas: el fallo en la autodetección del configurador de la aplicación.
+
+Este archivo era muy importante, dado que contiene la forma en la que trabaja el \emph{Serilog} (una de las librerías que fallaba por su versión) y la cadena de conexión con la base de datos. Al no detectar este archivo en el proyecto, no se podía obtener la cadena de conexión y por tanto la instancia de la base de datos no se creaba al iniciar el proyecto.
+
+Este error se consiguió resolver rehaciendo la configuración de las dependencias de cada uno de los proyectos (AccesoDatos, Web, Modelos...) y cambiando de lugar el archivo. Al colocar el archivo en un lugar genérico del proyecto (un directorio superior), el proyecto era capaz de detectarlo y solucionar el problema. 
+
+A partir de este punto, ninguna dependencia ha fallado, pero sí una librería: rotativa.
+Rotativa es la librería que se encarga de la generación de ficheros. El problema de esta librería fue su configuración en el programa, ya que faltaba un directorio con los archivos de configuración necesarios para la ejecución de esta herramienta.
+
+\section{Desarrollo principal del proyecto}
+El desarrollo principal del proyecto conforma las etapas más importantes de la funcionalidad de la aplicación. Se han dividido los procesos en varias secciones ya que cada una de ellas ha tenido ciertas particularidades y aspectos relevantes en su desarrollo.
+
+\subsection{Vistas de la página y diseño de interfaces}
+Se ha seguido un diseño similar para la creación de las vistas de procesos específicos, como por ejemplo:
+\begin{itemize}
+ \item Vista de administración de usuarios y currículum.
+ \item Vista con tablas de datos como currículum y notas.
+\end{itemize}
+
+La vista del inicio de sesión tiene un diseño muy similar a otras aplicaciones de CSA, que sigue el gradiente del fondo y como núcleo de la vista un elemento \emph{card} en su centro para poder iniciar sesión con el usuario.
+
+La vista que más ha cambiado ha sido sin duda la página principal, ya que tenemos varios casos:
+\begin{itemize}
+ \item Si inicia sesión un administrador, verá los apartados de gestión principales (administración de usuarios y currículum) así como su propio perfil.
+ \item Si inicia sesión cualquier otro usuario, verá su perfil, sus notas y la vista de currículos será distinta (solo podrá ver sus currículos).
+\end{itemize}
+
+Además, el diseño de esta interfaz se ha ido cambiando y adaptando en función de las fases del ciclo de vida que se han modificado, quitando o añadiendo botones, referencias y más.
+
+\subsection{Configuración inicial de usuarios, inicios de sesión y registros}
+Las primeras etapas del desarrollo, que han sido la configuración de usuarios, perfiles, inicio de sesión y registros, no han dado realmente muchos problemas. Los cambios más relevantes han sido tablas maestras para obtener ciertos datos en los perfiles de usuario, pero por lo demás no ha ocurrido nada relevante en su desarrollo.
+
+\subsection{Currículum y exportación a formato ``.pdf''}
+Esta ha sido una de las etapas que más ha cambiado, además de ser la más prioritaria y en la que más se ha invertido tiempo. 
+
+Los cambios más visibles han sido:
+\begin{itemize}
+ \item Nuevas tablas en base de datos.
+ \item Nuevos campos a varias tablas del modelo para aumentar los datos de los currículum
+ \item Cambio en el diseño de la tabla de currículos para darle más funcionalidad.
+ \item Cambio en el diseño de la exportación de los currículum (de un diseño propio al formato europeo estandarizado).
+ \item Cambio en el diseño de la vista para editar currículum a medida que se añadían campos nuevos.
+\end{itemize}
+
+\subsection{Administración de currículos y usuarios}
+Estas dos fases fueron añadidas posteriormente al análisis inicial y debido a la necesidad de realizarlas, se han colocado antes que otras en el modelo en cascada dada su prioridad.
+
+A pesar del cambio entre fases, estas etapas no han llevado mucho tiempo y se han ajustado muy bien al desarrollo del modelo previsto, teniendo un solo diseño (no ha habido necesidad de modificarlo) y siendo ambas bastante parecidas.
+
+El mayor cambio se verá a futuro a través de mejoras para añadir, por ejemplo, más filtros o campos.
+
+\section{Cambios en las etapas del ciclo de vida}
+A medida que se ha ido desarrollando el proyecto, las etapas o fases han ido cambiando en estructura y tamaño, añadiendo o quitando procesos y funcionalidades.
+
+La mayoría de fases han recibido nuevos desarrollos para corregir errores o para añadir más funcionalidad de la que en un principio se había planificado. Sin embargo, uno de los cambios más relevantes ha sido el cambio de prioridad de procesos al añadir nuevas fases.
+
+La fase de administración de usuarios y la de administración de currículos fueron añadidas a posteriori, tras ciertas reuniones de seguimiento con la empresa y su necesidad, ya que son unas funcionalidades que para ciertos equipos de la empresa pueden resultar muy útiles (sobre todo recursos humanos y administración).
+
+Como ha sido necesario añadirlas, la distribución de fases se ha tenido que ajustar debido a la prioridad de estas nuevas etapas, de modo que otros procesos menos importantes se han dejado para más adelante o como mejoras a futuro (por ejemplo las publicaciones, el registro en el inicio de sesión, etc.).
+
+\section{Despliegue del servidor web}
+El despliegue del servidor web, por lo general, no ha dado tantos problemas como se esperaba en un principio. Para su creación, se genera una imagen del disco de Windows 10, se añade a la aplicación de VirtualBox y se configura y crea el entorno virtual.
+
+La mayor complejidad viene cuando se crea el servidor de base de datos, que se realiza a través de SQL Server y no estaba muy familiarizado con ello.
+
+La configuración del IIS Express no ha dado muchos problemas, el único error que se generaba para entrar en la aplicación, era solamente porque había que configurar usuarios de base de datos y darles permisos de lectura y escritura para la base de datos de la aplicación.
+
+De esta forma, añadiendo el usuario a la cadena de conexión, la aplicación funcionaba perfectamente.

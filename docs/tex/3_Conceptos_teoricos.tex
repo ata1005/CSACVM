@@ -1,0 +1,46 @@
+\capitulo{3}{Conceptos teóricos}\label{Conceptos Teóricos}
+
+En este proyecto no se ha utilizado ningún algoritmo o proceso que requiera una base teórica para su comprensión, ya que al final es una aplicación web que se basa en formularios y consultas.
+
+A pesar de esto, las herramientas que se han utilizado, como pueden ser librerías o dependencias externas al proyecto en sí, han sido muy numerosas, y algunas de ellas requieren de ciertos conocimientos previos para explicar su funcionalidad y, sobre todo, la utilidad que tienen para el desarrollo de este proyecto.
+
+\section{\emph{Framework} y dependencias}
+En primer lugar, nos centraremos en explicar cómo funciona el \emph{framework} en el que se desarrolla este proyecto que, a pesar de que se explique en otros apartados de la documentación, no se detalla el funcionamiento de una forma teórica.
+
+El \emph{framework} o estructura que se ha utilizado para el desarrollo del proyecto es \emph{ASP.NET Core}. La estructura de .NET es la base del proyecto, que no es más que una plataforma de desarollo especializada en aplicaciones web, de escritorio o aplicaciones móviles.
+
+A esta estructura se le añade el componente de ASP con Core, que crea un formato especializado en desarrollo web con .NET y utilizando el lenguaje de C\#. Core es la utilidad que permite estructurar un modelo sobre la plataforma de desarrollo que estamos utilizando, dotando a la aplicación del contexto de la base de datos, modelos de tablas, etc.
+
+El marco de trabajo que ofrece esta estructura es sencillo y jerárquico, dividiendo la aplicación en tres proyectos diferentes principales (que se explicarán más adelante en el anexo específico de ``Diseño''). Esta división permite separar la parte de la web de los modelos y el acceso a los datos para hacer consultas más eficientes y con alto rendimiento.
+
+A esta estructura se suman las dependencias del proyecto, que son librerías internas proporcionadas a través del administrador de paquetes \emph{NuGet}. Estas utilidades permiten el uso de funciones y componentes que ayudan al desarrollo en aspectos importantes como las peticiones y consultas, crear el contexto de la base de datos, etc.
+
+La mayoría de las dependencias más importantes son las de \emph{EntityFramework}, que son librerías usadas en Core para relacionar el contexto de la base de datos con la propia aplicación web. También permite, entre otras funcionalidades, modelar las tablas o modelos de la base de datos, añadir funciones de redirección y configuración de la web, etc.
+
+\section{Librerías externas}
+Como se ha mencionado, el proyecto cuenta con una estructura específica a través de .NET Core, pero las herramientas se incrementan con el desarrollo, sobre todo en el apartado del cliente.
+
+En el apartado del cliente tenemos dos elementos importantes, que son la vista y los \emph{scripts}.
+La vista es la cara de la aplicación, es lo que el usuario ve y con lo que interactúa para enviar o recibir datos y comunicarse con el servidor.
+
+JavaScript en este caso se utiliza como una necesidad de interacción con la vista sin tener que llegar al controlador, modificando componentes de esta, cargando datos, enviando formularios, consultas, etc.
+
+Las herramientas principales que se utilizan en JavaScript son \emph{JQuery}, \emph{Ajax} y \emph{Datatables}, aunque también hay otras herramientas como \emph{Moment} (para el formato de fechas).
+
+Otras librerías interesantes de las que también se hará una breve explicación son RotativaPDF y FontAwesome.
+
+\subsection{\emph{JQuery}, \emph{Ajax} y \emph{Datatables}}
+\emph{JQuery} y \emph{Ajax} son librerías de JavaScript que se combinan entre sí para modular, visualizar, animar o manipular elementos de la vista y datos, así como realizar peticiones o consultas al servidor.
+
+El uso principal de \emph{JQuery} es el de utilizar funciones para obtener datos de los campos de una vista, modificarlos, añadir elementos html, manipular direcciones y más. \emph{Ajax} utiliza \emph{JQuery} para hacer peticiones al servidor a través de sus funciones. Con esta última, se pueden enviar o recibir datos a través de la comunicación con el controlador, y el resultado se obtiene de nuevo en una función de \emph{JQuery} para continuar con la ejecución, que puede resultar en una redirección o una inserción de datos.
+
+\emph{Datatables} es una librería de JavaScript que crea tablas de datos con un formato específico, que se determina a través de los paquetes de estilos y los \emph{scripts} de la librería. Para crear estas tablas, se obtienen los datos a través de un objeto del modelo, y se carga cada dato que indiquemos en una columna.
+
+Varias de las funcionalidades extra que tiene esta última librería, es de poder manipular la estructura y los datos de la tabla, ordenando en función de uno o varios campos, realizar búsquedas a través de ella, insertar otras funciones por cada columna, etc.
+
+\subsection{\emph{RotativaPDF} y \emph{FontAwesome}}
+\emph{RotativaPDF} es una librería que se compone de dos partes: se carga la dependencia a través del instalador de paquetes NuGet y después se añaden archivos de configuración al programa principal, para que después en el servidor se pueda crear un objeto de esta librería.
+
+Su funcionamiento es muy simple, después de configurar la librería, se crea un objeto que exporta una vista en formato ``.pdf''. Para ello, se envían los datos desde el controlador a esa vista específica, que se carga con ellos y forma la estructura de la hoja que se exportará.
+
+FontAwesome es una librería de iconos, que a través de JavaScript y CSS, es capaz de generar iconos personalizados que se muestran en la vista. La página principal de esta librería ofrece iconos gratuitos, que son los que se han utilizado en la aplicación. Para ello, se descarga también el paquete de configuración necesario para su funcionamiento y se añade en una carpeta del servidor.

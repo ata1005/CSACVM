@@ -1,0 +1,781 @@
+\apendice{Especificación de Requisitos}
+\section{Introducción}
+En esta sección se detallarán los diferentes requisitos de la aplicación en base a los objetivos principales de esta, diviendo en varios tipos de requisitos para su posterior desarrollo.
+
+En primer lugar, es necesario observar cuáles son los requisitos de la aplicación, qué
+se quiere conseguir y cómo se hará. Esto sirve de base de análisis por el equipo a la
+hora de gestionar las distintas fases del desarrollo de la aplicación.
+
+Como los requisitos dependen de los objetivos iniciales de la aplicación, deben cumplir una serie
+de características:
+\begin{itemize}
+ \item Debe haber claridad a la hora de su especificación.
+ \item Se organizan en función de una metodología y se deben priorizar ciertos objetivos.
+ \item Se debe probar el éxito o fracaso de la aplicación en tiempo finito.
+ \item Se debe ser coherente a la hora de estimar los tiempos para lograr los
+ objetivos que estiman dentro del alcance del proyecto.
+ \item Se deben tener en cuenta todos los objetivos que se proponen.
+\end{itemize}
+
+\section{Objetivos Generales}
+El objetivo principal del desarrollo de la aplicación es proporcionar un entorno web con un formato de red social dedicado al usuario, que permita:
+\begin{itemize}
+ \item Una gestión básica de usuarios (perfiles, notas, configuración).
+ \item Gestión de currículos de los usuarios de la empresa.
+ \item Gestión de directorios y notas de los usuarios.
+ \item Gestión de currículos y usuarios por parte de los usuarios administradores de la empresa.
+ \item Facilidad para buscar y filtrar información de usuarios y currículos.
+ \item Sencillez y comodidad en la interacción entre el usuario y la aplicación.
+ \item Ofrecer más funcionalidades a futuro, mantenimiento y actualizaciones en nuevas fases.
+ \item Accesibilidad y estructura correcta de los datos que se manejan.
+\end{itemize}
+
+\section{Catálogo de requisitos}
+Los requisitos se van a dividir en tres secciones:
+\begin{itemize}
+\tightlist
+ \item \textbf{Requisitos Estructurales}: se describe la estructura de la aplicación.
+ \item \textbf{Requisitos Funcionales}: requisitos del funcionamiento y comportamiento
+ de la aplicación. En este apartado se enumeran los casos de uso, pero estos se tratarán en un
+ apartado específico.
+ \item \textbf{Requisitos No Funcionales}: requisitos impuestos a un sistema para la calidad
+ y mantenimiento del software.
+\end{itemize}
+
+\subsection{Requisitos estructurales}
+Los requisitos estructurales son la base de la aplicación. En este apartado se incluirán:
+\begin{itemize}
+\tightlist
+ \item Base de Datos: tablas necesarias para el desarrollo de la aplicación y el guardado de los datos.
+ \item Vistas necesarias para la funcionalidad de la aplicación que cumplan los objetivos definidos previamente.
+ \item Despliegue de la web.
+\end{itemize}
+
+\subsubsection{Base de Datos}
+La base de datos se instanciará en local y accederemos a través de SQL Management Studio 18. Las entidades o tablas requeridas para los objetivos marcados son:
+\begin{itemize}
+ \item Usuario: tabla para los usuarios.
+ \item Currículum: tabla que guarda la instancia de un currículum. Es la tabla madre de la gestión de currículos, y de ella heredarán otras como FormacionCV, EntradaCV, UsuarioCV (es decir, todas las distintas fases que comprenden el currículum al completo), etc.
+ \item Entrada: una tabla para guardar las publicaciones de los usuarios.
+ \item NotaUsuario: tabla dedicada a guardar las notas personales de los usuarios.
+\end{itemize}
+
+\subsubsection{Vistas de la aplicación}
+Al ser una aplicación web, las vistas forman el nexo entre la interacción del usuario con esta. Para cumplir los objetivos que se han definido anteriormente, serán necesarias las siguientes vistas o pantallas:
+\begin{itemize}
+ \item \textbf{\emph{Login} o inicio de sesión}: primera pantalla, para iniciar sesión en la aplicación con el usuario.
+ \item \textbf{\emph{Layout} o disposición de la página}: vista que formará la interfaz de la aplicación (es la madre del resto de vistas, aparecerá en todo momento como una capa externa). En esta se dotará de un navegador superior y un panel lateral con las distintas opciones de navegación (para la gestión de currículos, perfil, etc.).
+ \item \textbf{Gestor de currículos}: una vista principal donde se muestren los currículos del usuario conectado con opciones para editar, eleminar y exportar a PDF. Los administradores verán
+ un listado de todos los currículos en base de datos y podrán filtrarlos a través
+ de varios campos.
+ \item \textbf{Gestor de usuarios}: los administradores tendrán una lista con los usuarios activos
+ y podrán gestionarlos (editar datos, desactivarlos, asignar gestores, etc.).
+ \item \textbf{Editor de perfil}: una vista con los datos de usuario que permita modificar/añadir distintos datos de información de usuario.
+ \item \textbf{Notas}: una vista para que el usuario pueda crear, editar y eliminar notas personales.
+ \item \textbf{Entradas}: la vista principal de la aplicación que será parte del inicio, que muestre las diferentes publicaciones de los usuarios y permita filtrar y añadir nuevas publicaciones.
+\end{itemize}
+
+\subsubsection{Despliegue de la web}
+Una vez esté terminada la aplicación se deberá desplegar para poder utilizarla. Depende del contexto del proyecto, el despliegue de este se dividirá en dos formas.
+
+Por un lado, el despliegue en local se hará a través de una máquina virtual con Windows 10, que tendrá una base de datos con SQL Management y un ejecutable de la aplicación. Esto se hará para poder ejecutar la aplicación de forma local, y se proporcionará la imagen del disco para su uso.
+
+Por otro lado, en el contexto de la empresa, la aplicación se deberá alojar en el servidor SQL Server de esta, creando una instancia para la publicación web del proyecto y añadiendo la base de datos correspondiente.
+
+\subsection{Requisitos funcionales de la aplicación}
+Los requisitos funcionales de la aplicación comprenden el comportamiento de la aplicación
+en cuanto a su funcionalidad, y se relaciona de forma directa con las distintas fases por las que pasará el proyecto. 
+
+Para este tipo de requisitos se hará un conjunto de casos de uso, que son pruebas de funcionalidad
+de las distintas fases o apartados que tiene la aplicación. Los requisitos funcionales
+son los siguientes:
+\begin{itemize}
+\tightlist
+ \item \textbf{RF-01}: Inicio de sesión en la aplicación.
+ \item \textbf{RF-02}: Página principal.
+    \begin{itemize}
+    \tightlist
+     \item \textbf{RF-02.1}: Crear publicaciones.
+     \item \textbf{RF-02.2}: Filtrar publicaciones.
+    \end{itemize}
+ \item \textbf{RF-03}: Configuración del perfil de los usuarios.
+ \item \textbf{RF-04}: Directorio de usuarios.
+    \begin{itemize}
+    \tightlist
+     \item \textbf{RF-04.1}: Crear notas de usuario.
+     \item \textbf{RF-04.2}: Ver y editar notas de usuario.
+     \item \textbf{RF-04.3}: Borrar notas de usuario.
+    \end{itemize}
+ \item \textbf{RF-05}: Listar currículos.
+    \begin{itemize}
+    \tightlist
+     \item \textbf{RF-05.1}: Crear currículos.
+     \item \textbf{RF-05.2}: Editar currículos.
+     \item \textbf{RF-05.3}: Borrar currículos.
+     \item \textbf{RF-05.4}: Clonar currículos.
+     \item \textbf{RF-05.5}: Exportación a PDF.
+     \item \textbf{RF-05.6}: Filtrar currículos.
+     \item \textbf{RF-05.7}: Ver datos de currículos.
+    \end{itemize}
+ \item \textbf{RF-06}: Listar usuarios.
+    \begin{itemize}
+    \tightlist
+     \item \textbf{RF-06.1}: Modificar usuarios.
+    \end{itemize}
+ \item \textbf{RF-07}: Registrar usuarios.
+\end{itemize}
+
+Para los casos de uso tenemos dos tipos de actores: el usuario administrador y el usuario normal.
+En función del usuario con el que iniciemos sesión, podremos acceder a unas funciones u otras.
+
+De esta manera, podemos dividir los casos de uso con los diferentes actores en la tabla \ref{casosUsoResumen}.
+\begin{table}
+    \centering
+	\begin{tabular}{lc}
+		\toprule
+		\textbf{Caso de uso}    & \textbf{Actor involucrado}\\
+		\toprule
+        \text CU-01: Inicio de sesión en la aplicación            & Ambos  \\
+        \text CU-02: Página principal                             & Ambos  \\
+        \text CU-03: Configuración del perfil de los usuarios     & Ambos  \\
+        \text CU-04: Directorio de usuarios                       & Ambos  \\
+        \text CU-05: Listar currículos                           & Ambos \\
+        \text CU-06: Crear currículos                            & No administrador \\
+        \text CU-07: Editar currículos                           & No administrador \\
+        \text CU-08: Borrar currículos                           & No administrador \\
+        \text CU-09: Clonar currículos                           & No administrador \\ 
+        \text CU-10: Exportación a PDF                            & Ambos  \\
+        \text CU-11: Filtrar currículos                          & Administrador \\
+        \text CU-12: Ver datos de currículos                     & Administrador \\
+        \text CU-13: Filtrar publicaciones                        & Ambos  \\
+        \text CU-14: Crear publicaciones                          & Ambos  \\
+        \text CU-15: Listar usuarios                              & Administrador \\
+        \text CU-16: Modificar usuarios                           & Administrador \\
+        \text CU-17: Crear notas de usuario                       & Ambos  \\
+        \text CU-18: Ver y editar notas de usuario                & Ambos  \\
+        \text CU-19: Borrar notas de usuario                      & Ambos  \\
+        \text CU-20: Registrar usuarios                           & Administrador  \\
+		\bottomrule
+	\end{tabular}
+	\caption{Tabla de Casos de Uso}
+    \label{casosUsoResumen}
+\end{table}
+
+
+\subsection{Requisitos no funcionales de la aplicación}
+Los requisitos no funcionales de un sistema son aquellas restricciones que definen los
+aspectos de un sistema en cuanto a calidad, rendimiento y seguridad de este, entre otros.
+
+Hay muchos tipos de requisitos no funcionales, pero se destacarán los siguientes:
+\begin{itemize}
+\item
+  \textbf{Rendimiento:} para que una aplicación tenga buen rendimiento, en el caso
+  de una página web, debe permitir el acceso y cambio entre vistas en el menor tiempo 
+  posible, evitando consultas de datos muy grandes y tiempos de procesamiento elevados.
+\item
+  \textbf{Seguridad:} la aplicación debe estar protegida contra el acceso no autorizado. 
+  En el caso de una aplicación web, debe haber una forma lógica y segura de la estructura
+  de las claves en la base de datos, como por ejemplo el uso de claves encriptadas, hash, etc.
+\item
+  \textbf{Actuación:} la aplicación debe ser capaz de manejar una gran cantidad de datos
+  y de usuarios sin poner en riesgo el rendimiento de esta.
+\item
+  \textbf{Disponibilidad:} la aplicación debe estar disponible de forma sencilla y 
+  evitando problemas de acceso al sistema (Internet, acceso a la aplicación por dominio o dirección,
+  etc.).
+\item
+  \textbf{Escalabilidad:} la aplicación será capaz de seguir ampliándose y desarrollándose
+  a futuro sin bajar o degradar su rendimiento.
+\item
+  \textbf{Mantenimiento}: la aplicación debe ser fácil de mantenerse con el tiempo y favorecer
+  la escalabilidad en cuanto a actualizaciones y cambios.
+\item
+  \textbf{Usabilidad}: la aplicación debe ser intuitva y fácil de utilizar. Un manual de usuario
+  también facilita la usabilidad del sistema.
+\item
+  \textbf{Compatibilidad y portabilidad}: el sistema debe ser compatible con otras aplicaciones.
+  En este caso se incluyen los diferentes navegadores web por los que se puede acceder 
+  a la aplicación, o las migraciones de la base de datos y del propio programa con actualizaciones de estrucuturas internas como servidores, entornos, etc.
+\item
+  \textbf{Fiabilidad}: el sistema debe dotar de confianza al usuario y su uso debe cumplir
+  con los objetivos y requerimientos que se buscan con la aplicación.
+\end{itemize}
+
+\newpage
+
+\section{Casos de uso}
+% Caso de Uso 01 -> Inicio de sesión en la aplicación.
+\begin{table}[h]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.7\columnwidth} }
+		\toprule
+		\textbf{CU-01}    & \textbf{Inicio de sesión en la aplicación}\\
+		\toprule
+		\text{Versión}              & 1.0    \\
+		\text{Autor}                & Alex Tomé \\
+        \text{Actores}              & Usuario genérico y administrador \\
+		\text{R.F asociados}        & RF-01 \\
+		\text{Descripción}          & Se debe entrar en la aplicación con usuario y contraseña \\
+		\text{Precondición}         & Usuario registrado en el sistema con contraseña \\
+		\text{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario introduce nombre de usaurio y contraseña
+			\item El usuario pulsa el botón de entrar.
+		\end{enumerate}\\
+		\text{Postcondición}        & El usuario entra con éxito al sistema \\
+		\text{Excepciones}          & No existe el usuario o las credenciales son incorrectas \\
+		\text{Importancia}          & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-1 Inicio de sesión en la aplicación.}
+\end{table}
+
+
+% Caso de Uso 02 -> Vista de publicaciones.
+\begin{table}[H]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.7\columnwidth} }
+		\toprule
+		\textbf{CU-02}    & \textbf{Vista de publicaciones}\\
+		\toprule
+		\text{Versión}              & 1.0    \\
+		\text{Autor}                & Alex Tomé \\
+        \text{Actores}              & Usuario genérico y administrador \\
+		\text{R.F asociados}        & RF-02 \\
+		\text{Descripción}          & Se podrán ver las publicaciones de la página principal \\
+		\text{Precondición}         & Usuario con sesión en el sistema \\
+		\text{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario entra en la aplicación tras iniciar sesión.
+            \item El usuario ve las últimas publicaciones.
+		\end{enumerate}\\
+		\text{Postcondición}        & El usuario ve las publicaciones con éxito \\
+		\text{Excepciones}          & No cargan las publicaciones \\
+		\text{Importancia}          & Media \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-02 Vista de publicaciones.}
+\end{table}
+
+% Caso de Uso 03 -> Configuración del perfil.
+\begin{table}[H]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-03}    & \textbf{Configuración del perfil}\\
+		\toprule
+		\text{Versión}              & 1.0    \\
+		\text{Autor}                & Alex Tomé \\
+        \text{Actores}              & Usuario genérico y administrador \\
+		\text{R.F asociados}        & RF-03 \\
+		\text{Descripción}          & Se podrá acceder al perfil y editar datos \\
+		\text{Precondición}         & Usuario con sesión en el sistema \\
+		\text{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario entra en su perfil.
+            \item El usuario puede cambiar datos a placer.
+            \item Los datos cabiados se guardan al pulsar el botón de guardar.
+		\end{enumerate}\\
+		\text{Postcondición}        & El usuario guarda los cambios con éxito  \\
+		\text{Excepciones}          & El usuario no puede modificar los datos \\
+		\text{Importancia}          & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-03 Configuración del perfil.}
+\end{table}
+
+% Caso de Uso 04 -> Directorio de usuarios.
+\begin{table}[H]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-04}    & \textbf{Directorio de usuarios}\\
+		\toprule
+		\text{Versión}              & 1.0    \\
+		\text{Autor}                & Alex Tomé \\
+        \text{Actores}              & Usuario genérico y administrador \\
+		\text{R.F asociados}        & RF-04, RF-04.1, RF-04.2 \\
+		\text{Descripción}          & Se podrá acceder al directorio y ver las notas \\
+		\text{Precondición}         & Usuario con sesión en el sistema \\
+		\text{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario entra en el directorio personal.
+            \item El usuario ve un listado de las notas creadas y un botón para añadir nuevas.
+		\end{enumerate}\\
+		\text{Postcondición}        & El usuario ve las notas con éxito \\
+		\text{Excepciones}          & No carga el directorio \\
+		\text{Importancia}          & Media \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-04 Directorio de usuarios.}
+\end{table}
+
+% Caso de Uso 05 -> Listar currículos.
+\begin{table}[H]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-05}    & \textbf{Listar currículos}\\
+		\toprule
+		\text{Versión}              & 1.0    \\
+		\text{Autor}                & Alex Tomé \\
+        \text{Actores}              & Usuario genérico y administrador \\
+		\text{R.F asociados}        & RF-05, RF-05.1, RF-05.6, RF-05.7 \\
+		\text{Descripción}          & Se podrá acceder y ver los documentos creados por el                                      usuario (usuario genérico). Se listarán los currículos de                                  todo el sistema (administrador) \\
+		\text{Precondición}         & Usuario con sesión en el sistema \\
+		\text{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario entra en la vista de currículos.
+            \item Si es administrador, verá un listado de todos los currículos. Si no lo es, verá solo los currículos creados por ese usuario.
+		\end{enumerate}\\
+		\text{Postcondición}        & El usuario ve los currículos  \\
+		\text{Excepciones}          & El usuario no puede ver el listado \\
+		\text{Importancia}          & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-05 Listar currículos.}
+\end{table}
+
+% Caso de Uso 06 -> Crear currículos.
+\begin{table}[H]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-06}    & \textbf{Crear currículos}\\
+		\toprule
+		\text{Versión}              & 1.0    \\
+		\text{Autor}                & Alex Tomé \\
+        \text{Actores}              & Usuario genérico \\
+		\text{R.F asociados}        & RF-05, RF-05.1 \\
+		\text{Descripción}          & Se podrá crear un nuevo currículum \\
+		\text{Precondición}         & Usuario genérico con sesión en el sistema \\
+		\text{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario entra en la vista de currículos.
+            \item El usuario pulsa el botón de nuevo currículum e inserta un título.
+		\end{enumerate}\\
+		\text{Postcondición}        & Se crea el currículum con éxito \\
+		\text{Excepciones}          & La creación falla \\
+		\text{Importancia}          & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-06 Crear currículos.}
+\end{table}
+
+% Caso de Uso 07 -> Editar currículos.
+\begin{table}[H]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-07}    & \textbf{Editar currículos}\\
+		\toprule
+		\text{Versión}              & 1.0    \\
+		\text{Autor}                & Alex Tomé \\
+        \text{Actores}              & Usuario genérico. \\
+		\text{R.F asociados}        & RF-05, RF-05.2 \\
+		\text{Descripción}          & Se podrá editar un currículum en cualquiera de sus 
+                                        entradas/pasos \\
+		\text{Precondición}         & Usuario con sesión en el sistema \\
+		\text{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario entra en la vista de currículos.
+            \item El usuario pulsa el botón de editar y modifica/añade cualquier campo y guarda.
+		\end{enumerate}\\
+		\text{Postcondición}        & El usuario guarda los cambios correctamente  \\
+		\text{Excepciones}          & El guardado no se hace correctamente \\
+		\text{Importancia}          & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-07 Editar currículos.}
+\end{table}
+
+% Caso de Uso 08 -> Borrar currículos.
+\begin{table}[H]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-08}    & \textbf{Borrar currículos}\\
+		\toprule
+		\text{Versión}              & 1.0    \\
+		\text{Autor}                & Alex Tomé \\
+        \text{Actores}              & Usuario genérico. \\
+		\text{R.F asociados}        & RF-05, RF-05.3 \\
+		\text{Descripción}          & Se podrá borrar un currículum existente \\
+		\text{Precondición}         & Usuario con sesión en el sistema \\
+		\text{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario entra en la vista de currículos.
+            \item El usuario pulsa el botón de borrar y elimina un currículum.
+		\end{enumerate}\\
+		\text{Postcondición}        & El usuario borra el documento y este desaparece  \\
+		\text{Excepciones}          & El borrado no se hace correctamente \\
+		\text{Importancia}          & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-08 Borrar currículos.}
+\end{table}
+
+% Caso de Uso 09 -> Clonar currículos.
+\begin{table}[H]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-09}    & \textbf{Clonar currículos}\\
+		\toprule
+		\text{Versión}              & 1.0    \\
+		\text{Autor}                & Alex Tomé \\
+        \text{Actores}              & Usuario genérico. \\
+		\text{R.F asociados}        & RF-05, RF-05.4 \\
+		\text{Descripción}          & Se podrá clonar un currículum de forma completa \\
+		\text{Precondición}         & Usuario con sesión en el sistema \\
+		\text{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario entra en la vista de currículos.
+            \item El usuario pulsa el botón de clonar y se crea un documento idéntico.
+		\end{enumerate}\\
+		\text{Postcondición}        & La cloncación es exitosa  \\
+		\text{Excepciones}          & No se genera un nuevo archivo o no se clonan los datos \\
+		\text{Importancia}          & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-09 Clonar currículos.}
+\end{table}
+
+% Caso de Uso 10 -> Exportación a PDF.
+\begin{table}[H]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-10}    & \textbf{Exportación a PDF}\\
+		\toprule
+		\text{Versión}              & 1.0    \\
+		\text{Autor}                & Alex Tomé \\
+        \text{Actores}              & Usuario genérico y administrador. \\
+		\text{R.F asociados}        & RF-05, RF-05.5 \\
+		\text{Descripción}          & Se podrá exportar a PDF un currículum existente \\
+		\text{Precondición}         & Usuario con sesión en el sistema \\
+		\text{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario entra en la vista de currículos.
+            \item El usuario pulsa el botón de exportar y se genera un PDF con los datos del CV.
+		\end{enumerate}\\
+		\text{Postcondición}        & Se genera el PDF al completo  \\
+		\text{Excepciones}          & No se crea el PDF o faltan datos \\
+		\text{Importancia}          & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-10 Exportación a PDF.}
+\end{table}
+
+% Caso de Uso 11 -> Filtrar currículos.
+\begin{table}[H]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-11}    & \textbf{Filtrar currículos}\\
+		\toprule
+		\text{Versión}              & 1.0    \\
+		\text{Autor}                & Alex Tomé \\
+        \text{Actores}              & Administrador. \\
+		\text{R.F asociados}        & RF-05, RF-05.6 \\
+		\text{Descripción}          & Se podrá filtrar la lista de currículos \\
+		\text{Precondición}         & Usuario con sesión en el sistema \\
+		\text{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario entra en la vista de currículos.
+            \item Los currículos se filtran en función de las opciones elegidas.
+		\end{enumerate}\\
+		\text{Postcondición}        & Se filtran los currículos con éxito  \\
+		\text{Excepciones}          & El listado no se corresponde con la búsqueda filtrada \\
+		\text{Importancia}          & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-11 Filtrar currículos.}
+\end{table}
+
+% Caso de Uso 12 -> Ver datos de currículos.
+\begin{table}[H]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-12}    & \textbf{Ver datos de currículos}\\
+		\toprule
+		\text{Versión}              & 1.0    \\
+		\text{Autor}                & Alex Tomé \\
+        \text{Actores}              & Administrador. \\
+		\text{R.F asociados}        & RF-05, RF-05.7 \\
+		\text{Descripción}          & Se podrá ver los datos de un currículum elegido \\
+		\text{Precondición}         & Usuario con sesión en el sistema \\
+		\text{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario entra en la vista de currículos.
+            \item El usuario pulsa el botón de ``Ver'' y se muestra la información principal.
+		\end{enumerate}\\
+		\text{Postcondición}        & Se muestra la información del currículum  \\
+		\text{Excepciones}          & El modal no se abre o no cargan los datos \\
+		\text{Importancia}          & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-12 Ver datos de currículos.}
+\end{table}
+
+% Caso de Uso 13 -> Filtrar publicaciones.
+\begin{table}[H]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-13}    & \textbf{Filtrar publicaciones}\\
+		\toprule
+		\text{Versión}              & 1.0    \\
+		\text{Autor}                & Alex Tomé \\
+        \text{Actores}              & Usaurio genérico y administrador. \\
+		\text{R.F asociados}        & RF-02, RF-02.2 \\
+		\text{Descripción}          & Se podrá filtrar la lista de publicaciones \\
+		\text{Precondición}         & Usuario con sesión en el sistema \\
+		\text{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario entra en la vista principal.
+            \item Se introducen datos en el filtro para la búsqueda.
+            \item Las publicaciones se filtran en función de las opciones elegidas.
+		\end{enumerate}\\
+		\text{Postcondición}        & Se filtran las publicaciones con éxito  \\
+		\text{Excepciones}          & El listado no se corresponde con la búsqueda filtrada \\
+		\text{Importancia}          & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-13 Filtrar publicaciones.}
+\end{table}
+
+% Caso de Uso 14 -> Crear publicaciones.
+\begin{table}[H]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-14}    & \textbf{Crear publicaciones}\\
+		\toprule
+		\text{Versión}              & 1.0    \\
+		\text{Autor}                & Alex Tomé \\
+        \text{Actores}              & Usuario genérico y administrador. \\
+		\text{R.F asociados}        & RF-02, RF-02.1 \\
+		\text{Descripción}          & Se podrá crear publicaciones en la página principal \\
+		\text{Precondición}         & Usuario con sesión en el sistema \\
+		\text{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario entra en la página principal.
+            \item En la parte superior, introduce un texto con la publicación deseada.
+		\end{enumerate}\\
+		\text{Postcondición}        & Se crea la publicación con éxito  \\
+		\text{Excepciones}          & No permite crear la publicación \\
+		\text{Importancia}          & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-14 Crear publicaciones.}
+\end{table}
+
+% Caso de Uso 15 -> Listar usuarios.
+\begin{table}[H]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-15}    & \textbf{Listar usuarios}\\
+		\toprule
+		\text{Versión}              & 1.0    \\
+		\text{Autor}                & Alex Tomé \\
+        \text{Actores}              & Administrador. \\
+		\text{R.F asociados}        & RF-06 \\
+		\text{Descripción}          & Se listarán todos los usuarios en el sistema \\
+		\text{Precondición}         & Usuario administrador con sesión en el sistema \\
+		\text{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario entra en la gestión de usuarios.
+            \item Los usuarios se encuentran listados en la tabla.
+		\end{enumerate}\\
+		\text{Postcondición}        & Se listan todos los usuarios registrados \\
+		\text{Excepciones}          & La tabla aparece vacía o faltan usuarios \\
+		\text{Importancia}          & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-15 Listar usuarios.}
+\end{table}
+
+% Caso de Uso 16 -> Modificar Usuarios.
+\begin{table}[H]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-16}    & \textbf{Modificar Usuarios}\\
+		\toprule
+		\text{Versión}              & 1.0    \\
+		\text{Autor}                & Alex Tomé \\
+        \text{Actores}              & Administrador. \\
+		\text{R.F asociados}        & RF-06, RF-06.1 \\
+		\text{Descripción}          & Se podrá modificar los datos de un usuario \\
+		\text{Precondición}         & Usuario administrador con sesión en el sistema \\
+		\text{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario entra en la gestión de usuarios.
+            \item El usuario selecciona aquel que quiere editar.
+            \item Su información aparece en la parte superior y permite editarla.
+		\end{enumerate}\\
+		\text{Postcondición}        & Se modifican los datos correctamente  \\
+		\text{Excepciones}          & No se cargan los datos o no se pueden modificar \\
+		\text{Importancia}          & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-16 Modificar Usuarios.}
+\end{table}
+
+% Caso de Uso 17 -> Crear notas de usuario.
+\begin{table}[H]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-17}    & \textbf{Crear notas de usuario}\\
+		\toprule
+		\text{Versión}              & 1.0    \\
+		\text{Autor}                & Alex Tomé \\
+        \text{Actores}              & Usuario genérico y administrador. \\
+		\text{R.F asociados}        & RF-04, RF-04.1 \\
+		\text{Descripción}          & Se podrá crear una nota de usuario \\
+		\text{Precondición}         & Usuario con sesión en el sistema \\
+		\text{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario entra en el directorio y pulsa en nueva nota.
+            \item El usuario crea la nota añadiendo un contenido y un título.
+		\end{enumerate}\\
+		\text{Postcondición}        & Se crea la nota correctamente \\
+		\text{Excepciones}          & La nota no se puede crear o sale vacía \\
+		\text{Importancia}          & Media \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-17 Crear notas de usuario.}
+\end{table}
+
+% Caso de Uso 18 -> Ver y editar notas de usuario.
+\begin{table}[H]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-18}    & \textbf{Ver y editar notas de usuario}\\
+		\toprule
+		\text{Versión}              & 1.0    \\
+		\text{Autor}                & Alex Tomé \\
+        \text{Actores}              & Usuario genérico y administrador. \\
+		\text{R.F asociados}        & RF-04, RF-04.2 \\
+		\text{Descripción}          & Se podrá ver y editar el contenido de una nota creada\\
+		\text{Precondición}         & Usuario con sesión en el sistema \\
+		\text{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario entra en el directorio.
+            \item El usuario pulsa a ver o editar una nota.
+		\end{enumerate}\\
+		\text{Postcondición}        & Se ven y se guardan los cambios de la nota  \\
+		\text{Excepciones}          & El contenido no aparece o no permite editar \\
+		\text{Importancia}          & Media \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-18 Ver y editar notas de usuario.}
+\end{table}
+
+% Caso de Uso 19 -> Borrar notas de usuario.
+\begin{table}[H]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\text{CU-19}    & \textbf{Borrar notas de usuario}\\
+		\toprule
+		\text{Versión}              & 1.0    \\
+		\text{Autor}                & Alex Tomé \\
+        \text{Actores}              & Usuario genérico y administrador. \\
+		\text{R.F asociados}        & RF-04, RF-04.3 \\
+		\text{Descripción}          & Se podrán borrar notas creadas \\
+		\text{Precondición}         & Usuario con sesión en el sistema \\
+		\text{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario entra en el directorio.
+            \item El usuario elimina una nota existente.
+		\end{enumerate}\\
+		\text{Postcondición}        & La nota se elimina del sistema \\
+		\text{Excepciones}          & La nota no se puede eliminar \\
+		\text{Importancia}          & Media \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-19 Borrar notas de usuario.}
+\end{table}
+
+% Caso de Uso 20 -> Registrar Usuarios.
+\begin{table}[H]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-20}    & \textbf{Registrar Usuarios}\\
+		\toprule
+		\text{Versión}              & 1.0    \\
+		\text{Autor}                & Alex Tomé \\
+        \text{Actores}              & Administrador. \\
+		\text{R.F asociados}        & RF-07 \\
+		\text{Descripción}          & Se podrá registrar un usuario en el sistema \\
+		\text{Precondición}         & Usuario administrador con sesión en el sistema \\
+		\text{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario entra en el registro de usuarios.
+            \item El usuario introduce los datos de un usuario y lo registra.
+		\end{enumerate}\\
+		\text{Postcondición}        & El usuario se genera correctamente  \\
+		\text{Excepciones}          & No se registra el usuario en el sistema \\
+		\text{Importancia}          & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-20 Registrar Usuarios.}
+\end{table}
+
+\section{Alcance del proyecto}
+El alcance de este proyecto, en el contexto de la empresa, está pensado para que sea algo a gran escala, por lo que las distintas fases pueden tratarse con más o menos margen, e incluso añadir alguna nueva funcionalidad a futuro.
+
+Sin embargo, en este trabajo, el alcance del mismo dependerá de todas las fases menos la de 
+extras o mejoras. De esta manera, si el proyecto en su totalidad lo forman las nueve fases
+mencionadas previamente, el alcance será de un 88\%, dejando así solamente la etapa de 
+extras o mejoras como complemento adicional, fuera de la estimación del desarrollo del proyecto.
+
+
+

@@ -1,0 +1,25 @@
+\capitulo{2}{Objetivos del proyecto}
+CSACVM es una aplicación web con formato de red social dedicada principalmente a la gestión de currículos vitae por parte de una empresa, en este caso CSA (Centro de Servicios Avanzados).
+
+El objetivo de esta aplicación se puede dividir en dos apartados. Por un lado se describe el propósito general de la funcionalidad de la aplicación en el contexto de la empresa, y por otro se describen las técnicas utilizadas para lograr estos objetivos.
+
+\section{Objetivos generales}
+\begin{itemize}
+ \item Dotar a la aplicación de un estilo de red social intuitivo y ampliable a más funcionalidad en el futuro.
+ \item Gestión de currículos por parte de cada usuario/trabajador de la empresa, que pueda añadir nuevas entradas para mantener actualizado el documento y exportarlo a \emph{PDF} cuando se desee.
+ \item Mantenimiento principal de usuarios (perfiles, notas, configuración) como en cualquier red social.
+ \item Administración y gestión de usuarios y currículos por parte del personal de Recursos Humanos de la empresa para poder explotar los datos.
+\end{itemize}
+
+\section{Objetivos técnicos}
+\begin{itemize}
+ \item Desarrollo de la aplicación en Visual Studio 2022 con .NET 6.0 y Core como herramienta de gestión de modelos.
+ \item Aplicar un patrón de arquitectura como el Modelo Vista-Controlador (MVC).
+ \item Gestión de base de datos gracias a SQL Management Studio y SQL Server.
+ \item Uso del \emph{code-first} como método para unir el modelo con la base de datos (a través de migraciones en Visual Studio con \emph{.NET}).
+ \item Descarga de dependencias en Visual Studio que proporcionan librerías para el desarrollo de diversas funcionalidades del proyecto.
+ \item Despliegue de la aplicación a través del uso de IIS Express.
+ \item Uso de Github para alojar el repositorio del proyecto.
+ \item Manejo y gestión de las diferentes fases del proyecto a través de las \emph{issues} y \emph{milestones} que proporciona Github.
+ \item Utilizar una máquina virtual para poder alojar el servidor web.
+\end{itemize}
